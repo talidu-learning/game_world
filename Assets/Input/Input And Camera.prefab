@@ -349,10 +349,7 @@ MonoBehaviour:
   useUnityEvents: 0
   sendStateChangeEvents: 0
   requireGestureToFail: {fileID: 0}
-  friendlyGestures:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  friendlyGestures: []
   OnTransformStart:
     m_PersistentCalls:
       m_Calls: []
@@ -392,10 +389,7 @@ MonoBehaviour:
   useUnityEvents: 0
   sendStateChangeEvents: 0
   requireGestureToFail: {fileID: 0}
-  friendlyGestures:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  friendlyGestures: []
   OnTransformStart:
     m_PersistentCalls:
       m_Calls: []

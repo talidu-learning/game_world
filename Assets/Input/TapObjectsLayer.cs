@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Plugins.WebGL;
 using TouchScript;
 using TouchScript.Hit;
 using TouchScript.Layers;
@@ -179,6 +180,8 @@ public class TapObjectsLayer : TouchLayer
     /// <inheritdoc />
     public override HitResult Hit(IPointer pointer, out HitData hit)
     {
+        WebGLPluginJS.Browser_Log(isObjectSelected.ToString());
+
         if (base.Hit(pointer, out hit) != HitResult.Hit) return HitResult.Miss;
 
         if (TouchManager.Instance.Pointers.Count > 1 || !isObjectSelected)

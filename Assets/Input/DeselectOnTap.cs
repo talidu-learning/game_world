@@ -1,25 +1,27 @@
 using System;
+using Plugins.WebGL;
 using TouchScript.Gestures;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DeselectOnTap : MonoBehaviour
-{
-    public static UnityEvent OnTapOnBackground = new UnityEvent();
+    public class DeselectOnTap : MonoBehaviour
+    {
+        public static UnityEvent OnTapOnBackground = new UnityEvent();
     
-    void Awake()
-    {
-        GetComponent<TapGesture>().Tapped += OnTapped;
-    }
+        void Awake()
+        {
+            GetComponent<TapGesture>().Tapped += OnTapped;
+        }
 
-    private void OnTapped(object sender, EventArgs e)
-    {
-        InvokeOnTap();
-    }
+        private void OnTapped(object sender, EventArgs e)
+        {
+            InvokeOnTap();
+        }
 
-    private void InvokeOnTap()
-    {
-        Debug.Log("tap");
-        OnTapOnBackground.Invoke();
+        private void InvokeOnTap()
+        {
+            Debug.Log("tap");
+            WebGLPluginJS.Browser_Log("Tap");
+            OnTapOnBackground.Invoke();
+        }
     }
-}

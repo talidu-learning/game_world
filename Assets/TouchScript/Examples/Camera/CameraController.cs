@@ -22,11 +22,17 @@ namespace TouchScript.Examples.CameraControl
             ManipulationGesture.OnStateChange.AddListener(OnStateChanged);
         }
 
+
         private void OnStateChanged(Gesture gesture)
         {
             if (ManipulationGesture.State == Gesture.GestureState.Idle)
             {
                 ManipulationGesture.Cancel();
+            }
+
+            if (ManipulationGesture.State == Gesture.GestureState.Ended)
+            {
+                ManipulationGesture.ActivePointers.Clear();
             }
         }
 
