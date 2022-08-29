@@ -13,6 +13,7 @@ namespace Plugins.WebGL
 
         public static void Browser_Log(string message)
         {
+            Debug.Log(message);
             //PassTextParam(message);
         }
 

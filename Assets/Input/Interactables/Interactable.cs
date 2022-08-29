@@ -7,11 +7,14 @@ public class Interactable : MonoBehaviour
 {
     private LongPressGesture LongPressGesture;
     private PressGesture PressGesture;
+    private ReleaseGesture ReleaseGesture;
     private TransformGesture TransformGesture;
     private bool isSelected = false;
 
     private void Start()
     {
+        ReleaseGesture = GetComponent<ReleaseGesture>();
+        
         TransformGesture = GetComponent<TransformGesture>();
         TransformGesture.enabled = false;
         
@@ -56,6 +59,7 @@ public class Interactable : MonoBehaviour
 
     public void OnTap()
     {
+        if (!isSelected) return;
         TapObjectsLayer.IsObjectSelectedEvent.Invoke(false, this);
         DisableDragging();
     }

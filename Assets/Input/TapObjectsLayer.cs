@@ -183,8 +183,8 @@ public class TapObjectsLayer : TouchLayer
         WebGLPluginJS.Browser_Log(isObjectSelected.ToString());
 
         if (base.Hit(pointer, out hit) != HitResult.Hit) return HitResult.Miss;
-
-        if (TouchManager.Instance.Pointers.Count > 1 || !isObjectSelected)
+        
+        if (TouchManager.Instance.Pointers.Count > 1)
         {
             return HitResult.Miss;
         }
