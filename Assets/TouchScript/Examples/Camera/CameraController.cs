@@ -1,6 +1,11 @@
-﻿using TouchScript.Gestures;
+﻿using System.Collections.Generic;
+using Plugins.WebGL;
+using TouchScript.Core;
+using TouchScript.Gestures;
 using UnityEngine;
 using TouchScript.Gestures.TransformGestures;
+using TouchScript.InputSources;
+using TouchScript.Pointers;
 
 namespace TouchScript.Examples.CameraControl
 {
@@ -13,26 +18,28 @@ namespace TouchScript.Examples.CameraControl
         public float ZoomSpeed = 10f;
 
         [SerializeField]private Transform pivot;
+
+        [SerializeField] private GameObject TouchManagerGameObject;
         private Transform cam;
+
+        private IList<Pointer> twoFingerPointers = new List<Pointer>();
 
         private void Awake()
         {
             cam = Camera.main.transform;
             
-            ManipulationGesture.OnStateChange.AddListener(OnStateChanged);
+            ManipulationGesture.OnTransformComplete.AddListener(OnComplete);
         }
 
-
-        private void OnStateChanged(Gesture gesture)
+        private void OnComplete(Gesture arg0)
         {
-            if (ManipulationGesture.State == Gesture.GestureState.Idle)
-            {
-                ManipulationGesture.Cancel();
-            }
+            var pointers = TouchManager.Instance.PressedPointers;
 
-            if (ManipulationGesture.State == Gesture.GestureState.Ended)
+            foreach (var p in pointers)
             {
-                ManipulationGesture.ActivePointers.Clear();
+                TouchManager.Instance.CancelPointer(p.Id);
+                TouchManager.Instance.RemoveInput(TouchManager.Instance.Inputs[0]);
+                TouchManager.Instance.AddInput(TouchManagerGameObject.AddComponent<StandardInput>());
             }
         }
 
@@ -44,7 +51,6 @@ namespace TouchScript.Examples.CameraControl
                 newZoom.y = Mathf.Clamp(newZoom.y, 5.0f, 11.5f);
                 cam.transform.localPosition = newZoom;
             }
-                
         }
 
         private void OnEnable()
@@ -69,7 +75,7 @@ namespace TouchScript.Examples.CameraControl
         private void TwoFingerTransformHandler(object sender, System.EventArgs e)
         {
             Vector3 newPos = pivot.rotation*TwoFingerMoveGesture.DeltaPosition*PanSpeed;
-            newPos.z = newPos.y;
+            newPos.z = -newPos.y;
             newPos.x = -newPos.x;
             newPos.y = 0;
             pivot.localPosition += newPos;

@@ -1,5 +1,5 @@
 using System;
-using Plugins.WebGL;
+using Interactables;
 using TouchScript.Gestures;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,14 +12,14 @@ using UnityEngine.Events;
         {
             GetComponent<TapGesture>().Tapped += OnTapped;
             
-            TapObjectsLayer.IsObjectSelectedEvent.AddListener(OnObjectSelected);
+            SelectionManager.IsObjectSelectedEvent.AddListener(OnObjectSelected);
         }
 
         private void OnObjectSelected(bool isSelected, Interactable interactable)
         {
             if (isSelected)
             {
-                gameObject.layer = LayerMask.NameToLayer("Interactables");
+                gameObject.GetComponent<MeshCollider>().enabled = true;
             }
         }
 
@@ -30,9 +30,7 @@ using UnityEngine.Events;
 
         private void InvokeOnTap()
         {
-            Debug.Log("tap");
-            WebGLPluginJS.Browser_Log("Tap");
-            gameObject.layer = LayerMask.NameToLayer("Default");
+            gameObject.GetComponent<MeshCollider>().enabled = false;
             OnTapOnBackground.Invoke();
         }
     }

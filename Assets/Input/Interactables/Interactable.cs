@@ -1,4 +1,5 @@
 using System;
+using Interactables;
 using TouchScript.Gestures;
 using TouchScript.Gestures.TransformGestures;
 using UnityEngine;
@@ -7,14 +8,11 @@ public class Interactable : MonoBehaviour
 {
     private LongPressGesture LongPressGesture;
     private PressGesture PressGesture;
-    private ReleaseGesture ReleaseGesture;
     private TransformGesture TransformGesture;
     private bool isSelected = false;
 
     private void Start()
     {
-        ReleaseGesture = GetComponent<ReleaseGesture>();
-        
         TransformGesture = GetComponent<TransformGesture>();
         TransformGesture.enabled = false;
         
@@ -40,7 +38,7 @@ public class Interactable : MonoBehaviour
         if (e.State == Gesture.GestureState.Recognized)
         {
             EnableDragging();
-            TapObjectsLayer.IsObjectSelectedEvent.Invoke(true, this);
+            SelectionManager.IsObjectSelectedEvent.Invoke(true, this);
         }
         else if (e.State == Gesture.GestureState.Failed)
         {
@@ -60,7 +58,7 @@ public class Interactable : MonoBehaviour
     public void OnTap()
     {
         if (!isSelected) return;
-        TapObjectsLayer.IsObjectSelectedEvent.Invoke(false, this);
+        SelectionManager.IsObjectSelectedEvent.Invoke(false, this);
         DisableDragging();
     }
     
