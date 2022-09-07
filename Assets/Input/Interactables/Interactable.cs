@@ -39,6 +39,7 @@ public class Interactable : MonoBehaviour
         {
             EnableDragging();
             SelectionManager.IsObjectSelectedEvent.Invoke(true, this);
+            gameObject.AddComponent<ObjectDrag>();
         }
         else if (e.State == Gesture.GestureState.Failed)
         {
@@ -52,7 +53,7 @@ public class Interactable : MonoBehaviour
         isSelected = true;
         LongPressGesture.enabled = false;
         PressGesture.enabled = false;
-        TransformGesture.enabled = true;
+        //TransformGesture.enabled = true;
     }
 
     public void OnTap()
@@ -69,7 +70,17 @@ public class Interactable : MonoBehaviour
         isSelected = false;
         LongPressGesture.enabled = true;
         PressGesture.enabled = true;
-        TransformGesture.enabled = false;
+        Destroy(gameObject.GetComponent<ObjectDrag>());
+        //TransformGesture.enabled = false;
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
     }
     
+    private void OnCollisionEnter(Collision other)
+    {
+        gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+    }
 }

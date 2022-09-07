@@ -147,7 +147,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   timeToPress: 1
-  distanceLimit: Infinity
+  distanceLimit: 1
 --- !u!114 &4883471184429529532
 MonoBehaviour:
   m_ObjectHideFlags: 0

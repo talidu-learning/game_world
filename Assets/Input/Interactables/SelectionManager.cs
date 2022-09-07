@@ -15,19 +15,30 @@ namespace Interactables
             IsObjectSelectedEvent.AddListener(IsObjectSelected);
         }
 
-        public void IsObjectSelected(bool isSelected, Interactable gameObject)
+        public void IsObjectSelected(bool isSelected, Interactable interactable)
         {
             if (isSelected)
             {
                 isObjectSelected = isSelected;
-                if(selectedObject != null && selectedObject !=gameObject)
+                if (selectedObject != null && selectedObject != interactable)
+                {
                     selectedObject.DisableDragging();
-                selectedObject = gameObject;
+                    BuildingSystem.Current.PlaceObjectOnGrid();
+                }
+                selectedObject = interactable;
+
+                if (interactable.gameObject.GetComponent<PlaceableObject>().Placed)
+                {
+                    var placeable = interactable.gameObject.GetComponent<PlaceableObject>();
+                    BuildingSystem.Current.RemoveArea(placeable.placedPosition, placeable.Size);
+                    BuildingSystem.Current.SetPlaceableObject(placeable);
+                }
             }
             else
             {
                 isObjectSelected = isSelected;
                 selectedObject.DisableDragging();
+                BuildingSystem.Current.PlaceObjectOnGrid();
             }
         }
     }

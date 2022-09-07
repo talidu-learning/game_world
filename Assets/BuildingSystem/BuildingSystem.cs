@@ -1,0 +1,144 @@
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+public class BuildingSystem : MonoBehaviour
+{
+    public static BuildingSystem Current;
+
+    public GridLayout GridLayout;
+
+    private Grid grid;
+
+    [SerializeField] private Tilemap PlacingTilemap;
+    [SerializeField] private TileBase TileBase;
+
+    public GameObject prefab1;
+
+    private PlaceableObject placeableObject;
+
+    private void Awake()
+    {
+        Current = this;
+        grid = GridLayout.gameObject.GetComponent<Grid>();
+    }
+
+    private void Start()
+    {
+        InitializeWithObject(prefab1);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            InitializeWithObject(prefab1);
+        }
+
+        if (!placeableObject) return;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Destroy(placeableObject.gameObject);
+        }
+
+    }
+
+    public void PlaceObjectOnGrid()
+    {
+        if (CanBePlaced(placeableObject))
+        {
+            Vector3Int start = GridLayout.WorldToCell(placeableObject.GetStartPosition());
+            placeableObject.Place(start);
+            TakeArea(start, placeableObject.Size, TileBase);
+        }
+        else
+        {
+            Destroy(placeableObject.gameObject);
+        }
+
+        placeableObject = null;
+    }
+
+    public static Vector3 GetMousePositionWorld()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out RaycastHit raycastHit))
+        {
+            return raycastHit.point;
+        }
+        return Vector3.zero;
+    }
+
+    public Vector3 SnapCoordinateToGrid(Vector3 position)
+    {
+        Vector3Int cellPos = GridLayout.WorldToCell(position);
+        position = grid.GetCellCenterWorld(cellPos);
+        return position;
+    }
+
+    private static TileBase[] GetTilesBlock(BoundsInt area, Tilemap tilemap)
+    {
+        TileBase[] array = new TileBase[(area.size.x+1) * (area.size.y+1) * area.size.z];
+        int counter = 0;
+
+        foreach (var v in area.allPositionsWithin)
+        {
+            Vector3Int pos = new Vector3Int(v.x, v.y, 0);
+            array[counter] = tilemap.GetTile(pos);
+            counter++;
+        }
+
+        return array;
+    }
+    
+    public void InitializeWithObject(GameObject prefab)
+    {
+        Vector3 position = SnapCoordinateToGrid(Vector3.zero);
+
+        GameObject obj = Instantiate(prefab, position, Quaternion.identity);
+
+        obj.AddComponent<PlaceableObject>();
+        
+        placeableObject = obj.GetComponent<PlaceableObject>();
+    }
+
+    public void SetPlaceableObject(PlaceableObject placeable)
+    {
+        placeableObject = placeable;
+    }
+
+    private bool CanBePlaced(PlaceableObject objectToPlace)
+    {
+        BoundsInt area = new BoundsInt();
+        area.position = GridLayout.WorldToCell(objectToPlace.GetStartPosition());
+
+        area.size = objectToPlace.Size;
+
+        TileBase[] baseArray = GetTilesBlock(area, PlacingTilemap);
+
+        foreach (var tileBase in baseArray)
+        {
+            if (tileBase == TileBase)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void RemoveArea(Vector3Int start, Vector3Int size)
+    {
+        PlacingTilemap.BoxFill(start, null, start.x, start.y, start.x + size.x, start.y + size.y);
+    }
+
+    public void TakeArea(Vector3Int start, Vector3Int size, TileBase tileBase)
+    {
+        PlacingTilemap.BoxFill(start, tileBase, start.x, start.y, start.x + size.x, start.y + size.y);
+    }
+    
+    public void TakeArea(Tilemap tilemap, Vector3Int start, Vector3Int size, TileBase tileBase)
+    {
+        tilemap.BoxFill(start, tileBase, start.x, start.y, start.x + size.x, start.y + size.y);
+    }
+}
