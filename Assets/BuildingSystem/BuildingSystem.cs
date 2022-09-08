@@ -10,6 +10,7 @@ public class BuildingSystem : MonoBehaviour
     private Grid grid;
 
     [SerializeField] private Tilemap PlacingTilemap;
+    [SerializeField] private Tilemap HeightTilemap;
     [SerializeField] private TileBase TileBase;
 
     public GameObject prefab1;
@@ -41,6 +42,16 @@ public class BuildingSystem : MonoBehaviour
             Destroy(placeableObject.gameObject);
         }
 
+        var tilepos = GridLayout.WorldToCell(placeableObject.GetStartPosition());
+        var tile = HeightTilemap.GetTile(tilepos);
+        Debug.Log(tile);
+        if (tile == null)
+            placeableObject.transform.position = new Vector3(placeableObject.transform.position.x,
+                0, placeableObject.transform.position.z);
+        else if (tile.name == "Red")
+            placeableObject.transform.position = new Vector3(placeableObject.transform.position.x, 1, placeableObject.transform.position.z);
+        else if (tile.name == "Green")
+            placeableObject.transform.position = new Vector3(placeableObject.transform.position.x, -1, placeableObject.transform.position.z);
     }
 
     public void PlaceObjectOnGrid()
@@ -93,6 +104,7 @@ public class BuildingSystem : MonoBehaviour
     
     public void InitializeWithObject(GameObject prefab)
     {
+        // TODO place Object in middle of camera
         Vector3 position = SnapCoordinateToGrid(Vector3.zero);
 
         GameObject obj = Instantiate(prefab, position, Quaternion.identity);
