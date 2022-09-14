@@ -11,6 +11,7 @@ public class ShopInventory : ScriptableObject
 [Serializable]
 public class ItemData
 {
+    public string ItemID;
     public Sprite ItemSprite;
     public int Value;
 }
