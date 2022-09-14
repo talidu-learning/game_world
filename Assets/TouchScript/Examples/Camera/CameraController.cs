@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Plugins.WebGL;
-using TouchScript.Core;
 using TouchScript.Gestures;
 using UnityEngine;
 using TouchScript.Gestures.TransformGestures;
@@ -16,6 +14,11 @@ namespace TouchScript.Examples.CameraControl
         public ScreenTransformGesture ManipulationGesture;
         public float PanSpeed = 200f;
         public float ZoomSpeed = 10f;
+
+        [SerializeField] private float negativeXAxisBound = -10f;
+        [SerializeField] private float positiveXAxisBound = 10f;
+        [SerializeField] private float negativeZAxisBound = -10f;
+        [SerializeField] private float positiveZAxisBound = 10f;
 
         [SerializeField]private Transform pivot;
 
@@ -75,8 +78,8 @@ namespace TouchScript.Examples.CameraControl
         private void TwoFingerTransformHandler(object sender, System.EventArgs e)
         {
             Vector3 newPos = pivot.rotation*TwoFingerMoveGesture.DeltaPosition*PanSpeed;
-            newPos.z = -newPos.y;
-            newPos.x = -newPos.x;
+            newPos.z = Mathf.Clamp(-newPos.y, negativeZAxisBound, positiveZAxisBound);
+            newPos.x = Mathf.Clamp(-newPos.x, negativeXAxisBound, positiveXAxisBound);
             newPos.y = 0;
             pivot.localPosition += newPos;
         }

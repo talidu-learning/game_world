@@ -23,22 +23,22 @@ namespace Interactables
                 if (selectedObject != null && selectedObject != interactable)
                 {
                     selectedObject.DisableDragging();
-                    BuildingSystem.Current.PlaceObjectOnGrid();
+                    BuildingSystem.BuildingSystem.Current.PlaceObjectOnGrid();
                 }
                 selectedObject = interactable;
 
                 if (interactable.gameObject.GetComponent<PlaceableObject>().Placed)
                 {
                     var placeable = interactable.gameObject.GetComponent<PlaceableObject>();
-                    BuildingSystem.Current.RemoveArea(placeable.placedPosition, placeable.Size);
-                    BuildingSystem.Current.SetPlaceableObject(placeable);
+                    BuildingSystem.BuildingSystem.Current.RemoveArea(placeable.placedPosition, placeable.Size);
+                    BuildingSystem.BuildingSystem.Current.SetPlaceableObject(placeable);
                 }
             }
             else
             {
                 isObjectSelected = isSelected;
                 selectedObject.DisableDragging();
-                BuildingSystem.Current.PlaceObjectOnGrid();
+                BuildingSystem.BuildingSystem.Current.PlaceObjectOnGrid();
             }
         }
     }
