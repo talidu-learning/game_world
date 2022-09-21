@@ -11,14 +11,19 @@ namespace BuildingSystem
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                var go = Instantiate(Prefab);
-                SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
+                SpawnObject();
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 BuildingSystem.Current.WithdrawSelectedObject();
             }
+        }
+
+        public void SpawnObject()
+        {
+            var go = Instantiate(Prefab);
+            SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
         }
     }
 }

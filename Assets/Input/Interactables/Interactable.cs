@@ -15,9 +15,6 @@ public class Interactable : MonoBehaviour
 
     private void Awake()
     {
-        objectDrag = gameObject.AddComponent<ObjectDrag>();
-        objectDrag.enabled = false;
-        
         TransformGesture = GetComponent<TransformGesture>();
         TransformGesture.enabled = false;
         
@@ -57,7 +54,7 @@ public class Interactable : MonoBehaviour
         isSelected = true;
         LongPressGesture.enabled = false;
         PressGesture.enabled = false;
-        objectDrag.enabled = true;
+        objectDrag = gameObject.AddComponent<ObjectDrag>();
         //TransformGesture.enabled = true;
     }
 
@@ -75,7 +72,7 @@ public class Interactable : MonoBehaviour
         isSelected = false;
         LongPressGesture.enabled = true;
         PressGesture.enabled = true;
-        objectDrag.enabled = false;
+        Destroy(objectDrag);
         //TransformGesture.enabled = false;
     }
     

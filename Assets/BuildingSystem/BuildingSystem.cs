@@ -39,6 +39,7 @@ namespace BuildingSystem
             }
             Destroy(placeableObject.gameObject);
             placeableObject = null;
+            visibleMapRenderer.enabled = false;
         }
 
         public void PlaceLastObjectOnGrid()
