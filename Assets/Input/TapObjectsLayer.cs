@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Plugins.WebGL;
 using TouchScript;
 using TouchScript.Hit;
 using TouchScript.Layers;
@@ -13,32 +12,8 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BoolUnityEvent : UnityEvent<bool, Interactable>{}
-
 public class TapObjectsLayer : TouchLayer
 {
-    public static BoolUnityEvent IsObjectSelectedEvent = new BoolUnityEvent();
-    
-    private bool isObjectSelected = false;
-
-    private Interactable selectedObject;
-    
-    public void IsObjectSelected(bool isSelected, Interactable gameObject)
-    {
-        if (isSelected)
-        {
-            isObjectSelected = isSelected;
-            if(selectedObject != null && selectedObject !=gameObject)
-                selectedObject.DisableDragging();
-            selectedObject = gameObject;
-        }
-        else
-        {
-            isObjectSelected = isSelected;
-            selectedObject.DisableDragging();
-        }
-    }
-    
     #region Public properties
 
     /// <summary>
@@ -180,8 +155,6 @@ public class TapObjectsLayer : TouchLayer
     /// <inheritdoc />
     public override HitResult Hit(IPointer pointer, out HitData hit)
     {
-        WebGLPluginJS.Browser_Log(isObjectSelected.ToString());
-
         if (base.Hit(pointer, out hit) != HitResult.Hit) return HitResult.Miss;
         
         if (TouchManager.Instance.Pointers.Count > 1)
@@ -251,7 +224,6 @@ public class TapObjectsLayer : TouchLayer
     /// <inheritdoc />
     protected override void Awake()
     {
-        IsObjectSelectedEvent.AddListener(IsObjectSelected);
         
         updateCamera();
         updateVariants();

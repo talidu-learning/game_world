@@ -1,4 +1,5 @@
 using System;
+using BuildingSystem;
 using Interactables;
 using TouchScript.Gestures;
 using TouchScript.Gestures.TransformGestures;
@@ -10,9 +11,13 @@ public class Interactable : MonoBehaviour
     private PressGesture PressGesture;
     private TransformGesture TransformGesture;
     private bool isSelected = false;
+    private ObjectDrag objectDrag;
 
-    private void Start()
+    private void Awake()
     {
+        objectDrag = gameObject.AddComponent<ObjectDrag>();
+        objectDrag.enabled = false;
+        
         TransformGesture = GetComponent<TransformGesture>();
         TransformGesture.enabled = false;
         
@@ -38,8 +43,7 @@ public class Interactable : MonoBehaviour
         if (e.State == Gesture.GestureState.Recognized)
         {
             EnableDragging();
-            SelectionManager.IsObjectSelectedEvent.Invoke(true, this);
-            gameObject.AddComponent<ObjectDrag>();
+            SelectionManager.SELECT_OBJECT_EVENT.Invoke(this);
         }
         else if (e.State == Gesture.GestureState.Failed)
         {
@@ -47,19 +51,20 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    private void EnableDragging()
+    public void EnableDragging()
     {
         gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
         isSelected = true;
         LongPressGesture.enabled = false;
         PressGesture.enabled = false;
+        objectDrag.enabled = true;
         //TransformGesture.enabled = true;
     }
 
-    public void OnTap()
+    private void OnTap()
     {
         if (!isSelected) return;
-        SelectionManager.IsObjectSelectedEvent.Invoke(false, this);
+        SelectionManager.DESELECT_OBJECT_EVENT.Invoke();
         DisableDragging();
     }
     
@@ -70,17 +75,8 @@ public class Interactable : MonoBehaviour
         isSelected = false;
         LongPressGesture.enabled = true;
         PressGesture.enabled = true;
-        Destroy(gameObject.GetComponent<ObjectDrag>());
+        objectDrag.enabled = false;
         //TransformGesture.enabled = false;
     }
-
-    private void OnCollisionExit(Collision other)
-    {
-        gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
-    }
     
-    private void OnCollisionEnter(Collision other)
-    {
-        gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
-    }
 }

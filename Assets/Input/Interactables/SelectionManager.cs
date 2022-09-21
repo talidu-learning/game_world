@@ -1,45 +1,65 @@
-﻿using UnityEngine;
+﻿using BuildingSystem;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace Interactables
 {
+    public class BoolInteractableUnityEvent : UnityEvent<Interactable>
+    {
+    }
+
     public class SelectionManager : MonoBehaviour
     {
-        public static BoolUnityEvent IsObjectSelectedEvent = new BoolUnityEvent();
-    
-        private bool isObjectSelected = false;
+        public static readonly BoolInteractableUnityEvent SELECT_OBJECT_EVENT = new BoolInteractableUnityEvent();
+        public static readonly UnityEvent DESELECT_OBJECT_EVENT = new UnityEvent();
 
         private Interactable selectedObject;
 
         private void Awake()
         {
-            IsObjectSelectedEvent.AddListener(IsObjectSelected);
+            SELECT_OBJECT_EVENT.AddListener(SelectObject);
+            DESELECT_OBJECT_EVENT.AddListener(DeselectObject);
         }
 
-        public void IsObjectSelected(bool isSelected, Interactable interactable)
+        private void DeselectObject()
         {
-            if (isSelected)
-            {
-                isObjectSelected = isSelected;
-                if (selectedObject != null && selectedObject != interactable)
-                {
-                    selectedObject.DisableDragging();
-                    BuildingSystem.BuildingSystem.Current.PlaceObjectOnGrid();
-                }
-                selectedObject = interactable;
+            selectedObject.DisableDragging();
+            selectedObject = null;
+            BuildingSystem.BuildingSystem.Current.PlaceLastObjectOnGrid();
+        }
 
-                if (interactable.gameObject.GetComponent<PlaceableObject>().Placed)
-                {
-                    var placeable = interactable.gameObject.GetComponent<PlaceableObject>();
-                    BuildingSystem.BuildingSystem.Current.RemoveArea(placeable.placedPosition, placeable.Size);
-                    BuildingSystem.BuildingSystem.Current.SetPlaceableObject(placeable);
-                }
+        private void SelectObject(Interactable interactable)
+        {
+            if (AnotherObjectIsSelected(interactable))
+            {
+                Debug.Log("SelectAnotherObject");
+                DeselectObject();
+            }
+
+
+            if (ObjectWasPlacedBefore(interactable))
+            {
+                Debug.Log("Replace");
+                BuildingSystem.BuildingSystem.Current.ReplaceObjectOnGrid(interactable.gameObject);
+                selectedObject = interactable;
             }
             else
             {
-                isObjectSelected = isSelected;
-                selectedObject.DisableDragging();
-                BuildingSystem.BuildingSystem.Current.PlaceObjectOnGrid();
+                Debug.Log("New Object");
+                var go = BuildingSystem.BuildingSystem.Current.StartPlacingObjectOnGrid(interactable.gameObject);
+                selectedObject = go.GetComponent<Interactable>();
             }
+        }
+
+        private static bool ObjectWasPlacedBefore(Interactable interactable)
+        {
+            return interactable.gameObject.GetComponent<PlaceableObject>() &&
+                   interactable.gameObject.GetComponent<PlaceableObject>().WasPlacedBefore;
+        }
+
+        private bool AnotherObjectIsSelected(Interactable interactable)
+        {
+            return selectedObject != null && selectedObject != interactable;
         }
     }
 }

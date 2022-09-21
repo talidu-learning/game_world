@@ -3,77 +3,45 @@ using UnityEngine.Tilemaps;
 
 namespace BuildingSystem
 {
+    /// <summary>
+    /// Places GameObjects on a Tilemap. Singleton.
+    /// </summary>
     public class BuildingSystem : MonoBehaviour
     {
         public static BuildingSystem Current;
-
         public GridLayout GridLayout;
 
-        private Grid grid;
-
+        // Tilemaps
         [SerializeField] private Tilemap PlacingTilemap;
         [SerializeField] private Tilemap VisibleTilemap;
-        //[SerializeField] private Tilemap HeightTilemap;
+        [SerializeField] private Tilemap ValidPlacingTilemap;
+        
         [SerializeField] private TileBase TileBase;
-        [SerializeField] private TileBase VisibleTileBase;
 
-        [SerializeField] private int GridSize = 50;
-        [SerializeField] private Vector3Int Origin;
-
-        public GameObject prefab1;
-
+        private Grid grid;
         private PlaceableObject placeableObject;
+        private TilemapRenderer visibleMapRenderer;
 
         private void Awake()
         {
             Current = this;
             grid = GridLayout.gameObject.GetComponent<Grid>();
+            visibleMapRenderer = VisibleTilemap.GetComponent<TilemapRenderer>();
+            visibleMapRenderer.enabled = false;
         }
 
-        private void Start()
+        public void WithdrawSelectedObject()
         {
-            InitializeVisibleGrid();
-            InitializeWithObject(prefab1);
-        }
-
-        private void InitializeVisibleGrid()
-        {
-            for (int i = Origin.x; i <= Origin.x + GridSize; i++)
-            {
-                for (int j = Origin.y; j <= Origin.y + GridSize; j++)
-                {
-                    VisibleTilemap.SetTile(new Vector3Int(i,j,0), VisibleTileBase);
-                }
-            }
-        }
-
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                InitializeWithObject(prefab1);
-            }
-
             if (!placeableObject) return;
-
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (placeableObject.WasPlacedBefore)
             {
-                Destroy(placeableObject.gameObject);
+                RemoveArea(placeableObject.placedPosition, placeableObject.Size);
             }
-
-            // var tilepos = GridLayout.WorldToCell(placeableObject.GetStartPosition());
-            // var tile = HeightTilemap.GetTile(tilepos);
-            // Debug.Log(tile);
-            // if (tile == null)
-            //     placeableObject.transform.position = new Vector3(placeableObject.transform.position.x,
-            //         0, placeableObject.transform.position.z);
-            // else if (tile.name == "Red")
-            //     placeableObject.transform.position = new Vector3(placeableObject.transform.position.x, 1, placeableObject.transform.position.z);
-            // else if (tile.name == "Green")
-            //     placeableObject.transform.position = new Vector3(placeableObject.transform.position.x, -1, placeableObject.transform.position.z);
+            Destroy(placeableObject.gameObject);
+            placeableObject = null;
         }
 
-        public void PlaceObjectOnGrid()
+        public void PlaceLastObjectOnGrid()
         {
             if (CanBePlaced(placeableObject))
             {
@@ -83,19 +51,45 @@ namespace BuildingSystem
             }
             else
             {
+                if (placeableObject.WasPlacedBefore)
+                {
+                    placeableObject.transform.position = placeableObject.placePosition;
+                    placeableObject.Place(placeableObject.placedPosition);
+                    TakeArea(placeableObject.placedPosition, placeableObject.Size, TileBase);
+                    return;
+                }
                 Destroy(placeableObject.gameObject);
             }
 
+            visibleMapRenderer.enabled = false;
+
             placeableObject = null;
+        }
+
+        public GameObject StartPlacingObjectOnGrid(GameObject objectToPlace)
+        {
+            GameObject go = SpawnObjectOnGrid(objectToPlace);
+            InitializePlacing(go);
+            visibleMapRenderer.enabled = true;
+            return go;
+        }
+
+        public void ReplaceObjectOnGrid(GameObject objectToReplace)
+        {
+            var placeable = objectToReplace.GetComponent<PlaceableObject>();
+            RemoveArea(placeable.placedPosition, placeable.Size);
+            InitializePlacing(objectToReplace);
+            visibleMapRenderer.enabled = true;
         }
 
         public static Vector3 GetMousePositionWorld()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out RaycastHit raycastHit))
+            if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
                 return raycastHit.point;
             }
+
             return Vector3.zero;
         }
 
@@ -106,9 +100,11 @@ namespace BuildingSystem
             return position;
         }
 
+        #region private
+
         private static TileBase[] GetTilesBlock(BoundsInt area, Tilemap tilemap)
         {
-            TileBase[] array = new TileBase[(area.size.x+1) * (area.size.y+1) * area.size.z];
+            TileBase[] array = new TileBase[area.size.x * area.size.y * area.size.z];
             int counter = 0;
 
             foreach (var v in area.allPositionsWithin)
@@ -120,22 +116,39 @@ namespace BuildingSystem
 
             return array;
         }
-    
-        public void InitializeWithObject(GameObject prefab)
+
+        private void InitializePlacing(GameObject objectToPLace)
         {
-            // TODO place Object in middle of camera
-            Vector3 position = SnapCoordinateToGrid(Vector3.zero);
-
-            GameObject obj = Instantiate(prefab, position, Quaternion.identity);
-
-            obj.AddComponent<PlaceableObject>();
-        
-            placeableObject = obj.GetComponent<PlaceableObject>();
+            placeableObject = objectToPLace.GetComponent<PlaceableObject>();
+            objectToPLace.GetComponent<Interactable>().EnableDragging();
         }
 
-        public void SetPlaceableObject(PlaceableObject placeable)
+        private GameObject SpawnObjectOnGrid(GameObject objectToPlace)
         {
-            placeableObject = placeable;
+            Vector3 middleofScreen = GetPointWhereRayHitsGroundInMiddleOfScreen();
+
+            Vector3 position = SnapCoordinateToGrid(middleofScreen);
+
+            objectToPlace.transform.SetPositionAndRotation(position, Quaternion.identity);
+
+            objectToPlace.AddComponent<PlaceableObject>();
+
+            return objectToPlace;
+        }
+
+        private static Vector3 GetPointWhereRayHitsGroundInMiddleOfScreen()
+        {
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
+            Plane plane = new Plane(Vector3.up, Vector3.zero);
+            
+            Vector3 middleofScreen = Vector3.zero;
+            if (plane.Raycast(ray, out float distance))
+            {
+                middleofScreen = ray.GetPoint(distance);
+            }
+
+            return middleofScreen;
         }
 
         private bool CanBePlaced(PlaceableObject objectToPlace)
@@ -143,10 +156,10 @@ namespace BuildingSystem
             BoundsInt area = new BoundsInt();
             area.position = GridLayout.WorldToCell(objectToPlace.GetStartPosition());
 
-            area.size = objectToPlace.Size;
+            area.size = new Vector3Int(objectToPlace.Size.x + 1, objectToPlace.Size.y + 1, 1);
 
             TileBase[] baseArray = GetTilesBlock(area, PlacingTilemap);
-
+            
             foreach (var tileBase in baseArray)
             {
                 if (tileBase == TileBase)
@@ -154,12 +167,12 @@ namespace BuildingSystem
                     return false;
                 }
             }
-        
-            baseArray = GetTilesBlock(area, VisibleTilemap);
+            
+            baseArray = GetTilesBlock(area, ValidPlacingTilemap);
 
             foreach (var tileBase in baseArray)
             {
-                if (tileBase != VisibleTileBase)
+                if (tileBase != TileBase)
                 {
                     return false;
                 }
@@ -168,19 +181,21 @@ namespace BuildingSystem
             return true;
         }
 
-        public void RemoveArea(Vector3Int start, Vector3Int size)
+        private void RemoveArea(Vector3Int start, Vector3Int size)
         {
             PlacingTilemap.BoxFill(start, null, start.x, start.y, start.x + size.x, start.y + size.y);
         }
 
-        public void TakeArea(Vector3Int start, Vector3Int size, TileBase tileBase)
+        private void TakeArea(Vector3Int start, Vector3Int size, TileBase tileBase)
         {
             PlacingTilemap.BoxFill(start, tileBase, start.x, start.y, start.x + size.x, start.y + size.y);
         }
-    
-        public void TakeArea(Tilemap tilemap, Vector3Int start, Vector3Int size, TileBase tileBase)
+
+        private void TakeArea(Tilemap tilemap, Vector3Int start, Vector3Int size, TileBase tileBase)
         {
             tilemap.BoxFill(start, tileBase, start.x, start.y, start.x + size.x, start.y + size.y);
         }
+
+        #endregion
     }
 }

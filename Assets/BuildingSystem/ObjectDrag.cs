@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class ObjectDrag : MonoBehaviour
+namespace BuildingSystem
 {
-    private Vector3 offset;
-
-    private void Awake()
+    public class ObjectDrag : MonoBehaviour
     {
-        Input.simulateMouseWithTouches = true;
-    }
+        private Vector3 offset;
 
-    private void OnMouseDown()
-    {
-        offset = transform.position - BuildingSystem.BuildingSystem.GetMousePositionWorld();
-    }
+        private void Awake()
+        {
+            Input.simulateMouseWithTouches = true;
+        }
 
-    private void OnMouseDrag()
-    {
-        Vector3 pos = BuildingSystem.BuildingSystem.GetMousePositionWorld() + offset;
-        transform.position = BuildingSystem.BuildingSystem.Current.SnapCoordinateToGrid(pos);
+        private void OnMouseDown()
+        {
+            offset = transform.position - BuildingSystem.GetMousePositionWorld();
+        }
+
+        private void OnMouseDrag()
+        {
+            Vector3 pos = BuildingSystem.GetMousePositionWorld() + offset;
+            transform.position = BuildingSystem.Current.SnapCoordinateToGrid(pos);
+        }
     }
 }
