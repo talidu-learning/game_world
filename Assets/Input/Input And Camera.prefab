@@ -29,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253050532}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.2279453, y: -4.172082, z: 2.2322433}
-  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_LocalPosition: {x: -1.9389, y: -4.1721, z: 15.9714}
+  m_LocalScale: {x: 13.2411, y: 1.849014, z: 9.141197}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5160054078279577941}
@@ -291,13 +291,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Main Camera
-  basicEditor: 1
+  basicEditor: 0
   advancedProps: 0
   hitProps: 0
   hit3DObjects: 1
   hit2DObjects: 1
-  hitWorldSpaceUI: 1
-  hitScreenSpaceUI: 1
+  hitWorldSpaceUI: 0
+  hitScreenSpaceUI: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 72
@@ -380,6 +380,7 @@ MonoBehaviour:
   sendMessageTarget: {fileID: 0}
   useUnityEvents: 0
   layers:
+  - {fileID: 50855102}
   - {fileID: 5160054077133451524}
   - {fileID: 5160054078421374694}
 --- !u!114 &5160054077438873693
@@ -597,6 +598,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5160054078741841718}
+  - component: {fileID: 50855102}
   m_Layer: 0
   m_Name: Pivot
   m_TagString: Untagged
@@ -620,3 +622,27 @@ Transform:
   m_Father: {fileID: 5160054078279577941}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &50855102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160054078741841719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e5768c36d1bb4acea50bd233372843a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Layer
+  basicEditor: 1
+  advancedProps: 0
+  hitProps: 0
+  hit3DObjects: 0
+  hit2DObjects: 0
+  hitWorldSpaceUI: 1
+  hitScreenSpaceUI: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 32
+  useHitFilters: 0

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using BuildingSystem;
+﻿using BuildingSystem;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,8 +13,6 @@ namespace Interactables
         public static readonly UnityEvent WITHDRAW_OBJECT_EVENT = new UnityEvent();
 
         private Interactable selectedObject;
-
-        private bool preventNewObjectFromSpawning = false;
 
         private void Awake()
         {
@@ -41,8 +38,6 @@ namespace Interactables
 
         private void SelectObject(Interactable interactable)
         {
-            Debug.Log(preventNewObjectFromSpawning);
-            if(preventNewObjectFromSpawning) return;
 
             if (AnotherObjectIsSelected(interactable))
             {
@@ -60,18 +55,11 @@ namespace Interactables
             else
             {
                 Debug.Log("New Object");
-                preventNewObjectFromSpawning = true;
-                StartCoroutine(Wait());
                 var go = BuildingSystem.BuildingSystem.Current.StartPlacingObjectOnGrid(interactable.gameObject);
                 selectedObject = go.GetComponent<Interactable>();
             }
         }
 
-        private IEnumerator Wait()
-        {
-            yield return new WaitForSeconds(0.5f);
-            preventNewObjectFromSpawning = false;
-        }
 
         private static bool ObjectWasPlacedBefore(Interactable interactable)
         {

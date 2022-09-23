@@ -55,7 +55,7 @@ public class Interactable : MonoBehaviour
         LongPressGesture.enabled = false;
         PressGesture.enabled = false;
         objectDrag = gameObject.AddComponent<ObjectDrag>();
-        //TransformGesture.enabled = true;
+        TransformGesture.enabled = true;
     }
 
     private void OnTap()
@@ -64,7 +64,9 @@ public class Interactable : MonoBehaviour
         SelectionManager.DESELECT_OBJECT_EVENT.Invoke();
         DisableDragging();
     }
-    
+
+
+
     public void DisableDragging()
     {
         if (!isSelected) return;
@@ -73,7 +75,7 @@ public class Interactable : MonoBehaviour
         LongPressGesture.enabled = true;
         PressGesture.enabled = true;
         Destroy(objectDrag);
-        //TransformGesture.enabled = false;
+        TransformGesture.enabled = false;
     }
     
 }

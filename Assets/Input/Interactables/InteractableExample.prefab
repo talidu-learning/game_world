@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4883471184429529533}
   - component: {fileID: 4883471184429529532}
   - component: {fileID: 4883471184429529534}
-  - component: {fileID: 4883471184429529535}
+  - component: {fileID: 3985199299028485562}
   m_Layer: 3
   m_Name: InteractableExample
   m_TagString: Untagged
@@ -224,7 +224,7 @@ MonoBehaviour:
   projectionProps: 0
   projection: 2
   projectionPlaneNormal: {x: 0, y: 1, z: 0}
---- !u!114 &4883471184429529535
+--- !u!114 &3985199299028485562
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,12 +233,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4883471184429529526}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 978a486d8ecf8437cbb87e8534908895, type: 3}
+  m_Script: {fileID: 11500000, guid: 2940843babae437eb71b03a74c48c362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enableSmoothing: 0
   smoothingFactor: 0.00001
   positionThreshold: 0.01
-  rotationThreshold: 0.1
-  scaleThreshold: 0.01
-  allowChangingFromOutside: 0
