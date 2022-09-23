@@ -58,24 +58,17 @@ namespace BuildingSystem
         private TransformerState state;
 
         private TransformGestureBase gesture;
-        private Transform cachedTransform;
 
         private TransformGesture.TransformType transformMask;
         private Vector3 targetPosition, targetScale;
         private Quaternion targetRotation;
 
         // last* variables are needed to detect when Transform's properties were changed outside of this script
-        private Vector3 lastPosition, lastScale;
-        private Quaternion lastRotation;
+        private Vector3 lastPosition;
 
         #endregion
 
         #region Unity methods
-
-        private void Awake()
-        {
-            cachedTransform = transform;
-        }
 
         private void OnEnable()
         {
@@ -107,30 +100,13 @@ namespace BuildingSystem
             if (enableSmoothing && prevState == TransformerState.Automatic)
             {
                 transform.position = lastPosition = targetPosition;
-                var newLocalScale = lastScale = targetScale;
+                var newLocalScale = targetScale;
                 // prevent recalculating colliders when no scale occurs
                 if (newLocalScale != transform.localScale) transform.localScale = newLocalScale;
-                transform.rotation = lastRotation = targetRotation;
+                transform.rotation = targetRotation;
             }
 
             transformMask = TransformGesture.TransformType.None;
-        }
-
-        private void stateManual()
-        {
-            setState(TransformerState.Manual);
-
-            targetPosition = lastPosition = cachedTransform.position;
-            targetRotation = lastRotation = cachedTransform.rotation;
-            targetScale = lastScale = cachedTransform.localScale;
-            transformMask = TransformGesture.TransformType.None;
-        }
-
-        private void stateAutomatic()
-        {
-            setState(TransformerState.Automatic);
-
-            if (!enableSmoothing || transformMask == TransformGesture.TransformType.None) stateIdle();
         }
 
         private void setState(TransformerState newState)
@@ -139,8 +115,6 @@ namespace BuildingSystem
         }
 
         #endregion
-
-        #region Private functions
 
         private void update()
         {
@@ -161,28 +135,7 @@ namespace BuildingSystem
             if (state == TransformerState.Automatic && !changed) stateIdle();
         }
 
-        private void manualUpdate()
-        {
-            if (state != TransformerState.Manual) stateManual();
-
-            var mask = gesture.TransformMask;
-            
-            targetPosition += gesture.DeltaPosition;
-            transformMask |= mask;
-
-            gesture.OverrideTargetPosition(targetPosition);
-
-            if (!enableSmoothing) applyValues();
-        }
-
         private Vector3 offset;
-        
-        private void applyValues()
-        {
-
-        }
-
-        #endregion
 
         #region Event handlers
         
