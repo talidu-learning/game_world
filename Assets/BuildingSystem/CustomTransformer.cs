@@ -59,7 +59,6 @@ namespace BuildingSystem
 
         private TransformGestureBase gesture;
 
-        private TransformGesture.TransformType transformMask;
         private Vector3 targetPosition, targetScale;
         private Quaternion targetRotation;
 
@@ -106,7 +105,6 @@ namespace BuildingSystem
                 transform.rotation = targetRotation;
             }
 
-            transformMask = TransformGesture.TransformType.None;
         }
 
         private void setState(TransformerState newState)

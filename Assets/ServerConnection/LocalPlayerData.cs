@@ -1,3 +1,4 @@
+using System.Linq;
 using Shop;
 using UnityEngine;
 
@@ -35,16 +36,17 @@ namespace ServerConnection
         public void Initilize(PlayerDataContainer playerDataContainer)
         {
             _playerDataConatiner = playerDataContainer;
+            StarCountUI.UpdateStarCount.Invoke(_playerDataConatiner.Stars.ToString());
         }
 
-        public string[] GetOwnedItems()
+        public ItemData[] GetOwnedItems()
         {
-            return _playerDataConatiner._ownedItems.Split(",");
+            return _playerDataConatiner._ownedItems.ToArray();
         }
         
-        public string[] GetPlacedItems()
+        public ItemData[] GetPlacedItems()
         {
-            return _playerDataConatiner._placedItems.ToArray();
+            return _playerDataConatiner._ownedItems.Where(o=> o.x != 0 && o.z != 0).ToArray();
         }
 
         public int GetStarCount()
@@ -52,16 +54,37 @@ namespace ServerConnection
             return _playerDataConatiner.Stars;
         }
 
-        public bool TryBuyItem(int itemValue)
+        public bool TryBuyItem(string id, int itemValue)
         {
             if (_playerDataConatiner.Stars - itemValue >= 0)
             {
                 _playerDataConatiner.Stars -= itemValue;
                 StarCountUI.UpdateStarCount.Invoke(_playerDataConatiner.Stars.ToString());
+                _playerDataConatiner._ownedItems.Add(new ItemData
+                {
+                    id = id
+                });
                 return true;
             }
 
             return false;
+        }
+
+        public void OnPlacedItem(string id, float x, float z)
+        {
+            _playerDataConatiner._ownedItems.Add(new ItemData
+            {
+                id = id,
+                x = x,
+                z = z
+            });
+        }
+
+        public void OnWithdrewItem(string id)
+        {
+            var item = _playerDataConatiner._ownedItems.First(o => o.id == id);
+            item.x = 0;
+            item.z = 0;
         }
     }
 }

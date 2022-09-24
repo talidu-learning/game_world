@@ -9,8 +9,9 @@ namespace Shop
         public GameObject CreateItem(string id)
         {
             // TODO Find Object in database and customize prefab
-            
-            return GameObject.Instantiate(InteractablePrefab);
+            var go = GameObject.Instantiate(InteractablePrefab);
+            go.AddComponent<ItemID>().id = id;
+            return go;
         }
     }
 }

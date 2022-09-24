@@ -1,5 +1,4 @@
-﻿using Interactables;
-using ServerConnection;
+﻿using ServerConnection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +30,7 @@ namespace Shop
                     BuyItem();
                     break;
                 case ShopItemButtonState.Bought:
-                    ShopManager.PlaceObjectEvent.Invoke(itemID);
+                    ShopManager.InitilizePlaceObjectEvent.Invoke(itemID);
                     itemButton.ChangeState(ShopItemButtonState.Placed);
                     _currentState = ShopItemButtonState.Placed;
                     break;
@@ -54,7 +53,7 @@ namespace Shop
 
         public void BuyItem()
         {
-            if (LocalPlayerData.Instance.TryBuyItem(itemValue))
+            if (LocalPlayerData.Instance.TryBuyItem(itemID, itemValue))
             {
                 itemButton.ChangeState(ShopItemButtonState.Bought);
                 _currentState = ShopItemButtonState.Bought;

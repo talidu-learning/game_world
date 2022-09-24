@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ServerConnection
 {
@@ -6,8 +7,15 @@ namespace ServerConnection
     {
         public string _playerName = "Test";
         public string _credential = "0000";
-        public string _ownedItems = "Box,Placed";
         public int Stars = 10;
-        public List<string> _placedItems = new List<string>{"Placed"};
+        public List<ItemData> _ownedItems = new List<ItemData>();
+    }
+
+    [Serializable]
+    public class ItemData
+    {
+        public string id;
+        public float x;
+        public float z;
     }
 }

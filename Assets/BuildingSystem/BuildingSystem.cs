@@ -1,3 +1,7 @@
+using System;
+using System.Collections;
+using ServerConnection;
+using Shop;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -30,6 +34,26 @@ namespace BuildingSystem
             visibleMapRenderer.enabled = false;
         }
 
+        public void OnLoadedGame(GameObject[] placedObjects)
+        {
+            StartCoroutine(LoadItems(placedObjects));
+        }
+
+        private IEnumerator LoadItems(GameObject[] placedObjects)
+        {
+            foreach (var go in placedObjects)
+            {
+                go.AddComponent<PlaceableObject>();
+            }
+
+            yield return null;
+            
+            foreach (var go in placedObjects)
+            {
+                PlacePlaceable(go.GetComponent<PlaceableObject>());
+            }
+        }
+
         public void WithdrawSelectedObject()
         {
             if (!placeableObject) return;
@@ -37,7 +61,7 @@ namespace BuildingSystem
             {
                 RemoveArea(placeableObject.placedPosition, placeableObject.Size);
             }
-            Destroy(placeableObject.gameObject);
+            ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
             placeableObject = null;
             visibleMapRenderer.enabled = false;
         }
@@ -46,9 +70,8 @@ namespace BuildingSystem
         {
             if (CanBePlaced(placeableObject))
             {
-                Vector3Int start = GridLayout.WorldToCell(placeableObject.GetStartPosition());
-                placeableObject.Place(start);
-                TakeArea(start, placeableObject.Size, TileBase);
+                PlacePlaceable(placeableObject);
+                ShopManager.OnTriedPlacingGameObjectEvent.Invoke(true, placeableObject.gameObject);
             }
             else
             {
@@ -59,12 +82,20 @@ namespace BuildingSystem
                     TakeArea(placeableObject.placedPosition, placeableObject.Size, TileBase);
                     return;
                 }
-                Destroy(placeableObject.gameObject);
+                
+                ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
             }
 
             visibleMapRenderer.enabled = false;
 
             placeableObject = null;
+        }
+
+        private void PlacePlaceable(PlaceableObject objectToPlace)
+        {
+            Vector3Int start = GridLayout.WorldToCell(objectToPlace.GetStartPosition());
+            objectToPlace.Place(start);
+            TakeArea(start, objectToPlace.Size, TileBase);
         }
 
         public GameObject StartPlacingObjectOnGrid(GameObject objectToPlace)

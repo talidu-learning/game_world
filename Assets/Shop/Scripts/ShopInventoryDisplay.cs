@@ -11,23 +11,37 @@ namespace Shop
         [SerializeField] private GameObject ContentViewport;
         [SerializeField] private GameObject ItemPrefab;
 
-        private Dictionary<string, ShopItem> _shopItems = new Dictionary<string, ShopItem>(); 
+        private Dictionary<string, ShopItem> _shopItems = new Dictionary<string, ShopItem>();
+
+        public void OnPlacedItem(string id, bool wasValidPlacement)
+        {
+            if (_shopItems.TryGetValue(id, out ShopItem item))
+            {
+                if(wasValidPlacement) item.PlaceItem();
+                else item.MarkItemAsBought();
+            }
+        }
+
+        private void Awake()
+        {
+            BuildShopInventory();
+        }
 
         private void Start()
         {
-            BuildShopInventory();
-            UpdateItemStates();
+            SaveGame.LoadedPlayerData.AddListener(UpdateItemStates);
         }
 
         private void UpdateItemStates()
         {
             var ownedItems = LocalPlayerData.Instance.GetOwnedItems();
             var placedItems = LocalPlayerData.Instance.GetPlacedItems();
-            Debug.Log(ownedItems.Length);
+            
+            Debug.Log(placedItems.Length);
+            
             foreach (var item in ownedItems)
             {
-                Debug.Log(item);
-                if (_shopItems.TryGetValue(item, out ShopItem shopItem))
+                if (_shopItems.TryGetValue(item.id, out ShopItem shopItem))
                 {
                     if (Array.IndexOf(placedItems, item) > -1)
                     {

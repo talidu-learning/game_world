@@ -1,3 +1,4 @@
+using Shop;
 using UnityEngine;
 
 namespace BuildingSystem
@@ -57,7 +58,7 @@ namespace BuildingSystem
         
             placedPosition = position;
             WasPlacedBefore = true;
-        
+
             // invoke events of placement
         }
     }

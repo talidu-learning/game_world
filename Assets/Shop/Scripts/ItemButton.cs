@@ -14,6 +14,8 @@ namespace Shop
 
         public void ChangeState(ShopItemButtonState state)
         {
+            image = GetComponent<Image>();
+            
             switch (state)
             {
                 case ShopItemButtonState.Bought:
