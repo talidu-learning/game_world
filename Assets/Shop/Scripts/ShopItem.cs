@@ -1,4 +1,5 @@
-﻿using ServerConnection;
+﻿using Interactables;
+using ServerConnection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,7 +31,7 @@ namespace Shop
                     BuyItem();
                     break;
                 case ShopItemButtonState.Bought:
-                    // TODO Place Item
+                    ShopManager.PlaceObjectEvent.Invoke(itemID);
                     itemButton.ChangeState(ShopItemButtonState.Placed);
                     _currentState = ShopItemButtonState.Placed;
                     break;
@@ -48,6 +49,7 @@ namespace Shop
         public void MarkItemAsBought()
         {
             itemButton.ChangeState(ShopItemButtonState.Bought);
+            _currentState = ShopItemButtonState.Bought;
         }
 
         public void BuyItem()
@@ -62,6 +64,7 @@ namespace Shop
         public void PlaceItem()
         {
             itemButton.ChangeState(ShopItemButtonState.Placed);
+            _currentState = ShopItemButtonState.Placed;
         }
     }
 }
