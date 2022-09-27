@@ -20,7 +20,6 @@ namespace ServerConnection
         {
             // TODO Load Data from Server
             _localPlayerData = gameObject.AddComponent<LocalPlayerData>();
-            Debug.Log(_localPlayerData.GetJSONData());
         }
 
         private void Start()
@@ -60,7 +59,6 @@ namespace ServerConnection
 
         private void OnApplicationQuit()
         {
-            Debug.Log("Save");
             SaveGameData();
         }
     }

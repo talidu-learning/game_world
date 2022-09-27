@@ -72,12 +72,9 @@ namespace ServerConnection
 
         public void OnPlacedItem(string id, float x, float z)
         {
-            _playerDataConatiner._ownedItems.Add(new ItemData
-            {
-                id = id,
-                x = x,
-                z = z
-            });
+            var item = _playerDataConatiner._ownedItems.First(i => i.id == id);
+            item.x = x;
+            item.z = z;
         }
 
         public void OnWithdrewItem(string id)

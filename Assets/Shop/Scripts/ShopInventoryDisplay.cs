@@ -37,7 +37,6 @@ namespace Shop
             var ownedItems = LocalPlayerData.Instance.GetOwnedItems();
             var placedItems = LocalPlayerData.Instance.GetPlacedItems();
             
-            Debug.Log(placedItems.Length);
             
             foreach (var item in ownedItems)
             {
