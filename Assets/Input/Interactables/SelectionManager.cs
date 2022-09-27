@@ -1,34 +1,75 @@
-﻿using UnityEngine;
+﻿using BuildingSystem;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace Interactables
 {
+    public class BoolInteractableUnityEvent : UnityEvent<Interactable> { }
+
     public class SelectionManager : MonoBehaviour
     {
-        public static BoolUnityEvent IsObjectSelectedEvent = new BoolUnityEvent();
-    
-        private bool isObjectSelected = false;
+        public static readonly BoolInteractableUnityEvent SELECT_OBJECT_EVENT = new BoolInteractableUnityEvent();
+        public static readonly UnityEvent DESELECT_OBJECT_EVENT = new UnityEvent();
+        public static readonly UnityEvent WITHDRAW_OBJECT_EVENT = new UnityEvent();
 
         private Interactable selectedObject;
 
         private void Awake()
         {
-            IsObjectSelectedEvent.AddListener(IsObjectSelected);
+            SELECT_OBJECT_EVENT.AddListener(SelectObject);
+            DESELECT_OBJECT_EVENT.AddListener(DeselectObject);
+            WITHDRAW_OBJECT_EVENT.AddListener(WithdrawObject);
         }
 
-        public void IsObjectSelected(bool isSelected, Interactable gameObject)
+        private void WithdrawObject()
         {
-            if (isSelected)
+            selectedObject = null;
+            BuildingSystem.BuildingSystem.Current.WithdrawSelectedObject();
+        }
+
+        private void DeselectObject()
+        {
+            // can happen when withdraw button is pressed. Interference with OnTap from Interactable?
+            if (!selectedObject) return;
+            selectedObject.DisableDragging();
+            selectedObject = null;
+            BuildingSystem.BuildingSystem.Current.PlaceLastObjectOnGrid();
+        }
+
+        private void SelectObject(Interactable interactable)
+        {
+
+            if (AnotherObjectIsSelected(interactable))
             {
-                isObjectSelected = isSelected;
-                if(selectedObject != null && selectedObject !=gameObject)
-                    selectedObject.DisableDragging();
-                selectedObject = gameObject;
+                Debug.Log("SelectAnotherObject");
+                DeselectObject();
+            }
+
+
+            if (ObjectWasPlacedBefore(interactable))
+            {
+                Debug.Log("Replace");
+                BuildingSystem.BuildingSystem.Current.ReplaceObjectOnGrid(interactable.gameObject);
+                selectedObject = interactable;
             }
             else
             {
-                isObjectSelected = isSelected;
-                selectedObject.DisableDragging();
+                Debug.Log("New Object");
+                var go = BuildingSystem.BuildingSystem.Current.StartPlacingObjectOnGrid(interactable.gameObject);
+                selectedObject = go.GetComponent<Interactable>();
             }
+        }
+
+
+        private static bool ObjectWasPlacedBefore(Interactable interactable)
+        {
+            return interactable.gameObject.GetComponent<PlaceableObject>() &&
+                   interactable.gameObject.GetComponent<PlaceableObject>().WasPlacedBefore;
+        }
+
+        private bool AnotherObjectIsSelected(Interactable interactable)
+        {
+            return selectedObject != null && selectedObject != interactable;
         }
     }
 }
