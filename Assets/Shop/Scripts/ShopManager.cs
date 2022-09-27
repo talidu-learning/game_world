@@ -8,8 +8,8 @@ namespace Shop
     public class BoolGameObjectUnityEvent : UnityEvent<bool, GameObject>{}
     public class ShopManager : MonoBehaviour
     {
-        [SerializeField] private ItemCreator itemCreator;
-        [SerializeField] private ShopInventoryDisplay shopInventoryDisplay;
+        [SerializeField] private ItemCreator ItemCreator;
+        [SerializeField] private ShopInventoryDisplay ShopInventoryDisplay;
 
         public static StringUnityEvent InitilizePlaceObjectEvent = new StringUnityEvent();
 
@@ -24,7 +24,7 @@ namespace Shop
         private void OnTriedPlacingGameObject(bool wasPlacedSuccessfully, GameObject placedObject)
         {
             var id = placedObject.GetComponent<ItemID>().id;
-            shopInventoryDisplay.OnPlacedItem(id, wasPlacedSuccessfully);
+            ShopInventoryDisplay.OnPlacedItem(id, wasPlacedSuccessfully);
             
             if(wasPlacedSuccessfully)LocalPlayerData.Instance.OnPlacedItem(id, placedObject.transform.position.x, placedObject.transform.position.z);
             else
@@ -36,7 +36,7 @@ namespace Shop
 
         private void OnPlaceObject(string itemId)
         {
-            var go = itemCreator.CreateItem(itemId);
+            var go = ItemCreator.CreateItem(itemId);
             SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
         }
     }

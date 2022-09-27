@@ -1,4 +1,3 @@
-using Shop;
 using UnityEngine;
 
 namespace BuildingSystem
@@ -8,9 +7,9 @@ namespace BuildingSystem
         public bool WasPlacedBefore { get; private set; }
         public Vector3Int Size { get; private set; }
         private Vector3[] vertices;
-        public Vector3Int placedPosition{ get; private set; }
+        public Vector3Int PlacedPosition{ get; private set; }
 
-        public Vector3 placePosition{ get; private set; }
+        public Vector3 PlacePosition{ get; private set; }
 
         private void Awake()
         {
@@ -51,12 +50,12 @@ namespace BuildingSystem
             CalculateSizeInCells();
         }
 
-        public virtual void Place(Vector3Int position)
+        public void Place(Vector3Int position)
         {
 
-            placePosition = transform.position;
+            PlacePosition = transform.position;
         
-            placedPosition = position;
+            PlacedPosition = position;
             WasPlacedBefore = true;
 
             // invoke events of placement

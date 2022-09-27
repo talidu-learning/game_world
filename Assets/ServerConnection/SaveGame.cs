@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Shop;
@@ -29,7 +28,7 @@ namespace ServerConnection
 
         private void SaveGameData()
         {
-            string json = _localPlayerData.GetJSONData();
+            string json = _localPlayerData.GetJsonData();
             
             File.WriteAllText(Application.persistentDataPath + "/gamedata.json", json);
         }

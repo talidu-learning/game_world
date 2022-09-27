@@ -56,6 +56,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5557176907917157822}
+  - component: {fileID: 599489674}
+  - component: {fileID: 599489675}
   m_Layer: 0
   m_Name: Logic
   m_TagString: Untagged
@@ -80,6 +82,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &599489674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557176907917157821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ef35a40f764d32b168fb007bc9dd28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractablePrefab: {fileID: 4883471184429529526, guid: 5be658ec8f2e2ab4fa9277a91b155d41, type: 3}
+--- !u!114 &599489675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557176907917157821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 872f3c74a756452bad9f3e8e5ecc11e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemCreator: {fileID: 599489674}
+  shopInventoryDisplay: {fileID: 5557176907690520787}
 --- !u!1 &5557176908100838816
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,3 +153,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82bba419c45045cdbccccd53eaeec223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemCreator: {fileID: 599489674}

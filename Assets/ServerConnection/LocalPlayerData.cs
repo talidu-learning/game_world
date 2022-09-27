@@ -28,7 +28,7 @@ namespace ServerConnection
             }
         }
 
-        public string GetJSONData()
+        public string GetJsonData()
         {
             return JsonUtility.ToJson(_playerDataConatiner);
         }

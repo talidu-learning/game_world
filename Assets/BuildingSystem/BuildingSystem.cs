@@ -1,6 +1,5 @@
-using System;
 using System.Collections;
-using ServerConnection;
+using System.Linq;
 using Shop;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -39,27 +38,12 @@ namespace BuildingSystem
             StartCoroutine(LoadItems(placedObjects));
         }
 
-        private IEnumerator LoadItems(GameObject[] placedObjects)
-        {
-            foreach (var go in placedObjects)
-            {
-                go.AddComponent<PlaceableObject>();
-            }
-
-            yield return null;
-            
-            foreach (var go in placedObjects)
-            {
-                PlacePlaceable(go.GetComponent<PlaceableObject>());
-            }
-        }
-
         public void WithdrawSelectedObject()
         {
             if (!placeableObject) return;
             if (placeableObject.WasPlacedBefore)
             {
-                RemoveArea(placeableObject.placedPosition, placeableObject.Size);
+                RemoveArea(placeableObject.PlacedPosition, placeableObject.Size);
             }
             ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
             placeableObject = null;
@@ -77,9 +61,9 @@ namespace BuildingSystem
             {
                 if (placeableObject.WasPlacedBefore)
                 {
-                    placeableObject.transform.position = placeableObject.placePosition;
-                    placeableObject.Place(placeableObject.placedPosition);
-                    TakeArea(placeableObject.placedPosition, placeableObject.Size, TileBase);
+                    placeableObject.transform.position = placeableObject.PlacePosition;
+                    placeableObject.Place(placeableObject.PlacedPosition);
+                    TakeArea(placeableObject.PlacedPosition, placeableObject.Size, TileBase);
                     return;
                 }
                 
@@ -109,20 +93,9 @@ namespace BuildingSystem
         public void ReplaceObjectOnGrid(GameObject objectToReplace)
         {
             var placeable = objectToReplace.GetComponent<PlaceableObject>();
-            RemoveArea(placeable.placedPosition, placeable.Size);
+            RemoveArea(placeable.PlacedPosition, placeable.Size);
             InitializePlacing(objectToReplace);
             visibleMapRenderer.enabled = true;
-        }
-
-        public static Vector3 GetMousePositionWorld()
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit raycastHit))
-            {
-                return raycastHit.point;
-            }
-
-            return Vector3.zero;
         }
 
         public Vector3 SnapCoordinateToGrid(Vector3 position)
@@ -134,6 +107,21 @@ namespace BuildingSystem
 
         #region private
 
+        private IEnumerator LoadItems(GameObject[] placedObjects)
+        {
+            foreach (var go in placedObjects)
+            {
+                go.AddComponent<PlaceableObject>();
+            }
+
+            yield return null;
+            
+            foreach (var go in placedObjects)
+            {
+                PlacePlaceable(go.GetComponent<PlaceableObject>());
+            }
+        }
+        
         private static TileBase[] GetTilesBlock(BoundsInt area, Tilemap tilemap)
         {
             TileBase[] array = new TileBase[area.size.x * area.size.y * area.size.z];
@@ -174,13 +162,13 @@ namespace BuildingSystem
 
             Plane plane = new Plane(Vector3.up, Vector3.zero);
             
-            Vector3 middleofScreen = Vector3.zero;
+            Vector3 middleOfScreen = Vector3.zero;
             if (plane.Raycast(ray, out float distance))
             {
-                middleofScreen = ray.GetPoint(distance);
+                middleOfScreen = ray.GetPoint(distance);
             }
 
-            return middleofScreen;
+            return middleOfScreen;
         }
 
         private bool CanBePlaced(PlaceableObject objectToPlace)
@@ -192,25 +180,14 @@ namespace BuildingSystem
 
             TileBase[] baseArray = GetTilesBlock(area, PlacingTilemap);
             
-            foreach (var tileBase in baseArray)
+            if (baseArray.Any(tileBase => tileBase == TileBase))
             {
-                if (tileBase == TileBase)
-                {
-                    return false;
-                }
+                return false;
             }
             
             baseArray = GetTilesBlock(area, ValidPlacingTilemap);
 
-            foreach (var tileBase in baseArray)
-            {
-                if (tileBase != TileBase)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return baseArray.All(tileBase => tileBase == TileBase);
         }
 
         private void RemoveArea(Vector3Int start, Vector3Int size)
@@ -221,11 +198,6 @@ namespace BuildingSystem
         private void TakeArea(Vector3Int start, Vector3Int size, TileBase tileBase)
         {
             PlacingTilemap.BoxFill(start, tileBase, start.x, start.y, start.x + size.x, start.y + size.y);
-        }
-
-        private void TakeArea(Tilemap tilemap, Vector3Int start, Vector3Int size, TileBase tileBase)
-        {
-            tilemap.BoxFill(start, tileBase, start.x, start.y, start.x + size.x, start.y + size.y);
         }
 
         #endregion

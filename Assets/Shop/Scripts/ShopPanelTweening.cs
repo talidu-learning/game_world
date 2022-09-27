@@ -5,13 +5,13 @@ namespace Shop
     public class ShopPanelTweening : MonoBehaviour
     {
         private bool isOpen = false;
-        
-        public void Open()
+
+        private void Open()
         {
             LeanTween.moveX(gameObject, 0, 0.8f).setEase(LeanTweenType.easeOutElastic);
         }
 
-        public void Close()
+        private void Close()
         {
             LeanTween.moveX(gameObject, -700.0f, 0.8f).setEase(LeanTweenType.easeOutElastic);
         }
