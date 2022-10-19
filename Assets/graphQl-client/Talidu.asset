@@ -1,0 +1,432 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ccf793b7ca1cc645b9cd36d753b8e3c, type: 3}
+  m_Name: Talidu
+  m_EditorClassIdentifier: 
+  url: https://graphql.talidu.net/graphql
+  queries:
+  - name: UserId
+    type: 0
+    query: "query UserId{\n    query{\n        currentUserId\n    }\n}"
+    queryString: query
+    returnType: Query
+    queryOptions:
+    - query
+    - nodeId
+    - node
+    - allAustWords
+    - allClasses
+    - allFeedbacks
+    - allInputSessions
+    - allSchools
+    - allStudents
+    - allTeachers
+    - allUpdateProbs
+    - allWords
+    - allWordsOlds
+    - austWordByWord
+    - classById
+    - feedbackByRegel
+    - inputSessionById
+    - schoolById
+    - studentById
+    - teacherByEmail
+    - teacherById
+    - updateProbByErrorName
+    - wordByWord
+    - wordsOldByWord
+    - currentUserId
+    - pseudoEncrypt
+    - stringifyBigint
+    - austWord
+    - class
+    - feedback
+    - inputSession
+    - school
+    - student
+    - teacher
+    - updateProb
+    - word
+    - wordsOld
+    fields:
+    - index: 24
+      name: currentUserId
+      type: UUID
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: query
+        type: Query
+      - name: nodeId
+        type: ID
+      - name: node
+        type: Node
+      - name: allAustWords
+        type: AustWordsConnection
+      - name: allClasses
+        type: ClassesConnection
+      - name: allFeedbacks
+        type: FeedbacksConnection
+      - name: allInputSessions
+        type: InputSessionsConnection
+      - name: allSchools
+        type: SchoolsConnection
+      - name: allStudents
+        type: StudentsConnection
+      - name: allTeachers
+        type: TeachersConnection
+      - name: allUpdateProbs
+        type: UpdateProbsConnection
+      - name: allWords
+        type: WordsConnection
+      - name: allWordsOlds
+        type: WordsOldsConnection
+      - name: austWordByWord
+        type: AustWord
+      - name: classById
+        type: Class
+      - name: feedbackByRegel
+        type: Feedback
+      - name: inputSessionById
+        type: InputSession
+      - name: schoolById
+        type: School
+      - name: studentById
+        type: Student
+      - name: teacherByEmail
+        type: Teacher
+      - name: teacherById
+        type: Teacher
+      - name: updateProbByErrorName
+        type: UpdateProb
+      - name: wordByWord
+        type: Word
+      - name: wordsOldByWord
+        type: WordsOld
+      - name: currentUserId
+        type: UUID
+      - name: pseudoEncrypt
+        type: Int
+      - name: stringifyBigint
+        type: String
+      - name: austWord
+        type: AustWord
+      - name: class
+        type: Class
+      - name: feedback
+        type: Feedback
+      - name: inputSession
+        type: InputSession
+      - name: school
+        type: School
+      - name: student
+        type: Student
+      - name: teacher
+        type: Teacher
+      - name: updateProb
+        type: UpdateProb
+      - name: word
+        type: Word
+      - name: wordsOld
+        type: WordsOld
+      hasChanged: 0
+    isComplete: 1
+  - name: Student
+    type: 0
+    query: "query Student{\n    studentById(  id :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\"
+      ){\n        proficiency\n        age\n        name\n        gender\n    }\n}"
+    queryString: studentById
+    returnType: Student
+    queryOptions:
+    - query
+    - nodeId
+    - node
+    - allAustWords
+    - allClasses
+    - allFeedbacks
+    - allInputSessions
+    - allSchools
+    - allStudents
+    - allTeachers
+    - allUpdateProbs
+    - allWords
+    - allWordsOlds
+    - austWordByWord
+    - classById
+    - feedbackByRegel
+    - inputSessionById
+    - schoolById
+    - studentById
+    - teacherByEmail
+    - teacherById
+    - updateProbByErrorName
+    - wordByWord
+    - wordsOldByWord
+    - currentUserId
+    - pseudoEncrypt
+    - stringifyBigint
+    - austWord
+    - class
+    - feedback
+    - inputSession
+    - school
+    - student
+    - teacher
+    - updateProb
+    - word
+    - wordsOld
+    fields:
+    - index: 9
+      name: proficiency
+      type: Int
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: id
+        type: UUID
+      - name: login
+        type: String
+      - name: age
+        type: Int
+      - name: class
+        type: UUID
+      - name: mistakePrognosis
+        type: JSON
+      - name: name
+        type: String
+      - name: gender
+        type: String
+      - name: alias
+        type: String
+      - name: proficiency
+        type: Int
+      - name: beginnerLevel
+        type: Int
+      - name: trainedOnKeyboard
+        type: Boolean
+      - name: stars
+        type: Int
+      - name: month
+        type: String
+      - name: estimatedSkill
+        type: String
+      - name: classByClass
+        type: Class
+      - name: inputSessionsByStudent
+        type: InputSessionsConnection
+      hasChanged: 0
+    - index: 3
+      name: age
+      type: Int
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: id
+        type: UUID
+      - name: login
+        type: String
+      - name: age
+        type: Int
+      - name: class
+        type: UUID
+      - name: mistakePrognosis
+        type: JSON
+      - name: name
+        type: String
+      - name: gender
+        type: String
+      - name: alias
+        type: String
+      - name: proficiency
+        type: Int
+      - name: beginnerLevel
+        type: Int
+      - name: trainedOnKeyboard
+        type: Boolean
+      - name: stars
+        type: Int
+      - name: month
+        type: String
+      - name: estimatedSkill
+        type: String
+      - name: classByClass
+        type: Class
+      - name: inputSessionsByStudent
+        type: InputSessionsConnection
+      hasChanged: 0
+    - index: 6
+      name: name
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: id
+        type: UUID
+      - name: login
+        type: String
+      - name: age
+        type: Int
+      - name: class
+        type: UUID
+      - name: mistakePrognosis
+        type: JSON
+      - name: name
+        type: String
+      - name: gender
+        type: String
+      - name: alias
+        type: String
+      - name: proficiency
+        type: Int
+      - name: beginnerLevel
+        type: Int
+      - name: trainedOnKeyboard
+        type: Boolean
+      - name: stars
+        type: Int
+      - name: month
+        type: String
+      - name: estimatedSkill
+        type: String
+      - name: classByClass
+        type: Class
+      - name: inputSessionsByStudent
+        type: InputSessionsConnection
+      hasChanged: 0
+    - index: 7
+      name: gender
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: id
+        type: UUID
+      - name: login
+        type: String
+      - name: age
+        type: Int
+      - name: class
+        type: UUID
+      - name: mistakePrognosis
+        type: JSON
+      - name: name
+        type: String
+      - name: gender
+        type: String
+      - name: alias
+        type: String
+      - name: proficiency
+        type: Int
+      - name: beginnerLevel
+        type: Int
+      - name: trainedOnKeyboard
+        type: Boolean
+      - name: stars
+        type: Int
+      - name: month
+        type: String
+      - name: estimatedSkill
+        type: String
+      - name: classByClass
+        type: Class
+      - name: inputSessionsByStudent
+        type: InputSessionsConnection
+      hasChanged: 0
+    isComplete: 1
+  mutations:
+  - name: LogInToken
+    type: 1
+    query: "mutation LogInToken{\n    studentSignIn{\n        jwtToken\n    }\n}"
+    queryString: studentSignIn
+    returnType: StudentSignInPayload
+    queryOptions:
+    - createAustWord
+    - createClass
+    - createFeedback
+    - createInputSession
+    - createSchool
+    - createStudent
+    - createTeacher
+    - createUpdateProb
+    - createWord
+    - createWordsOld
+    - updateAustWord
+    - updateAustWordByWord
+    - updateClass
+    - updateClassById
+    - updateFeedback
+    - updateFeedbackByRegel
+    - updateInputSession
+    - updateInputSessionById
+    - updateSchool
+    - updateSchoolById
+    - updateStudent
+    - updateStudentById
+    - updateTeacher
+    - updateTeacherByEmail
+    - updateTeacherById
+    - updateUpdateProb
+    - updateUpdateProbByErrorName
+    - updateWord
+    - updateWordByWord
+    - updateWordsOld
+    - updateWordsOldByWord
+    - deleteAustWord
+    - deleteAustWordByWord
+    - deleteClass
+    - deleteClassById
+    - deleteFeedback
+    - deleteFeedbackByRegel
+    - deleteInputSession
+    - deleteInputSessionById
+    - deleteSchool
+    - deleteSchoolById
+    - deleteStudent
+    - deleteStudentById
+    - deleteTeacher
+    - deleteTeacherByEmail
+    - deleteTeacherById
+    - deleteUpdateProb
+    - deleteUpdateProbByErrorName
+    - deleteWord
+    - deleteWordByWord
+    - deleteWordsOld
+    - deleteWordsOldByWord
+    - generateLoginCode
+    - studentSignIn
+    - teacherSignIn
+    - teacherSignUp
+    fields:
+    - index: 1
+      name: jwtToken
+      type: JwtToken
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: clientMutationId
+        type: String
+      - name: jwtToken
+        type: JwtToken
+      - name: query
+        type: Query
+      hasChanged: 0
+    isComplete: 1
+  subscriptions: []
+  loading: 0
