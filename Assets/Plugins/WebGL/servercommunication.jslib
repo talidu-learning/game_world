@@ -1,8 +1,8 @@
 mergeInto(LibraryManager.library, {
     // Function example
-    CallFunction: function () {
+    SetTestToken: function () {
         // Show a message as an alert
-        window.alert("You called a function from this plugin!");
+        window.localStorage.setItem('jwt_student', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NjU0OTE3NTYsImV4cCI6MTY2NTU3ODE1NiwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.1Bwq67KkgZbw63HmEOSjUXgatf8oXpozHsiRSl9wA50');
     },
     // Function with the text param
     PassTextParam: function (text) {
@@ -10,27 +10,17 @@ mergeInto(LibraryManager.library, {
         var convertedText = UTF8ToString(text);
         console.log(convertedText);
     },
-    // Function with the number param
-    PassNumberParam: function (number) {
-        // Show a message as an alert
-        window.alert("The number is: " + number);
-    },
     // Function returning text value
-    GetTextValue: function () {
+    GetToken: function () {
         // Define text value
-        var textToPass = "You got this text from the plugin";
+        var token = window.localStorage.getItem('jwt_student');
         // Create a buffer to convert text to bytes
-        var bufferSize = lengthBytesUTF8(textToPass) + 1;
+        var bufferSize = lengthBytesUTF8(token) + 1;
         var buffer = _malloc(bufferSize);
         // Convert text
-        stringToUTF8(textToPass, buffer, bufferSize);
+        stringToUTF8(token, buffer, bufferSize);
         // Return text value
         return buffer;
-    },
-    // Function returning number value
-    GetNumberValue: function () {
-        // Return number value
-        return 2020;
     },
     IsMobileDevice: function (){
         let check = false;

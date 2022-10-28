@@ -6,21 +6,18 @@ using UnityEngine.Events;
 
     public class DeselectOnTap : MonoBehaviour
     {
-        public static UnityEvent OnTapOnBackground = new UnityEvent();
+        public static readonly UnityEvent OnTapOnBackground = new UnityEvent();
 
         void Awake()
         {
             GetComponent<TapGesture>().Tapped += OnTapped;
             
-            SelectionManager.IsObjectSelectedEvent.AddListener(OnObjectSelected);
+            SelectionManager.SELECT_OBJECT_EVENT.AddListener(OnObjectSelected);
         }
 
-        private void OnObjectSelected(bool isSelected, Interactable interactable)
+        private void OnObjectSelected(Interactable interactable)
         {
-            if (isSelected)
-            {
-                gameObject.GetComponent<MeshCollider>().enabled = true;
-            }
+            gameObject.GetComponent<MeshCollider>().enabled = true;
         }
 
         private void OnTapped(object sender, EventArgs e)

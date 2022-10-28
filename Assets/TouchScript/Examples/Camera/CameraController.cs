@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Plugins.WebGL;
-using TouchScript.Core;
 using TouchScript.Gestures;
 using UnityEngine;
 using TouchScript.Gestures.TransformGestures;

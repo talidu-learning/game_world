@@ -1,4 +1,5 @@
 using System;
+using BuildingSystem;
 using Interactables;
 using TouchScript.Gestures;
 using TouchScript.Gestures.TransformGestures;
@@ -10,8 +11,9 @@ public class Interactable : MonoBehaviour
     private PressGesture PressGesture;
     private TransformGesture TransformGesture;
     private bool isSelected = false;
+    private ObjectDrag objectDrag;
 
-    private void Start()
+    private void Awake()
     {
         TransformGesture = GetComponent<TransformGesture>();
         TransformGesture.enabled = false;
@@ -38,7 +40,7 @@ public class Interactable : MonoBehaviour
         if (e.State == Gesture.GestureState.Recognized)
         {
             EnableDragging();
-            SelectionManager.IsObjectSelectedEvent.Invoke(true, this);
+            SelectionManager.SELECT_OBJECT_EVENT.Invoke(this);
         }
         else if (e.State == Gesture.GestureState.Failed)
         {
@@ -46,22 +48,25 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    private void EnableDragging()
+    public void EnableDragging()
     {
         gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
         isSelected = true;
         LongPressGesture.enabled = false;
         PressGesture.enabled = false;
+        objectDrag = gameObject.AddComponent<ObjectDrag>();
         TransformGesture.enabled = true;
     }
 
-    public void OnTap()
+    private void OnTap()
     {
         if (!isSelected) return;
-        SelectionManager.IsObjectSelectedEvent.Invoke(false, this);
+        SelectionManager.DESELECT_OBJECT_EVENT.Invoke();
         DisableDragging();
     }
-    
+
+
+
     public void DisableDragging()
     {
         if (!isSelected) return;
@@ -69,6 +74,7 @@ public class Interactable : MonoBehaviour
         isSelected = false;
         LongPressGesture.enabled = true;
         PressGesture.enabled = true;
+        Destroy(objectDrag);
         TransformGesture.enabled = false;
     }
     
