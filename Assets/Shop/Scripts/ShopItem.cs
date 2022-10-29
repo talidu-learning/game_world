@@ -9,32 +9,29 @@ namespace Shop
     {
         [SerializeField] private TextMeshProUGUI PriceTag;
         [SerializeField] private Image ItemImage;
-        [SerializeField] private ItemButton itemButton;
+        [SerializeField] private Button placeItem;
         [SerializeField] private Button button;
         public string itemID { private set; get; }
-
-        private ShopItemButtonState _currentState = ShopItemButtonState.Default;
 
         private int itemValue;
 
         private void Awake()
         {
-            button.onClick.AddListener(OnItemButtonClick);
+            button.onClick.AddListener(OnBuyItemButtonClick);
+            placeItem.onClick.AddListener(OnPlaceItemButtonClick);
         }
 
-        private void OnItemButtonClick()
+        private void OnBuyItemButtonClick()
         {
-            switch (_currentState)
+            if (BuyItem())
             {
-                case ShopItemButtonState.Default:
-                    BuyItem();
-                    break;
-                case ShopItemButtonState.Bought:
-                    ShopManager.InitilizePlaceObjectEvent.Invoke(itemID);
-                    itemButton.ChangeState(ShopItemButtonState.Placed);
-                    _currentState = ShopItemButtonState.Placed;
-                    break;
+                placeItem.gameObject.SetActive(true);
             }
+        }
+
+        private void OnPlaceItemButtonClick()
+        {
+            ShopManager.InitilizePlaceObjectEvent.Invoke(itemID);
         }
 
         public void Initialize(ItemData itemData)
@@ -47,23 +44,23 @@ namespace Shop
 
         public void MarkItemAsBought()
         {
-            itemButton.ChangeState(ShopItemButtonState.Bought);
-            _currentState = ShopItemButtonState.Bought;
+            placeItem.gameObject.SetActive(true);
         }
 
-        public void BuyItem()
+        public bool BuyItem()
         {
             if (LocalPlayerData.Instance.TryBuyItem(itemID, itemValue))
             {
-                itemButton.ChangeState(ShopItemButtonState.Bought);
-                _currentState = ShopItemButtonState.Bought;
+                return true;
             }
+
+            return false;
         }
-        
-        public void PlaceItem()
+
+        public void PlaceItem(bool isCopyLeft)
         {
-            itemButton.ChangeState(ShopItemButtonState.Placed);
-            _currentState = ShopItemButtonState.Placed;
+            if(isCopyLeft) return;
+            placeItem.gameObject.SetActive(false);
         }
     }
 }

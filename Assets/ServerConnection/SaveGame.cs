@@ -35,6 +35,10 @@ namespace ServerConnection
 
         private IEnumerator LoadGameData()
         {
+            if (!File.Exists(Application.persistentDataPath + "/gamedata.json"))
+            {
+                SaveGameData();
+            }
             _localPlayerData.Initilize(
                 JsonUtility.FromJson<PlayerDataContainer>(
                     File.ReadAllText(Application.persistentDataPath + "/gamedata.json")));

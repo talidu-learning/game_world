@@ -72,16 +72,21 @@ namespace ServerConnection
 
         public void OnPlacedItem(string id, float x, float z)
         {
-            var item = _playerDataConatiner._ownedItems.First(i => i.id == id);
+            var item = _playerDataConatiner._ownedItems.First(i => i.id == id && i.x == 0 && i.z==0);
             item.x = x;
             item.z = z;
         }
 
         public void OnWithdrewItem(string id)
         {
-            var item = _playerDataConatiner._ownedItems.First(o => o.id == id);
+            var item = _playerDataConatiner._ownedItems.First(o => o.id == id && o.x != 0 && o.z!=0);
             item.x = 0;
             item.z = 0;
+        }
+
+        public bool IsItemPlaceable(string itemId)
+        {
+            return _playerDataConatiner._ownedItems.Any(o => o.id == itemId && o.x == 0 && o.z == 0);
         }
     }
 }

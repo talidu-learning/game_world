@@ -1,9 +1,9 @@
 ﻿namespace Shop
 {
-    public enum ShopItemButtonState
-    {
-        Default,
-        Bought,
-        Placed
-    }
+    // public enum ShopItemButtonState
+    // {
+    //     Default,
+    //     Bought,
+    //     Placed
+    // }
 }

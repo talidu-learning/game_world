@@ -11,13 +11,13 @@ namespace Shop
         [SerializeField] private GameObject ContentViewport;
         [SerializeField] private GameObject ItemPrefab;
 
-        private Dictionary<string, ShopItem> _shopItems = new Dictionary<string, ShopItem>();
+        private Dictionary<string, ShopItem> _shopItems = new();
 
-        public void OnPlacedItem(string id, bool wasValidPlacement)
+        public void OnPlacedItem(string id, bool wasValidPlacement, bool isOneCopyLeft)
         {
             if (_shopItems.TryGetValue(id, out ShopItem item))
             {
-                if(wasValidPlacement) item.PlaceItem();
+                if(wasValidPlacement && !isOneCopyLeft) item.PlaceItem(false);
                 else item.MarkItemAsBought();
             }
         }
@@ -44,7 +44,7 @@ namespace Shop
                 {
                     if (Array.IndexOf(placedItems, item) > -1)
                     {
-                        shopItem.PlaceItem();
+                        shopItem.PlaceItem(LocalPlayerData.Instance.IsItemPlaceable(item.id));
                     }
                     else
                     {

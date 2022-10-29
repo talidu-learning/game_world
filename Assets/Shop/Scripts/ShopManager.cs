@@ -24,18 +24,23 @@ namespace Shop
         private void OnTriedPlacingGameObject(bool wasPlacedSuccessfully, GameObject placedObject)
         {
             var id = placedObject.GetComponent<ItemID>().id;
-            ShopInventoryDisplay.OnPlacedItem(id, wasPlacedSuccessfully);
-            
-            if(wasPlacedSuccessfully)LocalPlayerData.Instance.OnPlacedItem(id, placedObject.transform.position.x, placedObject.transform.position.z);
+
+            if (wasPlacedSuccessfully)
+            {
+                LocalPlayerData.Instance.OnPlacedItem(id, placedObject.transform.position.x, placedObject.transform.position.z);
+            }
             else
             {
                 LocalPlayerData.Instance.OnWithdrewItem(id);
                 Destroy(placedObject);
             }
+            
+            ShopInventoryDisplay.OnPlacedItem(id, wasPlacedSuccessfully, LocalPlayerData.Instance.IsItemPlaceable(id));
         }
 
         private void OnPlaceObject(string itemId)
         {
+            if(!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
             var go = ItemCreator.CreateItem(itemId);
             SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
         }
