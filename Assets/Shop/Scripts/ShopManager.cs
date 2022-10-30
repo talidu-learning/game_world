@@ -11,7 +11,7 @@ namespace Shop
         [SerializeField] private ItemCreator ItemCreator;
         [SerializeField] private ShopInventoryDisplay ShopInventoryDisplay;
 
-        public static StringUnityEvent InitilizePlaceObjectEvent = new StringUnityEvent();
+        public static StringIntUnityEvent InitilizePlaceObjectEvent = new StringIntUnityEvent();
 
         public static BoolGameObjectUnityEvent OnTriedPlacingGameObjectEvent = new BoolGameObjectUnityEvent();
 
@@ -23,25 +23,26 @@ namespace Shop
 
         private void OnTriedPlacingGameObject(bool wasPlacedSuccessfully, GameObject placedObject)
         {
+            var uid = placedObject.GetComponent<ItemID>().uid;
             var id = placedObject.GetComponent<ItemID>().id;
 
             if (wasPlacedSuccessfully)
             {
-                LocalPlayerData.Instance.OnPlacedItem(id, placedObject.transform.position.x, placedObject.transform.position.z);
+                LocalPlayerData.Instance.OnPlacedItem(uid, placedObject.transform.position.x, placedObject.transform.position.z);
             }
             else
             {
-                LocalPlayerData.Instance.OnWithdrewItem(id);
+                LocalPlayerData.Instance.OnWithdrewItem(uid);
                 Destroy(placedObject);
             }
             
             ShopInventoryDisplay.OnPlacedItem(id, wasPlacedSuccessfully, LocalPlayerData.Instance.IsItemPlaceable(id));
         }
 
-        private void OnPlaceObject(string itemId)
+        private void OnPlaceObject(string itemId, int uid)
         {
             if(!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
-            var go = ItemCreator.CreateItem(itemId);
+            var go = ItemCreator.CreateItem(itemId, uid);
             SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
         }
     }

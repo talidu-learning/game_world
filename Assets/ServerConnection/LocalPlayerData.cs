@@ -62,7 +62,8 @@ namespace ServerConnection
                 StarCountUI.UpdateStarCount.Invoke(_playerDataConatiner.Stars.ToString());
                 _playerDataConatiner._ownedItems.Add(new ItemData
                 {
-                    id = id
+                    id = id,
+                    uid = _playerDataConatiner._ownedItems.Count + 1
                 });
                 return true;
             }
@@ -70,16 +71,16 @@ namespace ServerConnection
             return false;
         }
 
-        public void OnPlacedItem(string id, float x, float z)
+        public void OnPlacedItem(int uid, float x, float z)
         {
-            var item = _playerDataConatiner._ownedItems.First(i => i.id == id && i.x == 0 && i.z==0);
+            var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid && i.x == 0 && i.z==0);
             item.x = x;
             item.z = z;
         }
 
-        public void OnWithdrewItem(string id)
+        public void OnWithdrewItem(int uid)
         {
-            var item = _playerDataConatiner._ownedItems.First(o => o.id == id && o.x != 0 && o.z!=0);
+            var item = _playerDataConatiner._ownedItems.First(o => o.uid == uid && o.x != 0 && o.z!=0);
             item.x = 0;
             item.z = 0;
         }
@@ -87,6 +88,11 @@ namespace ServerConnection
         public bool IsItemPlaceable(string itemId)
         {
             return _playerDataConatiner._ownedItems.Any(o => o.id == itemId && o.x == 0 && o.z == 0);
+        }
+
+        public int GetCountOfUnplacedItems(string itemId)
+        {
+            return _playerDataConatiner._ownedItems.Count(i => i.id == itemId && i.x != 0 && i.z != 0);
         }
     }
 }

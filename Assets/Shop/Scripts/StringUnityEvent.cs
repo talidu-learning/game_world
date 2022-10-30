@@ -6,4 +6,9 @@ namespace Shop
     {
         
     }
+    
+    public class StringIntUnityEvent : UnityEvent<string, int>
+    {
+        
+    }
 }

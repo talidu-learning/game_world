@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ServerConnection;
 using UnityEngine;
 
@@ -35,22 +36,13 @@ namespace Shop
         private void UpdateItemStates()
         {
             var ownedItems = LocalPlayerData.Instance.GetOwnedItems();
-            var placedItems = LocalPlayerData.Instance.GetPlacedItems();
             
-            
-            foreach (var item in ownedItems)
+            foreach (var item in _shopItems)
             {
-                if (_shopItems.TryGetValue(item.id, out ShopItem shopItem))
-                {
-                    if (Array.IndexOf(placedItems, item) > -1)
+                    if (ownedItems.Count(i=> i.id == item.Key) > 0 || !LocalPlayerData.Instance.IsItemPlaceable(item.Key))
                     {
-                        shopItem.PlaceItem(LocalPlayerData.Instance.IsItemPlaceable(item.id));
+                        item.Value.PlaceItem(false);
                     }
-                    else
-                    {
-                        shopItem.MarkItemAsBought();
-                    }
-                }
             }
         }
 

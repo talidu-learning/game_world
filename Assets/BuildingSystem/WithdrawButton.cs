@@ -2,15 +2,18 @@ using Interactables;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WithdrawButton : MonoBehaviour
+namespace BuildingSystem
 {
-    void Awake()
+    public class WithdrawButton : MonoBehaviour
     {
-        GetComponent<Button>().onClick.AddListener(OnClick);
-    }
+        void Awake()
+        {
+            GetComponent<Button>().onClick.AddListener(OnClick);
+        }
 
-    private void OnClick()
-    {
-        SelectionManager.WITHDRAW_OBJECT_EVENT.Invoke();
+        private void OnClick()
+        {
+            SelectionManager.WITHDRAW_OBJECT_EVENT.Invoke();
+        }
     }
 }

@@ -39,6 +39,7 @@ namespace ServerConnection
             {
                 SaveGameData();
             }
+            
             _localPlayerData.Initilize(
                 JsonUtility.FromJson<PlayerDataContainer>(
                     File.ReadAllText(Application.persistentDataPath + "/gamedata.json")));
@@ -49,7 +50,7 @@ namespace ServerConnection
             
             foreach (var item in ids)
             {
-                var go = itemCreator.CreateItem(item.id);
+                var go = itemCreator.CreateItem(item.id, item.uid);
                 go.transform.position = new Vector3(item.x, 0, item.z);
                 gos.Add(go);
             }

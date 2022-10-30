@@ -6,11 +6,12 @@ namespace Shop
     {
         [SerializeField] private GameObject InteractablePrefab;
         
-        public GameObject CreateItem(string id)
+        public GameObject CreateItem(string id, int uid)
         {
             // TODO Find Object in database and customize prefab
             var go = GameObject.Instantiate(InteractablePrefab);
             go.AddComponent<ItemID>().id = id;
+            go.GetComponent<ItemID>().uid = uid;
             return go;
         }
     }

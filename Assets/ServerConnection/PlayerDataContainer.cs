@@ -15,6 +15,7 @@ namespace ServerConnection
     public class ItemData
     {
         public string id;
+        public int uid;
         public float x;
         public float z;
     }

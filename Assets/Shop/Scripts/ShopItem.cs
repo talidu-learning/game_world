@@ -12,6 +12,7 @@ namespace Shop
         [SerializeField] private Button placeItem;
         [SerializeField] private Button button;
         public string itemID { private set; get; }
+        public int uitemID { private set; get; }
 
         private int itemValue;
 
@@ -31,7 +32,8 @@ namespace Shop
 
         private void OnPlaceItemButtonClick()
         {
-            ShopManager.InitilizePlaceObjectEvent.Invoke(itemID);
+            if(LocalPlayerData.Instance.GetCountOfUnplacedItems(itemID) == 1)placeItem.gameObject.SetActive(false);
+            ShopManager.InitilizePlaceObjectEvent.Invoke(itemID, uitemID);
         }
 
         public void Initialize(ItemData itemData)
