@@ -73,7 +73,7 @@ namespace ServerConnection
 
         public void OnPlacedItem(int uid, float x, float z)
         {
-            var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid && i.x == 0 && i.z==0);
+            var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
             item.x = x;
             item.z = z;
         }
@@ -89,10 +89,20 @@ namespace ServerConnection
         {
             return _playerDataConatiner._ownedItems.Any(o => o.id == itemId && o.x == 0 && o.z == 0);
         }
+        
+        public int GetCountOfOwnedItems(string itemId)
+        {
+            return _playerDataConatiner._ownedItems.Count(i => i.id == itemId);
+        }
 
         public int GetCountOfUnplacedItems(string itemId)
         {
-            return _playerDataConatiner._ownedItems.Count(i => i.id == itemId && i.x != 0 && i.z != 0);
+            return _playerDataConatiner._ownedItems.Count(i => i.id == itemId && i.x == 0 && i.z == 0);
+        }
+
+        public int GetUIDOfUnplacedItem(string itemID)
+        {
+            return _playerDataConatiner._ownedItems.First(i=> i.x == 0 && i.z == 0).uid;
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Shop
         private void OnPlaceObject(string itemId, int uid)
         {
             if(!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
-            var go = ItemCreator.CreateItem(itemId, uid);
+            var go = ItemCreator.CreateItem(itemId, LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemId));
             SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
         }
     }

@@ -107,8 +107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 872f3c74a756452bad9f3e8e5ecc11e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemCreator: {fileID: 599489674}
-  shopInventoryDisplay: {fileID: 5557176907690520787}
+  ItemCreator: {fileID: 599489674}
+  ShopInventoryDisplay: {fileID: 5557176907690520787}
 --- !u!1 &5557176908100838816
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ namespace Shop
 
             SelectionManager.SELECT_OBJECT_EVENT.AddListener(EnableWithdraw);
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(DisableWithdraw);
+            SelectionManager.WITHDRAW_OBJECT_EVENT.AddListener(DisableWithdraw);
         }
 
         private void EnableWithdraw(Interactable interactable)

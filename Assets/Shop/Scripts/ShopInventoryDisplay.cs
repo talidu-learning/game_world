@@ -19,7 +19,7 @@ namespace Shop
             if (_shopItems.TryGetValue(id, out ShopItem item))
             {
                 if(wasValidPlacement && !isOneCopyLeft) item.PlaceItem(false);
-                else item.MarkItemAsBought();
+                else item.WasInvalidPlacement();
             }
         }
 
