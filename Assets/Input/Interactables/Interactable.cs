@@ -32,7 +32,7 @@ public class Interactable : MonoBehaviour
 
     private void PressGestureOnPressed(object sender, EventArgs e)
     {
-        gameObject.GetComponent<MeshRenderer>().material.color = Color.black;
+        gameObject.GetComponentInChildren<SpriteRenderer>().material.color = Color.black;
     }
 
     private void LongPressedHandler(object sender, GestureStateChangeEventArgs e)
@@ -44,13 +44,13 @@ public class Interactable : MonoBehaviour
         }
         else if (e.State == Gesture.GestureState.Failed)
         {
-            gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+            gameObject.GetComponentInChildren<SpriteRenderer>().material.color = Color.white;
         }
     }
 
     public void EnableDragging()
     {
-        gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
+        gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.green;
         isSelected = true;
         LongPressGesture.enabled = false;
         PressGesture.enabled = false;
@@ -70,7 +70,7 @@ public class Interactable : MonoBehaviour
     public void DisableDragging()
     {
         if (!isSelected) return;
-        gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+        gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
         isSelected = false;
         LongPressGesture.enabled = true;
         PressGesture.enabled = true;
