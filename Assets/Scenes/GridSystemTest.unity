@@ -546,6 +546,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 599489674, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+      propertyPath: _inventory
+      value: 
+      objectReference: {fileID: 11400000, guid: 2e3881a7dd09dd54d97dd33e6736f7ba, type: 2}
     - target: {fileID: 5557176907690520787, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
       propertyPath: ContentViewport
       value: 
@@ -670,7 +674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3684780546054948029, guid: f9e513129a4896148ad22438606db08c, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3684780546772594607, guid: f9e513129a4896148ad22438606db08c, type: 3}
       propertyPath: m_IsActive

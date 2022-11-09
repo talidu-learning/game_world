@@ -14,4 +14,5 @@ public class ItemData
     public string ItemID;
     public Sprite ItemSprite;
     public int Value;
+    public GameObject Prefab;
 }
