@@ -6,6 +6,8 @@ namespace ServerConnection
 {
     public class LocalPlayerData : MonoBehaviour
     {
+        private int _stars = 0;
+        
         private PlayerDataContainer _playerDataConatiner = new PlayerDataContainer();
 
         private static LocalPlayerData _instance;
@@ -36,7 +38,7 @@ namespace ServerConnection
         public void Initilize(PlayerDataContainer playerDataContainer)
         {
             _playerDataConatiner = playerDataContainer;
-            StarCountUI.UpdateStarCount.Invoke(_playerDataConatiner.Stars.ToString());
+            StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
         }
 
         public ItemData[] GetOwnedItems()
@@ -51,15 +53,15 @@ namespace ServerConnection
 
         public int GetStarCount()
         {
-            return _playerDataConatiner.Stars;
+            return _stars;
         }
 
         public bool TryBuyItem(string id, int itemValue)
         {
-            if (_playerDataConatiner.Stars - itemValue >= 0)
+            if (_stars - itemValue >= 0)
             {
-                _playerDataConatiner.Stars -= itemValue;
-                StarCountUI.UpdateStarCount.Invoke(_playerDataConatiner.Stars.ToString());
+                _stars -= itemValue;
+                StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
                 _playerDataConatiner._ownedItems.Add(new ItemData
                 {
                     id = id,
