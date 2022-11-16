@@ -13,23 +13,15 @@ MonoBehaviour:
   m_Name: ShopInevtory
   m_EditorClassIdentifier: 
   ShopItems:
-  - ItemID: Checker
-    ItemSprite: {fileID: 21300000, guid: 101a2db3cfc4b43ef985335f970658ab, type: 3}
+  - ItemID: Table
+    ItemSprite: {fileID: 21300000, guid: aa61202a0d0d8144ea9d1b3926342f1f, type: 3}
     Value: 2
     Prefab: {fileID: 4883471184429529526, guid: 5be658ec8f2e2ab4fa9277a91b155d41, type: 3}
-  - ItemID: Box
-    ItemSprite: {fileID: 21300000, guid: 101a2db3cfc4b43ef985335f970658ab, type: 3}
+  - ItemID: Kaktus
+    ItemSprite: {fileID: 21300000, guid: 6cae25cbeed4807438c1bb2063d23a0d, type: 3}
     Value: 2
     Prefab: {fileID: 4883471184429529526, guid: a3719859f4fdab841946194ea736e9c8, type: 3}
-  - ItemID: Placed
-    ItemSprite: {fileID: 21300000, guid: 101a2db3cfc4b43ef985335f970658ab, type: 3}
+  - ItemID: Crate
+    ItemSprite: {fileID: 21300000, guid: 8bc20814a9216174aba27ed2f144dfca, type: 3}
     Value: 2
-    Prefab: {fileID: 4883471184429529526, guid: 5be658ec8f2e2ab4fa9277a91b155d41, type: 3}
-  - ItemID: Humbug
-    ItemSprite: {fileID: 21300000, guid: 101a2db3cfc4b43ef985335f970658ab, type: 3}
-    Value: 20
-    Prefab: {fileID: 4883471184429529526, guid: 5be658ec8f2e2ab4fa9277a91b155d41, type: 3}
-  - ItemID: 2Humbug
-    ItemSprite: {fileID: 21300000, guid: 101a2db3cfc4b43ef985335f970658ab, type: 3}
-    Value: 20
-    Prefab: {fileID: 4883471184429529526, guid: 5be658ec8f2e2ab4fa9277a91b155d41, type: 3}
+    Prefab: {fileID: 4883471184429529526, guid: 48237f5c94496c746b5599555f3cdce8, type: 3}

@@ -1,4 +1,5 @@
-﻿using TouchScript.Gestures;
+﻿using System;
+using TouchScript.Gestures;
 using TouchScript.Gestures.TransformGestures.Base;
 using UnityEngine;
 
@@ -19,18 +20,6 @@ namespace BuildingSystem
 
         private Vector3 lastPosition;
 
-        private bool isOnSocket = false;
-
-        public void EntersSocket()
-        {
-            isOnSocket = true;
-        }
-        
-        public void LeavesSocket()
-        {
-            isOnSocket = false;
-        }
-        
         private void OnEnable()
         {
             gesture = GetComponent<TransformGestureBase>();
@@ -52,11 +41,9 @@ namespace BuildingSystem
                 case Gesture.GestureState.Possible:
                     break;
                 case Gesture.GestureState.Changed:
-                    if (!isOnSocket)
                         transform.position =
                             BuildingSystem.Current.SnapCoordinateToGrid(
                                 GetPositionWorld(gesture.ActivePointers[0].Position) + offset);
-                    else transform.position = GetPositionWorld(gesture.ActivePointers[0].Position);
                     break;
                 case Gesture.GestureState.Ended:
                     break;

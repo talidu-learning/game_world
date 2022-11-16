@@ -6,7 +6,7 @@ namespace ServerConnection
 {
     public class LocalPlayerData : MonoBehaviour
     {
-        private int _stars = 0;
+        private int _stars = 500;
         
         private PlayerDataContainer _playerDataConatiner = new PlayerDataContainer();
 
@@ -82,7 +82,8 @@ namespace ServerConnection
 
         public void OnWithdrewItem(int uid)
         {
-            var item = _playerDataConatiner._ownedItems.First(o => o.uid == uid && o.x != 0 && o.z!=0);
+            var item = _playerDataConatiner._ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
+            if (item == null) return;
             item.x = 0;
             item.z = 0;
         }
