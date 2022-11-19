@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82ef35a40f764d32b168fb007bc9dd28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractablePrefab: {fileID: 4883471184429529526, guid: 5be658ec8f2e2ab4fa9277a91b155d41, type: 3}
+  _inventory: {fileID: 11400000, guid: 2e3881a7dd09dd54d97dd33e6736f7ba, type: 2}
 --- !u!114 &599489675
 MonoBehaviour:
   m_ObjectHideFlags: 0

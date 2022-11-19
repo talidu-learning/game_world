@@ -4,21 +4,54 @@ using UnityEngine.Events;
 
 namespace Interactables
 {
-    public class BoolInteractableUnityEvent : UnityEvent<Interactable> { }
+    public class InteractableUnityEvent : UnityEvent<Interactable> { }
+    public class SocketUnityEvent : UnityEvent<Socket> { }
 
     public class SelectionManager : MonoBehaviour
     {
-        public static readonly BoolInteractableUnityEvent SELECT_OBJECT_EVENT = new BoolInteractableUnityEvent();
+        public static readonly InteractableUnityEvent SELECT_OBJECT_EVENT = new InteractableUnityEvent();
         public static readonly UnityEvent DESELECT_OBJECT_EVENT = new UnityEvent();
         public static readonly UnityEvent WITHDRAW_OBJECT_EVENT = new UnityEvent();
 
         private Interactable selectedObject;
+
+        public static readonly UnityEvent EnableDecoration = new UnityEvent();
+        public static readonly UnityEvent DisableDecoration = new UnityEvent();
+        
+        public static readonly SocketUnityEvent SELECT_SOCKET_EVENT = new SocketUnityEvent();
+        public static readonly SocketUnityEvent DESELECT_SOCKET_EVENT = new SocketUnityEvent();
+        public static readonly SocketUnityEvent WITHDRAW_SOCKET_EVENT = new SocketUnityEvent();
+        
+        private Socket selectedSocket;
 
         private void Awake()
         {
             SELECT_OBJECT_EVENT.AddListener(SelectObject);
             DESELECT_OBJECT_EVENT.AddListener(DeselectObject);
             WITHDRAW_OBJECT_EVENT.AddListener(WithdrawObject);
+            
+            SELECT_SOCKET_EVENT.AddListener(SelectSocket);
+            DESELECT_SOCKET_EVENT.AddListener(DeselectSocket);
+            WITHDRAW_SOCKET_EVENT.AddListener(WithdrawSocket);
+        }
+
+        private void WithdrawSocket(Socket socket)
+        {
+            
+        }
+
+        private void DeselectSocket(Socket socket)
+        {
+            if(selectedSocket == null) return;
+            selectedSocket.Deselect();
+            selectedSocket = null;
+        }
+
+        private void SelectSocket(Socket socket)
+        {
+            if(selectedSocket != null) selectedSocket.Deselect();
+            selectedSocket = socket;
+            selectedSocket.Select();
         }
 
         private void WithdrawObject()

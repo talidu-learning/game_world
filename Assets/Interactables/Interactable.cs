@@ -25,8 +25,23 @@ public class Interactable : MonoBehaviour
         PressGesture.Pressed += PressGestureOnPressed;
         
         DeselectOnTap.OnTapOnBackground.AddListener(OnTap);
+        
+        SelectionManager.EnableDecoration.AddListener(OnEnablingDecoration);
+        SelectionManager.DisableDecoration.AddListener(OnDisablingDecoration);
     }
-    
+
+    private void OnDisablingDecoration()
+    {
+        LongPressGesture.enabled = true;
+        PressGesture.enabled = true;
+    }
+
+    private void OnEnablingDecoration()
+    {
+        LongPressGesture.enabled = false;
+        PressGesture.enabled = false;
+    }
+
 
     private void PressGestureOnPressed(object sender, EventArgs e)
     {
