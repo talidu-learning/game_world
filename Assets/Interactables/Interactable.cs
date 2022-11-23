@@ -34,12 +34,14 @@ public class Interactable : MonoBehaviour
     {
         LongPressGesture.enabled = true;
         PressGesture.enabled = true;
+        GetComponent<BoxCollider>().enabled = true;
     }
 
     private void OnEnablingDecoration()
     {
         LongPressGesture.enabled = false;
         PressGesture.enabled = false;
+        GetComponent<BoxCollider>().enabled = false;
     }
 
 

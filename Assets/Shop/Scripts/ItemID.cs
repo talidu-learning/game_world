@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Interactables;
+using UnityEngine;
 
 namespace Shop
 {
@@ -6,5 +8,7 @@ namespace Shop
     {
         public string id;
         public int uid;
+
+        public List<ItemAttribute> ItemAttributes = new List<ItemAttribute>();
     }
 }

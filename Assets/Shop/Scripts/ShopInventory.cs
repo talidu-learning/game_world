@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Interactables;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ShopInevtory", menuName = "ScriptableObjects/Shop Inventory")]
@@ -15,4 +16,5 @@ public class ItemData
     public Sprite ItemSprite;
     public int Value;
     public GameObject Prefab;
+    public List<ItemAttribute> Attributes = new List<ItemAttribute>();
 }

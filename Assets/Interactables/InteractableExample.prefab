@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6596497636159851973}
   - component: {fileID: 2782433213929315987}
   - component: {fileID: 8854597342125630117}
+  - component: {fileID: 56152467354319756}
   m_Layer: 3
   m_Name: Socket
   m_TagString: Untagged
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edfb717faca4bada655b9d82c87e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Neighbour: {fileID: 4067496457131650314}
   IsUsed: 0
   Uid: 0
 --- !u!212 &2782433213929315987
@@ -132,6 +134,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   ignoreChildren: 0
+--- !u!65 &56152467354319756
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3617345792938015993}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4622052709938419124
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,8 +307,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.9899654, y: 1, z: 3.1060934}
-  m_Center: {x: -0.018523574, y: 0, z: -0.04896307}
+  m_Size: {x: 5.9899654, y: 2.6690598, z: 3.1060934}
+  m_Center: {x: -0.018523693, y: 0.8345299, z: -0.04896307}
 --- !u!114 &4883471184429529523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,6 +487,7 @@ GameObject:
   - component: {fileID: 9011654220502392459}
   - component: {fileID: 6647069183735351112}
   - component: {fileID: 6990880561905625892}
+  - component: {fileID: 3367044080037125005}
   m_Layer: 3
   m_Name: Socket (2)
   m_TagString: Untagged
@@ -506,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edfb717faca4bada655b9d82c87e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Neighbour: {fileID: 0}
   IsUsed: 0
   Uid: 0
 --- !u!212 &6647069183735351112
@@ -592,6 +609,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   ignoreChildren: 0
+--- !u!65 &3367044080037125005
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8090857342382996020}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8433350392391278377
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,6 +634,7 @@ GameObject:
   - component: {fileID: 4067496457131650314}
   - component: {fileID: 9011754346172536873}
   - component: {fileID: 4672198330091624619}
+  - component: {fileID: 195946163359894897}
   m_Layer: 3
   m_Name: Socket (1)
   m_TagString: Untagged
@@ -638,6 +669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edfb717faca4bada655b9d82c87e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Neighbour: {fileID: 9011654220502392459}
   IsUsed: 0
   Uid: 0
 --- !u!212 &9011754346172536873
@@ -724,3 +756,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   ignoreChildren: 0
+--- !u!65 &195946163359894897
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8433350392391278377}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
