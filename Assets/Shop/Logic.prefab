@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShopInventory: {fileID: 11400000, guid: 2e3881a7dd09dd54d97dd33e6736f7ba, type: 2}
   ContentViewport: {fileID: 0}
-  ItemPrefab: {fileID: 2182071670665996700, guid: 978b4ef0c2dec31419d14f7e47acb43e, type: 3}
+  ShopItemPrefab: {fileID: 2182071670665996700, guid: 978b4ef0c2dec31419d14f7e47acb43e, type: 3}
 --- !u!1 &5557176907917157821
 GameObject:
   m_ObjectHideFlags: 0

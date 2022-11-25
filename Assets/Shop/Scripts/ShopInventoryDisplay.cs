@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ServerConnection;
 using UnityEngine;
@@ -10,7 +9,7 @@ namespace Shop
     {
         [SerializeField] private ShopInventory ShopInventory;
         [SerializeField] private GameObject ContentViewport;
-        [SerializeField] private GameObject ItemPrefab;
+        [SerializeField] private GameObject ShopItemPrefab;
 
         private Dictionary<string, ShopItem> _shopItems = new();
 
@@ -50,7 +49,7 @@ namespace Shop
         {
             foreach (var item in ShopInventory.ShopItems)
             {
-                var newItem = Instantiate(ItemPrefab, ContentViewport.transform);
+                var newItem = Instantiate(ShopItemPrefab, ContentViewport.transform);
                 newItem.GetComponent<ShopItem>().Initialize(item);
                 _shopItems.Add(item.ItemID, newItem.GetComponent<ShopItem>());
             }

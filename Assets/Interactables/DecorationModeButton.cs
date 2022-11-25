@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +11,12 @@ namespace Interactables
         private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(ToggleDecoMode);
+        }
+
+        private void Start()
+        {
+            ToggleInventoryButton.OpenedInventoryEvent.AddListener(()=> gameObject.SetActive(false));
+            ToggleInventoryButton.ClosedInventoryUnityEvent.AddListener(()=> gameObject.SetActive(true));
         }
 
         public void ToggleDecoMode()
