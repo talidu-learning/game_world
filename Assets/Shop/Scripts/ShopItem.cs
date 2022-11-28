@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Interactables;
 using Inventory;
 using ServerConnection;
@@ -18,6 +19,8 @@ namespace Shop
         public string itemID { private set; get; }
 
         private int itemValue;
+        
+        public List<ItemAttribute> attributes{ private set; get; }
 
         private void Awake()
         {
@@ -66,6 +69,7 @@ namespace Shop
             ItemImage.sprite = itemData.ItemSprite;
             PriceTag.text = itemData.Value.ToString();
             itemValue = itemData.Value;
+            attributes = itemData.Attributes;
             
             UpdateUI();
         }

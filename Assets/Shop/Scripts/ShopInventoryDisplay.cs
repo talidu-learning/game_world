@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Enumerations;
+using Interactables;
 using ServerConnection;
 using UnityEngine;
 
@@ -30,8 +32,23 @@ namespace Shop
         private void Start()
         {
             SaveGame.LoadedPlayerData.AddListener(UpdateItemStates);
+            UIManager.FILTER_EVENT.AddListener(OnFilterToggled);
         }
 
+        private void OnFilterToggled(UIType uiType, List<ItemAttribute> attributes, bool isActive)
+        {
+            if(uiType == UIType.Inventory) return;
+
+            foreach (var attribute in attributes)
+            {
+                foreach (var item in _shopItems)
+                {
+                    if(item.Value.GetComponent<ShopItem>().attributes.Contains(attribute))
+                        item.Value.gameObject.SetActive(!isActive);
+                }
+            }
+        }
+        
         private void UpdateItemStates()
         {
             var ownedItems = LocalPlayerData.Instance.GetOwnedItems();

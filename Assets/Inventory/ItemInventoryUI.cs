@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Enumerations;
+using Interactables;
 using ServerConnection;
 using Shop;
 using UnityEngine;
@@ -25,6 +27,22 @@ namespace Inventory
         private void Start()
         {
             SaveGame.LoadedPlayerData.AddListener(UpdateItemStates);
+            
+            UIManager.FILTER_EVENT.AddListener(OnFilterToggled);
+        }
+
+        private void OnFilterToggled(UIType uiType, List<ItemAttribute> attributes, bool isActive)
+        {
+            if(uiType == UIType.Shop) return;
+
+            foreach (var attribute in attributes)
+            {
+                foreach (var item in inventoryItems)
+                {
+                    if(item.Value.GetComponent<InventoryItem>().attributes.Contains(attribute))
+                        item.Value.SetActive(!isActive);
+                }
+            }
         }
 
         private void UpdateItemStates()

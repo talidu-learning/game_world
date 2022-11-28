@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Interactables;
 using ServerConnection;
 using Shop;
@@ -12,6 +13,9 @@ namespace Inventory
     {
         [SerializeField] private TextMeshProUGUI Unplaced;
         [SerializeField] private Image ItemImage;
+
+        public List<ItemAttribute> attributes{ private set; get; }
+        
         public string itemID { private set; get; }
 
         public void Awake()
@@ -64,7 +68,7 @@ namespace Inventory
         {
             itemID = itemData.ItemID;
             ItemImage.sprite = itemData.ItemSprite;
-            
+            attributes = itemData.Attributes;
             UpdateUI();
         }
         

@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using Enumerations;
 using Interactables;
 using ServerConnection;
 using UnityEngine;
@@ -6,8 +8,13 @@ using UnityEngine.Events;
 
 namespace Shop
 {
+    public class FilterEvent : UnityEvent<UIType, List<ItemAttribute>, bool>{}
+    
     public class UIManager : MonoBehaviour
     {
+        public readonly static FilterEvent FILTER_EVENT = new FilterEvent();
+        
+        
         [SerializeField]private Animation LoadingAnimation;
 
         [SerializeField] private GameObject WithdrawButton;
