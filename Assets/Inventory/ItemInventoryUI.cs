@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Enumerations;
 using Interactables;
 using ServerConnection;
 using Shop;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Inventory
 {
@@ -16,6 +16,8 @@ namespace Inventory
         [SerializeField] private ShopInventory ShopInventory;
         [SerializeField] private GameObject InventoryItemPrefab;
         [SerializeField] private GameObject InventoryUIContent;
+        [SerializeField] private GameObject FilterPanel;
+        [SerializeField] private ToggleInventoryButton ToggleButton;
 
         private Dictionary<string, GameObject> inventoryItems = new Dictionary<string, GameObject>();
         
@@ -29,6 +31,28 @@ namespace Inventory
             SaveGame.LoadedPlayerData.AddListener(UpdateItemStates);
             
             UIManager.FILTER_EVENT.AddListener(OnFilterToggled);
+            
+            SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);
+            SelectionManager.DESELECT_SOCKET_EVENT.AddListener(OnDeselectedSocket);
+        }
+
+        private void OnDeselectedSocket(Socket arg0)
+        {
+            FilterPanel.SetActive(true);
+            OnFilterToggled(UIType.Inventory,new List<ItemAttribute> {ItemAttribute.Wide, ItemAttribute.VeryHuge}, false);
+        }
+
+        private void OnSelectedSocket(Socket socket)
+        {
+            ToggleButton.OpenInventory();
+            FilterPanel.SetActive(false);
+            // OnFilterToggled(UIType.Inventory,
+            //     !socket.Neighbour.IsUsed
+            //         ? new List<ItemAttribute> {ItemAttribute.OneSocketDeco, ItemAttribute.TwoSocketDeco}
+            //         : new List<ItemAttribute> {ItemAttribute.OneSocketDeco}, true);
+            OnFilterToggled(UIType.Inventory,new List<ItemAttribute> {ItemAttribute.Wide, ItemAttribute.VeryHuge}, true);
+            
+            
         }
 
         private void OnFilterToggled(UIType uiType, List<ItemAttribute> attributes, bool isActive)
@@ -39,7 +63,7 @@ namespace Inventory
             {
                 foreach (var item in inventoryItems)
                 {
-                    if(item.Value.GetComponent<InventoryItem>().attributes.Contains(attribute))
+                    if(item.Value.GetComponent<InventoryItem>().attributes.Contains(attribute) && LocalPlayerData.Instance.GetCountOfUnplacedItems(item.Key)>0)
                         item.Value.SetActive(!isActive);
                 }
             }
@@ -62,7 +86,7 @@ namespace Inventory
         {
             if (inventoryItems.TryGetValue(itemId, out GameObject key))
             {
-                key.GetComponent<InventoryItem>().UpdateUIOffByOne();
+                key.GetComponent<InventoryItem>().UpdateUI();
             }
             else
             {

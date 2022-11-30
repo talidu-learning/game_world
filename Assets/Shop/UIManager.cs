@@ -24,8 +24,26 @@ namespace Shop
             SaveGame.LoadedPlayerData.AddListener(()=> StartCoroutine(OnLoadedGame()));
 
             SelectionManager.SELECT_OBJECT_EVENT.AddListener(EnableWithdraw);
+            SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);
+            SelectionManager.DESELECT_SOCKET_EVENT.AddListener(OnDeselectedSocket);
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(DisableWithdraw);
             SelectionManager.WITHDRAW_OBJECT_EVENT.AddListener(DisableWithdraw);
+            SelectionManager.WITHDRAW_SOCKET_EVENT.AddListener(OnWithdrawSocketItem);
+        }
+
+        private void OnWithdrawSocketItem(Socket arg0)
+        {
+            DisableWithdraw();
+        }
+
+        private void OnDeselectedSocket(Socket arg0)
+        {
+            DisableWithdraw();
+        }
+
+        private void OnSelectedSocket(Socket socket)
+        {
+            if(socket.IsUsed) EnableWithdraw(null);
         }
 
         private void EnableWithdraw(Interactable interactable)

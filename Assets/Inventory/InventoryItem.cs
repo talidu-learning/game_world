@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Interactables;
 using ServerConnection;
 using Shop;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Inventory
@@ -27,8 +29,24 @@ namespace Inventory
         {
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(StartAsyncUpdate);
             SelectionManager.WITHDRAW_OBJECT_EVENT.AddListener(StartAsyncUpdate);
+            
+            SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);
+            SelectionManager.DESELECT_SOCKET_EVENT.AddListener(OnDeselectedSocket);
+            SelectionManager.WITHDRAW_SOCKET_EVENT.AddListener(OnDeselectedSocket);
         }
-        
+
+        private void OnDeselectedSocket(Socket socket)
+        {
+            GetComponent<Button>().onClick.RemoveAllListeners();
+            GetComponent<Button>().onClick.AddListener(PlaceItem);
+        }
+
+        private void OnSelectedSocket(Socket socket)
+        {
+            GetComponent<Button>().onClick.RemoveAllListeners();
+            GetComponent<Button>().onClick.AddListener(PlaceOnSocket);
+        }
+
         private void StartAsyncUpdate()
         {
             gameObject.SetActive(true);
@@ -43,25 +61,15 @@ namespace Inventory
 
         private void PlaceItem()
         {
-            
-            // TODO if(LocalPlayerData.Instance.GetCountOfUnplacedItems(itemID) == 1)
             var uitemID = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemID);
             ShopManager.InitilizePlaceObjectEvent.Invoke(itemID, uitemID);
-            
             ToggleInventoryButton.CloseInventoryUnityEvent.Invoke();
-            
-            // TODO if(LocalPlayerData.Instance.GetCountOfUnplacedItems(itemID) <= 1)
-            
-            //UpdateUIOffByOne();
         }
 
-        public void UpdateUIOffByOne()
+        private void PlaceOnSocket()
         {
-            int owned = LocalPlayerData.Instance.GetCountOfOwnedItems(itemID);
-            int unplaced = LocalPlayerData.Instance.GetCountOfUnplacedItems(itemID);
-            int offByOne = (owned - unplaced - 1);
-            Unplaced.text = offByOne.ToString();
-            // TODO if(offByOne == 0)
+            ToggleInventoryButton.CloseInventoryUnityEvent.Invoke();
+            SocketPlacement.PlaceItemOnSocket.Invoke(itemID);
         }
         
         public void Initialize(ItemData itemData)
@@ -72,9 +80,11 @@ namespace Inventory
             UpdateUI();
         }
         
-        private void UpdateUI()
+        public void UpdateUI()
         {
             int unplaced = LocalPlayerData.Instance.GetCountOfUnplacedItems(itemID);
+
+            Unplaced.text = unplaced.ToString();
             
             if(unplaced != 0) gameObject.SetActive(true);
             else

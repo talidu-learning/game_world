@@ -52,12 +52,21 @@ namespace Interactables
             if(selectedSocket != null) selectedSocket.Deselect();
             selectedSocket = socket;
             selectedSocket.Select();
+            
         }
 
         private void WithdrawObject()
         {
-            selectedObject = null;
-            BuildingSystem.BuildingSystem.Current.WithdrawSelectedObject();
+            if (selectedSocket != null)
+            {
+                selectedSocket.Withdraw();
+                selectedSocket = null;
+            }
+            else
+            {
+                selectedObject = null;
+                BuildingSystem.BuildingSystem.Current.WithdrawSelectedObject();   
+            }
         }
 
         private void DeselectObject()

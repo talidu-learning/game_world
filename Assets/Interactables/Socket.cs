@@ -27,7 +27,14 @@ namespace Interactables
 
         public void Deselect()
         {
-            GetComponent<SpriteRenderer>().color = Color.white;
+            GetComponent<SpriteRenderer>().color = IsUsed? Color.red : Color.white;
+        }
+
+        public void Place(int uid)
+        {
+            IsUsed = true;
+            Uid = uid;
+            GetComponent<SpriteRenderer>().color = Color.red;
         }
 
         public void Withdraw()

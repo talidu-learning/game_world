@@ -79,6 +79,21 @@ namespace ServerConnection
             item.x = x;
             item.z = z;
         }
+        
+        public void OnPlacedItem(int uid, float x, float z, int socketuid, int socketcount, int socketindex)
+        {
+            Debug.Log(socketcount);
+            Debug.Log(socketindex);
+            var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
+            item.x = x;
+            item.z = z;
+            
+            var socketItem = _playerDataConatiner._ownedItems.First(i => i.uid == socketuid);
+            if (socketItem.itemsPlacedOnSockets.Length < 1)
+                socketItem.itemsPlacedOnSockets = new int[socketcount];
+
+            socketItem.itemsPlacedOnSockets[socketindex] = uid;
+        }
 
         public void OnWithdrewItem(int uid)
         {
