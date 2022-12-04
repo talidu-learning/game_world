@@ -33,13 +33,6 @@ namespace Inventory
             LocalPlayerData.Instance.OnPlacedItem(uid, go.transform.position.x, go.transform.position.z,
                 currentSocket.transform.parent.parent.GetComponent<ItemID>().uid,
                 currentSocket.transform.parent.childCount, currentSocket.transform.GetSiblingIndex());
-
-            // var attributes = go.GetComponent<ItemData>().Attributes;
-            // if (attributes.Contains(ItemAttribute.TwoSocketDeco))
-            // {
-            //     currentSocket.Neighbour.Place(uid);
-            //     go.transform.position += new Vector3(-0.5f, 0, 0); // place in between sockets
-            // }
         }
 
         private GameObject CreateSocketItem(string itemId, int uid)

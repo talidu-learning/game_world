@@ -89,8 +89,7 @@ namespace ServerConnection
             item.z = z;
             
             var socketItem = _playerDataConatiner._ownedItems.First(i => i.uid == socketuid);
-            if (socketItem.itemsPlacedOnSockets.Length < 1)
-                socketItem.itemsPlacedOnSockets = new int[socketcount];
+            socketItem.itemsPlacedOnSockets ??= new int[socketcount];
 
             socketItem.itemsPlacedOnSockets[socketindex] = uid;
         }

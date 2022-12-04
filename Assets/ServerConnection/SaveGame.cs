@@ -52,6 +52,7 @@ namespace ServerConnection
             var itemDatas = _localPlayerData.GetPlacedItems().ToList();
 
             List<GameObject> gos = new List<GameObject>();
+            List<int> uids = new List<int>();
 
             var itemswithsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length > 0);
             var itemswithoutsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length == 0).ToList();
@@ -59,13 +60,13 @@ namespace ServerConnection
             
             foreach (var item in itemswithsockets)
             {
+                if(uids.Contains(item.uid)) continue;
                 var go = itemCreator.CreateItem(item.id, item.uid);
                 go.transform.position = new Vector3(item.x, 0, item.z);
                 gos.Add(go);
+                uids.Add(item.uid);
 
                 var sockets = go.transform.GetChild(0).GetComponentsInChildren<Socket>();
-                Debug.Log(sockets.Length);
-                Debug.Log(item.itemsPlacedOnSockets.Length);
 
                 for (int i = 0; i < sockets.Length; i++)
                 {
@@ -73,22 +74,11 @@ namespace ServerConnection
                     if (item.itemsPlacedOnSockets[i] != 0)
                     {
                         sockets[i].Place(item.itemsPlacedOnSockets[i]);
-                        CreateSocketItem(item.id, item.itemsPlacedOnSockets[i], sockets[i]);
-                        // Debug.Log(item.itemsPlacedOnSockets[i]);
-                        // Debug.Log(item.id);
-                        var itemEntryOfItemPlacedOnSocket = itemswithoutsockets.First(it => it.uid == item.itemsPlacedOnSockets[i]);
-                        itemswithoutsockets.Remove(itemEntryOfItemPlacedOnSocket);
+                        var data = itemDatas.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i]);
+                        CreateSocketItem(data.id, item.itemsPlacedOnSockets[i], sockets[i]);
+                        uids.Add(item.itemsPlacedOnSockets[i]);
                     }
                 }
-
-                itemDatas.Remove(item);
-            }
-            
-            foreach (var item in itemswithoutsockets)
-            {
-                var go = itemCreator.CreateItem(item.id, item.uid);
-                go.transform.position = new Vector3(item.x, 0, item.z);
-                gos.Add(go);
             }
             
             BuildingSystem.BuildingSystem.Current.OnLoadedGame(gos.ToArray());
