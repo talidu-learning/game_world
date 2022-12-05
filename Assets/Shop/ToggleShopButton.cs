@@ -1,3 +1,4 @@
+using Interactables;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +17,15 @@ namespace Shop
             var button = GetComponent<Button>();
             
             button.onClick.AddListener(OnButtonClick);
+            
+            DecorationModeButton.ToggledDecoModeButtonEvent.AddListener(OnToggledDecoMode);
         }
 
+        private void OnToggledDecoMode()
+        {
+            gameObject.SetActive(!gameObject.activeSelf);
+        }
+        
         private void OnButtonClick()
         {
             //ShopPanel.gameObject.SetActive(!ShopPanel.gameObject.activeSelf);

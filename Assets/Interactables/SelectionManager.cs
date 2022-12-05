@@ -1,4 +1,6 @@
 ﻿using BuildingSystem;
+using Inventory;
+using ServerConnection;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -37,7 +39,8 @@ namespace Interactables
 
         private void WithdrawSocket(Socket socket)
         {
-            
+           socket.Deselect(); 
+           selectedSocket = null;
         }
 
         private void DeselectSocket(Socket socket)
@@ -59,8 +62,7 @@ namespace Interactables
         {
             if (selectedSocket != null)
             {
-                selectedSocket.Withdraw();
-                selectedSocket = null;
+                SocketPlacement.WithdrawItemOnSocket.Invoke();
             }
             else
             {

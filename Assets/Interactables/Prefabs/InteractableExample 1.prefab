@@ -113,7 +113,6 @@ GameObject:
   - component: {fileID: 4883471184429529532}
   - component: {fileID: 4883471184429529534}
   - component: {fileID: 3985199299028485562}
-  - component: {fileID: 103641984489750157}
   m_Layer: 3
   m_Name: InteractableExample 1
   m_TagString: Socket
@@ -292,17 +291,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2940843babae437eb71b03a74c48c362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &103641984489750157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4883471184429529526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfe5a23a1a2e428b94972259620be0ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SocketPosition: {fileID: 0}
-  IsUsed: 0

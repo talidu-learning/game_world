@@ -33,6 +33,17 @@ namespace Shop
         {
             SaveGame.LoadedPlayerData.AddListener(UpdateItemStates);
             UIManager.FILTER_EVENT.AddListener(OnFilterToggled);
+
+            LocalPlayerData.ChangedItemDataEvent.AddListener(UpdateItemState);
+        }
+
+        private void UpdateItemState(string id)
+        {
+            var go = _shopItems.FirstOrDefault(o => o.Key == id).Value;
+            var shopItem = go.GetComponent<ShopItem>();
+            var itemdata = ShopInventory.ShopItems.FirstOrDefault(i=> i.ItemID == id);
+            shopItem.Initialize(itemdata);
+
         }
 
         private void OnFilterToggled(UIType uiType, List<ItemAttribute> attributes, bool isActive)

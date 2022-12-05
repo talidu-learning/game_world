@@ -45,7 +45,7 @@ namespace ServerConnection
                 SaveGameData();
             }
             
-            _localPlayerData.Initilize(
+            _localPlayerData.Initialize(
                 JsonUtility.FromJson<PlayerDataContainer>(
                     File.ReadAllText(Application.persistentDataPath + "/gamedata.json")));
 

@@ -1,3 +1,5 @@
+using System;
+using Interactables;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -16,6 +18,16 @@ namespace Inventory
         {
             GetComponent<Button>().onClick.AddListener(OpenInventory);
             CloseInventoryUnityEvent.AddListener(Close);
+        }
+
+        private void Start()
+        {
+            DecorationModeButton.ToggledDecoModeButtonEvent.AddListener(OnToggledDecoMode);
+        }
+
+        private void OnToggledDecoMode()
+        {
+            gameObject.SetActive(!gameObject.activeSelf);
         }
 
         public void CloseInventory()

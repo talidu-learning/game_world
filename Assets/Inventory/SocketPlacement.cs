@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Interactables;
 using ServerConnection;
 using Shop;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Inventory
 {
@@ -12,9 +14,22 @@ namespace Inventory
 
         public static StringUnityEvent PlaceItemOnSocket = new StringUnityEvent();
 
+        public static UnityEvent WithdrawItemOnSocket = new UnityEvent();
+
         [SerializeField] private GameObject SocketItem;
 
         private Socket currentSocket;
+
+        private void Awake()
+        {
+            WithdrawItemOnSocket.AddListener(OnWithdrawItem);
+        }
+
+        private void OnWithdrawItem()
+        {
+            LocalPlayerData.Instance.OnWithdrewItem(currentSocket.Uid,currentSocket.transform.parent.parent.GetComponent<ItemID>().uid, currentSocket.transform.GetSiblingIndex());
+            currentSocket.Withdraw();
+        }
 
         private void Start()
         {
@@ -33,6 +48,8 @@ namespace Inventory
             LocalPlayerData.Instance.OnPlacedItem(uid, go.transform.position.x, go.transform.position.z,
                 currentSocket.transform.parent.parent.GetComponent<ItemID>().uid,
                 currentSocket.transform.parent.childCount, currentSocket.transform.GetSiblingIndex());
+            
+            SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
         }
 
         private GameObject CreateSocketItem(string itemId, int uid)

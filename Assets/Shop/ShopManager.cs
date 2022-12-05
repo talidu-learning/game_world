@@ -1,4 +1,5 @@
-﻿using Interactables;
+﻿using System.Linq;
+using Interactables;
 using ServerConnection;
 using UnityEngine;
 using UnityEngine.Events;
@@ -32,6 +33,19 @@ namespace Shop
             }
             else
             {
+                if (placedObject.GetComponent<SocketCollection>())
+                {
+                    Debug.Log(placedObject.GetComponent<SocketCollection>());
+                    var sockets = placedObject.GetComponent<SocketCollection>().Sockets.Where(s => s.IsUsed);
+
+                    foreach (var socket in sockets)
+                    {
+                        LocalPlayerData.Instance.OnWithdrewItem(socket.Uid, uid, socket.transform.GetSiblingIndex());
+                        socket.Withdraw();
+                    }
+                    
+                }
+
                 LocalPlayerData.Instance.OnWithdrewItem(uid);
                 Destroy(placedObject);
             }

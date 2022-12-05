@@ -34,6 +34,19 @@ namespace Inventory
             
             SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);
             SelectionManager.DESELECT_SOCKET_EVENT.AddListener(OnDeselectedSocket);
+            
+            LocalPlayerData.ChangedItemDataEvent.AddListener(UpdateItemState);
+        }
+
+        private void UpdateItemState(string id)
+        {
+            var item = inventoryItems.FirstOrDefault(i => i.Key == id);
+            var itemData = ShopInventory.ShopItems.FirstOrDefault(i => i.ItemID == id);
+            if (item.Value == null) return;
+            item.Value.SetActive(true);
+            item.Value.GetComponent<InventoryItem>().Initialize(itemData);
+
+            if (LocalPlayerData.Instance.GetCountOfUnplacedItems(id) == 0) item.Value.SetActive(false);
         }
 
         private void OnDeselectedSocket(Socket arg0)
@@ -44,15 +57,10 @@ namespace Inventory
 
         private void OnSelectedSocket(Socket socket)
         {
+            if (socket.IsUsed) return;
             ToggleButton.OpenInventory();
             FilterPanel.SetActive(false);
-            // OnFilterToggled(UIType.Inventory,
-            //     !socket.Neighbour.IsUsed
-            //         ? new List<ItemAttribute> {ItemAttribute.OneSocketDeco, ItemAttribute.TwoSocketDeco}
-            //         : new List<ItemAttribute> {ItemAttribute.OneSocketDeco}, true);
             OnFilterToggled(UIType.Inventory,new List<ItemAttribute> {ItemAttribute.Wide, ItemAttribute.VeryHuge}, true);
-            
-            
         }
 
         private void OnFilterToggled(UIType uiType, List<ItemAttribute> attributes, bool isActive)

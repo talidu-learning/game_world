@@ -1,11 +1,14 @@
 ﻿using Inventory;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Interactables
 {
     public class DecorationModeButton : MonoBehaviour
     {
+        public static UnityEvent ToggledDecoModeButtonEvent = new UnityEvent();
+        
         private bool isModeEnabled = false;
 
         private void Awake()
@@ -45,6 +48,8 @@ namespace Interactables
             }
 
             isModeEnabled = !isModeEnabled;
+            
+            ToggledDecoModeButtonEvent.Invoke();
         }
     }
 }

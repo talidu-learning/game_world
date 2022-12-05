@@ -1,11 +1,14 @@
 using System.Linq;
 using Shop;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ServerConnection
 {
     public class LocalPlayerData : MonoBehaviour
     {
+        public static StringUnityEvent ChangedItemDataEvent = new StringUnityEvent();
+        
         private int _stars = 500;
         
         private PlayerDataContainer _playerDataConatiner = new PlayerDataContainer();
@@ -35,7 +38,7 @@ namespace ServerConnection
             return JsonUtility.ToJson(_playerDataConatiner);
         }
 
-        public void Initilize(PlayerDataContainer playerDataContainer)
+        public void Initialize(PlayerDataContainer playerDataContainer)
         {
             _playerDataConatiner = playerDataContainer;
             StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
@@ -67,6 +70,8 @@ namespace ServerConnection
                     id = id,
                     uid = _playerDataConatiner._ownedItems.Count + 1
                 });
+                
+                ChangedItemDataEvent.Invoke(id);
                 return true;
             }
 
@@ -78,20 +83,23 @@ namespace ServerConnection
             var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
             item.x = x;
             item.z = z;
+            
+            ChangedItemDataEvent.Invoke(item.id);
         }
         
-        public void OnPlacedItem(int uid, float x, float z, int socketuid, int socketcount, int socketindex)
+        public void OnPlacedItem(int uid, float x, float z, int socketcolectionuid, int socketcount, int socketindex)
         {
-            Debug.Log(socketcount);
-            Debug.Log(socketindex);
             var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
             item.x = x;
             item.z = z;
             
-            var socketItem = _playerDataConatiner._ownedItems.First(i => i.uid == socketuid);
+            var socketItem = _playerDataConatiner._ownedItems.First(i => i.uid == socketcolectionuid);
             socketItem.itemsPlacedOnSockets ??= new int[socketcount];
-
+            Debug.Log(socketcount);
+            Debug.Log(socketindex);
             socketItem.itemsPlacedOnSockets[socketindex] = uid;
+            
+            ChangedItemDataEvent.Invoke(item.id);
         }
 
         public void OnWithdrewItem(int uid)
@@ -100,6 +108,23 @@ namespace ServerConnection
             if (item == null) return;
             item.x = 0;
             item.z = 0;
+            
+            ChangedItemDataEvent.Invoke(item.id);
+        }
+        
+        public void OnWithdrewItem(int uid, int socketcollectionuid, int socketindex)
+        {
+            var item = _playerDataConatiner._ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
+            if (item == null) return;
+            item.x = 0;
+            item.z = 0;
+
+            var socketcollection = _playerDataConatiner._ownedItems.First(o => o.uid == socketcollectionuid)
+                .itemsPlacedOnSockets;
+            
+            socketcollection[socketindex] = 0;
+            
+            ChangedItemDataEvent.Invoke(item.id);
         }
 
         public bool IsItemPlaceable(string itemId)
@@ -119,7 +144,7 @@ namespace ServerConnection
 
         public int GetUIDOfUnplacedItem(string itemID)
         {
-            return _playerDataConatiner._ownedItems.First(i=> i.x == 0 && i.z == 0).uid;
+            return _playerDataConatiner._ownedItems.First(i=> i.id == itemID && i.x == 0 && i.z == 0).uid;
         }
     }
 }
