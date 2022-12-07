@@ -23,6 +23,7 @@ namespace Filter
 
         private void ToggleFilter()
         {
+            GameAudio.PlaySoundEvent.Invoke(SoundType.Filter);
             isActivated = !isActivated;
 
             gameObject.GetComponent<Image>().color = isActivated ? Color.grey : Color.white;

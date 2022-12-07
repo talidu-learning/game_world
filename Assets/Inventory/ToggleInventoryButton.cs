@@ -1,4 +1,5 @@
 using System;
+using Enumerations;
 using Interactables;
 using UnityEngine;
 using UnityEngine.Events;
@@ -32,11 +33,13 @@ namespace Inventory
 
         public void CloseInventory()
         {
+            GameAudio.PlaySoundEvent.Invoke(SoundType.CloseInventory);
             Close();
         }
 
         public void OpenInventory()
         {
+            GameAudio.PlaySoundEvent.Invoke(SoundType.OpenInventory);
             Open();
             OpenedInventoryEvent.Invoke();
         }

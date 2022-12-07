@@ -1,3 +1,4 @@
+using Enumerations;
 using Interactables;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ namespace BuildingSystem
 
         private void OnClick()
         {
+            GameAudio.PlaySoundEvent.Invoke(SoundType.Withdraw);
             SelectionManager.WITHDRAW_OBJECT_EVENT.Invoke();
         }
     }

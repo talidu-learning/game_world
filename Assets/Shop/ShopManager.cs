@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Enumerations;
 using Interactables;
 using ServerConnection;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace Shop
 
             if (wasPlacedSuccessfully)
             {
+                GameAudio.PlaySoundEvent.Invoke(SoundType.Place);
                 LocalPlayerData.Instance.OnPlacedItem(uid, placedObject.transform.position.x, placedObject.transform.position.z);
             }
             else

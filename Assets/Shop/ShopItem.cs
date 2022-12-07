@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Enumerations;
 using Interactables;
 using Inventory;
 using ServerConnection;
@@ -48,6 +49,7 @@ namespace Shop
         {
             if (BuyItem())
             {
+                GameAudio.PlaySoundEvent.Invoke(SoundType.Buy);
                 UpdateUI();
                 var uitemID = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemID);
                 ShopManager.InitilizePlaceObjectEvent.Invoke(itemID, uitemID);

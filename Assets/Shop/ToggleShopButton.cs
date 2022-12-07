@@ -1,3 +1,4 @@
+using Enumerations;
 using Interactables;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,10 +37,12 @@ namespace Shop
 
             if (isOpen)
             {
+                GameAudio.PlaySoundEvent.Invoke(SoundType.OpenShop);
                 GetComponent<Image>().sprite = OpenedPanel;
             }
             else
             {
+                GameAudio.PlaySoundEvent.Invoke(SoundType.CloseShop);
                 GetComponent<Image>().sprite = ClosedPanel;
             }
         }
