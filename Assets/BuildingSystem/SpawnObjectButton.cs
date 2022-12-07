@@ -1,6 +1,4 @@
-using System;
 using Interactables;
-using TouchScript.Gestures;
 using UnityEngine;
 
 public class SpawnObjectButton : MonoBehaviour

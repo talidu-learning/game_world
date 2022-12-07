@@ -52,7 +52,6 @@ namespace BuildingSystem
 
         public void Place(Vector3Int position)
         {
-
             PlacePosition = transform.position;
         
             PlacedPosition = position;

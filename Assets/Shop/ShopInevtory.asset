@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7766321e4550d7c4bac7b2ac26f103ce, type: 3}
+  m_Name: ShopInevtory
+  m_EditorClassIdentifier: 
+  ShopItems:
+  - ItemID: Table
+    ItemSprite: {fileID: 21300000, guid: aa61202a0d0d8144ea9d1b3926342f1f, type: 3}
+    Value: 2
+    Prefab: {fileID: 4883471184429529526, guid: 5be658ec8f2e2ab4fa9277a91b155d41, type: 3}
+    Attributes: 02000000
+  - ItemID: Kaktus
+    ItemSprite: {fileID: 21300000, guid: 6cae25cbeed4807438c1bb2063d23a0d, type: 3}
+    Value: 2
+    Prefab: {fileID: 4883471184429529526, guid: a3719859f4fdab841946194ea736e9c8, type: 3}
+    Attributes: 00000000
+  - ItemID: Crate
+    ItemSprite: {fileID: 21300000, guid: 8bc20814a9216174aba27ed2f144dfca, type: 3}
+    Value: 2
+    Prefab: {fileID: 4883471184429529526, guid: 48237f5c94496c746b5599555f3cdce8, type: 3}
+    Attributes: 01000000
+  - ItemID: CrateForWater
+    ItemSprite: {fileID: 21300000, guid: 8bc20814a9216174aba27ed2f144dfca, type: 3}
+    Value: 2
+    Prefab: {fileID: 4883471184429529526, guid: 48237f5c94496c746b5599555f3cdce8, type: 3}
+    Attributes: 04000000

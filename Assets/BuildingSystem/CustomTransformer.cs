@@ -1,4 +1,5 @@
-﻿using TouchScript.Gestures;
+﻿using System;
+using TouchScript.Gestures;
 using TouchScript.Gestures.TransformGestures.Base;
 using UnityEngine;
 
@@ -40,7 +41,9 @@ namespace BuildingSystem
                 case Gesture.GestureState.Possible:
                     break;
                 case Gesture.GestureState.Changed:
-                    transform.position = BuildingSystem.Current.SnapCoordinateToGrid(GetPositionWorld(gesture.ActivePointers[0].Position) + offset);
+                        transform.position =
+                            BuildingSystem.Current.SnapCoordinateToGrid(
+                                GetPositionWorld(gesture.ActivePointers[0].Position) + offset);
                     break;
                 case Gesture.GestureState.Ended:
                     break;
