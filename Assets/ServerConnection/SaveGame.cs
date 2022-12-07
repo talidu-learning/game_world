@@ -80,6 +80,15 @@ namespace ServerConnection
                     }
                 }
             }
+
+            foreach (var item in itemswithoutsockets)
+            {
+                if(uids.Contains(item.uid)) continue;
+                var go = itemCreator.CreateItem(item.id, item.uid);
+                go.transform.position = new Vector3(item.x, 0, item.z);
+                gos.Add(go);
+                uids.Add(item.uid);
+            }
             
             BuildingSystem.BuildingSystem.Current.OnLoadedGame(gos.ToArray());
             

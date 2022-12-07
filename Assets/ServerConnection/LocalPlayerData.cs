@@ -1,7 +1,6 @@
 using System.Linq;
 using Shop;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ServerConnection
 {
@@ -94,9 +93,7 @@ namespace ServerConnection
             item.z = z;
             
             var socketItem = _playerDataConatiner._ownedItems.First(i => i.uid == socketcolectionuid);
-            socketItem.itemsPlacedOnSockets ??= new int[socketcount];
-            Debug.Log(socketcount);
-            Debug.Log(socketindex);
+            if(socketItem.itemsPlacedOnSockets == null) socketItem.itemsPlacedOnSockets = new int[socketcount];
             socketItem.itemsPlacedOnSockets[socketindex] = uid;
             
             ChangedItemDataEvent.Invoke(item.id);
