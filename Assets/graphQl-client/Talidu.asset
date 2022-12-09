@@ -143,9 +143,9 @@ MonoBehaviour:
   - name: Student
     type: 0
     query: "query Student{\n    studentById(  id :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\"
-      ){\n        proficiency\n        age\n        name\n        gender\n    }\n}"
+      ){\n        proficiency\n        age\n        name\n        stars\n    }\n}"
     queryString: studentById
-    returnType: Student
+    returnType: Query
     queryOptions:
     - query
     - nodeId
@@ -308,9 +308,9 @@ MonoBehaviour:
       - name: inputSessionsByStudent
         type: InputSessionsConnection
       hasChanged: 0
-    - index: 7
-      name: gender
-      type: String
+    - index: 12
+      name: stars
+      type: Int
       parentIndexes: 
       hasSubField: 0
       possibleFields:
@@ -350,17 +350,221 @@ MonoBehaviour:
         type: InputSessionsConnection
       hasChanged: 0
     isComplete: 1
+  - name: GetAllItems
+    type: 0
+    query: "query GetAllItems{\n    allPurchasedItems(  condition :{ owner :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\"}
+      ){\n        nodes{\n            sockets\n            z\n            x\n           
+      id\n            uid\n            owner\n        }\n    }\n}"
+    queryString: allPurchasedItems
+    returnType: PurchasedItemsConnection
+    queryOptions:
+    - query
+    - nodeId
+    - node
+    - allAustWords
+    - allClasses
+    - allFeedbacks
+    - allInputSessions
+    - allPurchasedItems
+    - allSchools
+    - allStudents
+    - allTeachers
+    - allUpdateProbs
+    - allWords
+    - allWordsOlds
+    - austWordByWord
+    - classById
+    - feedbackByRegel
+    - inputSessionById
+    - purchasedItemByUid
+    - schoolById
+    - studentById
+    - teacherByEmail
+    - teacherById
+    - updateProbByErrorName
+    - wordByWord
+    - wordsOldByWord
+    - currentUserId
+    - pseudoEncrypt
+    - stringifyBigint
+    - austWord
+    - class
+    - feedback
+    - inputSession
+    - purchasedItem
+    - school
+    - student
+    - teacher
+    - updateProb
+    - word
+    - wordsOld
+    fields:
+    - index: 0
+      name: nodes
+      type: PurchasedItem
+      parentIndexes: 
+      hasSubField: 1
+      possibleFields:
+      - name: nodes
+        type: PurchasedItem
+      - name: edges
+        type: PurchasedItemsEdge
+      - name: pageInfo
+        type: PageInfo
+      - name: totalCount
+        type: Int
+      hasChanged: 0
+    - index: 6
+      name: sockets
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 5
+      name: z
+      type: Float
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 4
+      name: x
+      type: Float
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 2
+      name: id
+      type: String
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 1
+      name: uid
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 3
+      name: owner
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    isComplete: 1
   mutations:
-  - name: LogInToken
+  - name: UpdateItem
     type: 1
-    query: "mutation LogInToken{\n    studentSignIn{\n        jwtToken\n    }\n}"
-    queryString: studentSignIn
-    returnType: StudentSignInPayload
+    query: 
+    queryString: updatePurchasedItemByUid
+    returnType: UpdatePurchasedItemPayload
     queryOptions:
     - createAustWord
     - createClass
     - createFeedback
     - createInputSession
+    - createPurchasedItem
     - createSchool
     - createStudent
     - createTeacher
@@ -375,6 +579,8 @@ MonoBehaviour:
     - updateFeedbackByRegel
     - updateInputSession
     - updateInputSessionById
+    - updatePurchasedItem
+    - updatePurchasedItemByUid
     - updateSchool
     - updateSchoolById
     - updateStudent
@@ -396,6 +602,148 @@ MonoBehaviour:
     - deleteFeedbackByRegel
     - deleteInputSession
     - deleteInputSessionById
+    - deletePurchasedItem
+    - deletePurchasedItemByUid
+    - deleteSchool
+    - deleteSchoolById
+    - deleteStudent
+    - deleteStudentById
+    - deleteTeacher
+    - deleteTeacherByEmail
+    - deleteTeacherById
+    - deleteUpdateProb
+    - deleteUpdateProbByErrorName
+    - deleteWord
+    - deleteWordByWord
+    - deleteWordsOld
+    - deleteWordsOldByWord
+    - generateLoginCode
+    - studentSignIn
+    - teacherSignIn
+    - teacherSignUp
+    fields: []
+    isComplete: 0
+  - name: DeleteItem
+    type: 1
+    query: 
+    queryString: deletePurchasedItemByUid
+    returnType: DeletePurchasedItemPayload
+    queryOptions:
+    - createAustWord
+    - createClass
+    - createFeedback
+    - createInputSession
+    - createPurchasedItem
+    - createSchool
+    - createStudent
+    - createTeacher
+    - createUpdateProb
+    - createWord
+    - createWordsOld
+    - updateAustWord
+    - updateAustWordByWord
+    - updateClass
+    - updateClassById
+    - updateFeedback
+    - updateFeedbackByRegel
+    - updateInputSession
+    - updateInputSessionById
+    - updatePurchasedItem
+    - updatePurchasedItemByUid
+    - updateSchool
+    - updateSchoolById
+    - updateStudent
+    - updateStudentById
+    - updateTeacher
+    - updateTeacherByEmail
+    - updateTeacherById
+    - updateUpdateProb
+    - updateUpdateProbByErrorName
+    - updateWord
+    - updateWordByWord
+    - updateWordsOld
+    - updateWordsOldByWord
+    - deleteAustWord
+    - deleteAustWordByWord
+    - deleteClass
+    - deleteClassById
+    - deleteFeedback
+    - deleteFeedbackByRegel
+    - deleteInputSession
+    - deleteInputSessionById
+    - deletePurchasedItem
+    - deletePurchasedItemByUid
+    - deleteSchool
+    - deleteSchoolById
+    - deleteStudent
+    - deleteStudentById
+    - deleteTeacher
+    - deleteTeacherByEmail
+    - deleteTeacherById
+    - deleteUpdateProb
+    - deleteUpdateProbByErrorName
+    - deleteWord
+    - deleteWordByWord
+    - deleteWordsOld
+    - deleteWordsOldByWord
+    - generateLoginCode
+    - studentSignIn
+    - teacherSignIn
+    - teacherSignUp
+    fields: []
+    isComplete: 0
+  - name: UpdateStars
+    type: 1
+    query: "mutation UpdateStars{\n    updateStudentById(  input :{ studentPatch
+      :{ stars :196}, id :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\"} ){\n        student{\n           
+      stars\n        }\n    }\n}"
+    queryString: updateStudentById
+    returnType: UpdateStudentPayload
+    queryOptions:
+    - createAustWord
+    - createClass
+    - createFeedback
+    - createInputSession
+    - createPurchasedItem
+    - createSchool
+    - createStudent
+    - createTeacher
+    - createUpdateProb
+    - createWord
+    - createWordsOld
+    - updateAustWord
+    - updateAustWordByWord
+    - updateClass
+    - updateClassById
+    - updateFeedback
+    - updateFeedbackByRegel
+    - updateInputSession
+    - updateInputSessionById
+    - updatePurchasedItem
+    - updatePurchasedItemByUid
+    - updateSchool
+    - updateSchoolById
+    - updateStudent
+    - updateStudentById
+    - updateTeacher
+    - updateTeacherByEmail
+    - updateTeacherById
+    - updateUpdateProb
+    - updateUpdateProbByErrorName
+    - updateWord
+    - updateWordByWord
+    - updateWordsOld
+    - updateWordsOldByWord
+    - deleteAustWord
+    - deleteAustWordByWord
+    - deleteClass
+    - deleteClassById
+    - deleteFeedback
+    - deleteFeedbackByRegel
+    - deleteInputSession
+    - deleteInputSessionById
+    - deletePurchasedItem
+    - deletePurchasedItemByUid
     - deleteSchool
     - deleteSchoolById
     - deleteStudent
@@ -415,17 +763,293 @@ MonoBehaviour:
     - teacherSignUp
     fields:
     - index: 1
-      name: jwtToken
-      type: JwtToken
+      name: student
+      type: Student
       parentIndexes: 
-      hasSubField: 0
+      hasSubField: 1
       possibleFields:
       - name: clientMutationId
         type: String
-      - name: jwtToken
-        type: JwtToken
+      - name: student
+        type: Student
       - name: query
         type: Query
+      - name: classByClass
+        type: Class
+      - name: studentEdge
+        type: StudentsEdge
+      hasChanged: 0
+    - index: 12
+      name: stars
+      type: Int
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: id
+        type: UUID
+      - name: login
+        type: String
+      - name: age
+        type: Int
+      - name: class
+        type: UUID
+      - name: mistakePrognosis
+        type: JSON
+      - name: name
+        type: String
+      - name: gender
+        type: String
+      - name: alias
+        type: String
+      - name: proficiency
+        type: Int
+      - name: beginnerLevel
+        type: Int
+      - name: trainedOnKeyboard
+        type: Boolean
+      - name: stars
+        type: Int
+      - name: month
+        type: String
+      - name: estimatedSkill
+        type: String
+      - name: dailyTarget
+        type: Int
+      - name: classByClass
+        type: Class
+      - name: inputSessionsByStudent
+        type: InputSessionsConnection
+      - name: purchasedItemsByOwner
+        type: PurchasedItemsConnection
+      hasChanged: 0
+    isComplete: 0
+  - name: CreateItem
+    type: 1
+    query: "mutation CreateItem{\n    createPurchasedItem(  input :{ purchasedItem
+      :{ owner :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\", id :\"Table\"}} ){\n       
+      purchasedItem{\n            sockets\n            z\n            x\n           
+      uid\n            id\n            owner\n        }\n    }\n}"
+    queryString: createPurchasedItem
+    returnType: CreatePurchasedItemPayload
+    queryOptions:
+    - createAustWord
+    - createClass
+    - createFeedback
+    - createInputSession
+    - createPurchasedItem
+    - createSchool
+    - createStudent
+    - createTeacher
+    - createUpdateProb
+    - createWord
+    - createWordsOld
+    - updateAustWord
+    - updateAustWordByWord
+    - updateClass
+    - updateClassById
+    - updateFeedback
+    - updateFeedbackByRegel
+    - updateInputSession
+    - updateInputSessionById
+    - updatePurchasedItem
+    - updatePurchasedItemByUid
+    - updateSchool
+    - updateSchoolById
+    - updateStudent
+    - updateStudentById
+    - updateTeacher
+    - updateTeacherByEmail
+    - updateTeacherById
+    - updateUpdateProb
+    - updateUpdateProbByErrorName
+    - updateWord
+    - updateWordByWord
+    - updateWordsOld
+    - updateWordsOldByWord
+    - deleteAustWord
+    - deleteAustWordByWord
+    - deleteClass
+    - deleteClassById
+    - deleteFeedback
+    - deleteFeedbackByRegel
+    - deleteInputSession
+    - deleteInputSessionById
+    - deletePurchasedItem
+    - deletePurchasedItemByUid
+    - deleteSchool
+    - deleteSchoolById
+    - deleteStudent
+    - deleteStudentById
+    - deleteTeacher
+    - deleteTeacherByEmail
+    - deleteTeacherById
+    - deleteUpdateProb
+    - deleteUpdateProbByErrorName
+    - deleteWord
+    - deleteWordByWord
+    - deleteWordsOld
+    - deleteWordsOldByWord
+    - generateLoginCode
+    - studentSignIn
+    - teacherSignIn
+    - teacherSignUp
+    fields:
+    - index: 1
+      name: purchasedItem
+      type: PurchasedItem
+      parentIndexes: 
+      hasSubField: 1
+      possibleFields:
+      - name: clientMutationId
+        type: String
+      - name: purchasedItem
+        type: PurchasedItem
+      - name: query
+        type: Query
+      - name: studentByOwner
+        type: Student
+      - name: purchasedItemEdge
+        type: PurchasedItemsEdge
+      hasChanged: 0
+    - index: 6
+      name: sockets
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 5
+      name: z
+      type: Float
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 4
+      name: x
+      type: Float
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 1
+      name: uid
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 2
+      name: id
+      type: String
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 3
+      name: owner
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
       hasChanged: 0
     isComplete: 1
   subscriptions: []

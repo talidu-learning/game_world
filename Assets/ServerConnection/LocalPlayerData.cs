@@ -57,6 +57,11 @@ namespace ServerConnection
         {
             return _stars;
         }
+        
+        public void SetStarCount(int stars)
+        {
+            _stars = stars;
+        }
 
         public bool TryBuyItem(string id, int itemValue)
         {
@@ -69,6 +74,8 @@ namespace ServerConnection
                     id = id,
                     uid = _playerDataConatiner._ownedItems.Count + 1
                 });
+                
+                Game.ServerConnection.UpdateStarsEvent.Invoke(_stars);
                 
                 ChangedItemDataEvent.Invoke(id);
                 return true;

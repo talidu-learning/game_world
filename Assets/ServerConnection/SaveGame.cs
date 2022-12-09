@@ -12,6 +12,8 @@ namespace ServerConnection
 {
     public class SaveGame : MonoBehaviour
     {
+        [SerializeField] private Game.ServerConnection ServerConnection;
+        
         [SerializeField] private ItemCreator itemCreator;
         [SerializeField] private GameObject SocketItem;
         [SerializeField] private ShopInventory shopInventory;
@@ -22,7 +24,7 @@ namespace ServerConnection
         
         private void Awake()
         {
-            // TODO Load Data from Server
+            ServerConnection.GetStudentData();
             _localPlayerData = gameObject.AddComponent<LocalPlayerData>();
         }
 
@@ -40,6 +42,8 @@ namespace ServerConnection
 
         private IEnumerator LoadGameData()
         {
+            yield return new WaitUntil(()=> Game.ServerConnection.Loaded);
+            
             if (!File.Exists(Application.persistentDataPath + "/gamedata.json"))
             {
                 SaveGameData();
@@ -51,16 +55,29 @@ namespace ServerConnection
 
             var itemDatas = _localPlayerData.GetPlacedItems().ToList();
 
+            var gos = CreateGameObjects(itemDatas);
+
+            BuildingSystem.BuildingSystem.Current.OnLoadedGame(gos.ToArray());
+            
+            StarCountUI.UpdateStarCount.Invoke(Game.ServerConnection.StudentData.Stars.ToString());
+            LocalPlayerData.Instance.SetStarCount(Game.ServerConnection.StudentData.Stars);
+            
+            yield return null;
+            LoadedPlayerData.Invoke();
+        }
+
+        private List<GameObject> CreateGameObjects(List<ItemData> itemDatas)
+        {
             List<GameObject> gos = new List<GameObject>();
             List<int> uids = new List<int>();
 
             var itemswithsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length > 0);
             var itemswithoutsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length == 0).ToList();
             Debug.Log(itemswithoutsockets.Count);
-            
+
             foreach (var item in itemswithsockets)
             {
-                if(uids.Contains(item.uid)) continue;
+                if (uids.Contains(item.uid)) continue;
                 var go = itemCreator.CreateItem(item.id, item.uid);
                 go.transform.position = new Vector3(item.x, 0, item.z);
                 gos.Add(go);
@@ -83,19 +100,16 @@ namespace ServerConnection
 
             foreach (var item in itemswithoutsockets)
             {
-                if(uids.Contains(item.uid)) continue;
+                if (uids.Contains(item.uid)) continue;
                 var go = itemCreator.CreateItem(item.id, item.uid);
                 go.transform.position = new Vector3(item.x, 0, item.z);
                 gos.Add(go);
                 uids.Add(item.uid);
             }
-            
-            BuildingSystem.BuildingSystem.Current.OnLoadedGame(gos.ToArray());
-            
-            yield return null;
-            LoadedPlayerData.Invoke();
+
+            return gos;
         }
-        
+
         private GameObject CreateSocketItem(string itemId, int uid, Socket currentSocket)
         {
             var socketItem = Instantiate(SocketItem, currentSocket.gameObject.transform, false);

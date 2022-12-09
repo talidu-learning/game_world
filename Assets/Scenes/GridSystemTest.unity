@@ -1597,8 +1597,30 @@ PrefabInstance:
       propertyPath: shopInventory
       value: 
       objectReference: {fileID: 11400000, guid: 2e3881a7dd09dd54d97dd33e6736f7ba, type: 2}
+    - target: {fileID: 5557176908100838818, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+      propertyPath: ServerConnection
+      value: 
+      objectReference: {fileID: 1277939598}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+--- !u!1 &1277939597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5557176908100838816, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+  m_PrefabInstance: {fileID: 1277939596}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1277939598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277939597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cf66b1722d8ea4289258403ff891ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taliduGraphApi: {fileID: 11400000, guid: fae804bf8854c514bb57f0b4b8765e4b, type: 2}
 --- !u!1 &1413335016 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4787235970136780888, guid: b1f5a9049bf255c4581b5b40f0174aa9, type: 3}
