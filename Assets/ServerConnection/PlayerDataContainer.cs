@@ -15,5 +15,6 @@ namespace ServerConnection
         public int uid;
         public float x;
         public float z;
+        public int[] itemsPlacedOnSockets;
     }
 }

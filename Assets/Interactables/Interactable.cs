@@ -1,4 +1,5 @@
 using System;
+using Enumerations;
 using Interactables;
 using TouchScript.Gestures;
 using TouchScript.Gestures.TransformGestures;
@@ -34,22 +35,26 @@ public class Interactable : MonoBehaviour
     {
         LongPressGesture.enabled = true;
         PressGesture.enabled = true;
+        GetComponent<BoxCollider>().enabled = true;
     }
 
     private void OnEnablingDecoration()
     {
         LongPressGesture.enabled = false;
         PressGesture.enabled = false;
+        GetComponent<BoxCollider>().enabled = false;
     }
 
 
     private void PressGestureOnPressed(object sender, EventArgs e)
     {
         gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.grey;
+        GameAudio.PlaySoundEvent.Invoke(SoundType.Select);
     }
 
     private void LongPressedHandler(object sender, GestureStateChangeEventArgs e)
     {
+
         if (e.State == Gesture.GestureState.Recognized)
         {
             EnableDragging();
@@ -58,6 +63,7 @@ public class Interactable : MonoBehaviour
         else if (e.State == Gesture.GestureState.Failed)
         {
             gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
+            GameAudio.StopPLaying.Invoke();
         }
     }
 

@@ -1,19 +1,22 @@
-﻿using TouchScript.Gestures;
+﻿using System;
+using ServerConnection;
+using TouchScript.Gestures;
 using UnityEngine;
 
 namespace Interactables
 {
     public class Socket : MonoBehaviour
     {
+        public Socket Neighbour;
         public bool IsUsed;
         public int Uid;
 
         private void Awake()
         {
-            GetComponent<PressGesture>().OnPress.AddListener(OnTap);
+            GetComponent<PressGesture>().Pressed+=OnTap;
         }
 
-        private void OnTap(Gesture gesture)
+        private void OnTap(object sender, EventArgs e)
         {
             SelectionManager.SELECT_SOCKET_EVENT.Invoke(this);
         }
@@ -25,7 +28,14 @@ namespace Interactables
 
         public void Deselect()
         {
-            GetComponent<SpriteRenderer>().color = Color.white;
+            GetComponent<SpriteRenderer>().color = IsUsed? Color.red : Color.white;
+        }
+
+        public void Place(int uid)
+        {
+            IsUsed = true;
+            Uid = uid;
+            GetComponent<SpriteRenderer>().color = Color.red;
         }
 
         public void Withdraw()
@@ -33,7 +43,6 @@ namespace Interactables
             Destroy(transform.GetChild(0).gameObject);
             IsUsed = false;
         }
-        
         
     }
 }
