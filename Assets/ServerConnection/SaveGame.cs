@@ -24,7 +24,7 @@ namespace ServerConnection
         
         private void Awake()
         {
-            ServerConnection.GetStudentData();
+            //ServerConnection.GetStudentData();
             _localPlayerData = gameObject.AddComponent<LocalPlayerData>();
         }
 

@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4622052709938419124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0.246}
-  m_LocalScale: {x: 0.6299, y: 0.6299, z: 0.6299}
+  m_LocalPosition: {x: 0, y: 2.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0.25665337}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4883471184429529522}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 6cae25cbeed4807438c1bb2063d23a0d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: daeceaaec0ed2d246bcb2f8185272eb9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 4883471184429529534}
   - component: {fileID: 3985199299028485562}
   m_Layer: 3
-  m_Name: Kaktus
+  m_Name: Betonmischer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,8 +155,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0059501, y: 1.0460136, z: 0.7927103}
-  m_Center: {x: 0.0029751062, y: 0.30201614, z: -0.010032535}
+  m_Size: {x: 14.825484, y: 5.690443, z: 2.8947213}
+  m_Center: {x: -0.009823322, y: 1.3406196, z: 0.41226017}
 --- !u!114 &4883471184429529523
 MonoBehaviour:
   m_ObjectHideFlags: 0

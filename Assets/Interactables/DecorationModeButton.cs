@@ -7,6 +7,9 @@ namespace Interactables
 {
     public class DecorationModeButton : MonoBehaviour
     {
+        [SerializeField] private Sprite DecoModeOn;
+        [SerializeField] private Sprite DecoModeOff;
+    
         public static UnityEvent ToggledDecoModeButtonEvent = new UnityEvent();
         
         private bool isModeEnabled = false;
@@ -40,10 +43,12 @@ namespace Interactables
         {
             if (isModeEnabled)
             {
+                GetComponent<Image>().sprite = DecoModeOff;
                 SelectionManager.DisableDecoration.Invoke();
             }
             else
             {
+                GetComponent<Image>().sprite = DecoModeOn;
                 SelectionManager.EnableDecoration.Invoke();
             }
 

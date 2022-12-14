@@ -13,7 +13,7 @@ namespace Shop
 
         private void Close()
         {
-            LeanTween.moveX(gameObject, -700.0f, 0.8f).setEase(LeanTweenType.easeOutElastic);
+            LeanTween.moveX(gameObject, -840.0f, 0.8f).setEase(LeanTweenType.easeOutElastic);
         }
 
         public void Toggle()
