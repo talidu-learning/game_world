@@ -75,6 +75,11 @@ namespace BuildingSystem
             placeableObject = null;
         }
 
+        public void PlaceObjectOnGrid(PlaceableObject placeableObject)
+        {
+            PlacePlaceable(placeableObject);
+        }
+
         private void PlacePlaceable(PlaceableObject objectToPlace)
         {
             Vector3Int start = GridLayout.WorldToCell(objectToPlace.GetStartPosition());

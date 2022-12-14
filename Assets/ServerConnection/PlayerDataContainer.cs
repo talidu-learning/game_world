@@ -11,6 +11,7 @@ namespace ServerConnection
     [Serializable]
     public class ItemData
     {
+        public string nodeId;
         public string id;
         public Guid uid;
         public float x;

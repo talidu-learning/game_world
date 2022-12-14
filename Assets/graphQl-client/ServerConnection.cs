@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GraphQlClient.Core;
@@ -46,6 +47,8 @@ namespace Game
 
             purchasedItems = await GetAllItems(id);
 
+            //await UpdateItem(purchasedItems[0].uid, 1, 1);
+            
             //await CreateItem(id, "Table");
             
             //await GetAllItems(id);
@@ -77,8 +80,10 @@ namespace Game
         
         private async Task UpdateItem(Guid itemguid, int xCoord, int zCoord, Guid[] socketguids = null)
         {
+            string idasstring = purchasedItems.First(i => i.uid == itemguid).nodeId;
+            Debug.Log(idasstring);
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new {purchasedItemPatch = new{sockets = socketguids, x = xCoord, z = zCoord}, uid = itemguid});
+            query.SetArgs(new {input= new{purchasedItemPatch= new {sockets= socketguids, x= xCoord, z= zCoord, nodeId=idasstring}, uid=itemguid}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
             request.Dispose();
         }
@@ -98,11 +103,13 @@ namespace Game
             {
                 ItemData itemData = new ItemData
                 {
+                    nodeId = node.NodeId,
                     id = node.Id,
                     uid = node.Uid,
                     x = Convert.ToSingle(node.X),
                     z = Convert.ToSingle(node.Z)
                 };
+                Debug.Log(node.NodeId);
                 items.Add(itemData);
             }
             Debug.Log("Purchased Items: " + items.Count);
