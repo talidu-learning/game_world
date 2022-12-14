@@ -40,7 +40,7 @@ namespace Inventory
         private void OnPlaceItemOnSocket(string itemId)
         {
             if (!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
-            int uid = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemId);
+            Guid uid = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemId);
             var go = CreateSocketItem(itemId, uid);
 
             currentSocket.Place(uid);
@@ -52,7 +52,7 @@ namespace Inventory
             SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
         }
 
-        private GameObject CreateSocketItem(string itemId, int uid)
+        private GameObject CreateSocketItem(string itemId, Guid uid)
         {
             var socketItem = Instantiate(SocketItem, currentSocket.gameObject.transform, false);
 

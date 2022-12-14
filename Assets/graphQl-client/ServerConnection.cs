@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GraphQlClient.Core;
 using Plugins.WebGL;
+using ServerConnection;
 using Shop;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -25,6 +26,8 @@ namespace Game
 
         private Guid id;
 
+        public static List<ItemData> purchasedItems = new List<ItemData>();
+
         private void Awake()
         {
             UpdateStarsEvent.AddListener(UpdateStarCount);
@@ -34,19 +37,18 @@ namespace Game
             
             // WebGLPluginJS.SetUpTestToken();
             // var token = WebGLPluginJS.GetTokenFromLocalStorage();
-            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzA1ODIwNTUsImV4cCI6MTY3MDY2ODQ1NSwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.QsIg4bcfa1aMRogFZl0WPwm8H2VEFxs8DsJnacrEHxE";
-            Debug.Log(token);
+            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzEwMDM0MDYsImV4cCI6MTY3MTA4OTgwNiwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.KUPcQl2DV9nUvs6HmskGHOagpwScnpz-bZG3FWVvJ1M";
             
             taliduGraphApi.SetAuthToken(token);
             id = new Guid(await GetStudentID());
 
             await GetStudentData(id);
 
-            await GetAllItems(id);
+            purchasedItems = await GetAllItems(id);
 
             //await CreateItem(id, "Table");
             
-            await GetAllItems(id);
+            //await GetAllItems(id);
 
             Loaded = true;
 
@@ -87,10 +89,23 @@ namespace Game
             query.SetArgs(new {condition = new {owner = guid}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
             var result = request.downloadHandler.text;
-            Debug.Log(result);
             request.Dispose();
-            List<ItemData> items = new List<ItemData>();
+            var deserializedData = Welcome.FromJson(result);
             
+            List<ItemData> items = new List<ItemData>();
+
+            foreach (var node in deserializedData.Data.AllPurchasedItems.Nodes)
+            {
+                ItemData itemData = new ItemData
+                {
+                    id = node.Id,
+                    uid = node.Uid,
+                    x = Convert.ToSingle(node.X),
+                    z = Convert.ToSingle(node.Z)
+                };
+                items.Add(itemData);
+            }
+            Debug.Log("Purchased Items: " + items.Count);
             return items;
         }
         
@@ -119,7 +134,6 @@ namespace Game
             query.SetArgs(new {id = guid});
             UnityWebRequest request = await taliduGraphApi.Post(query);
 
-            Debug.Log(request.downloadHandler.text);
             var dataString = request.downloadHandler.text.Replace("{\"data\":{\"studentById\":{", "")
                 .Replace("}", "").Replace('"', ' ').Replace(" ", "");
 
@@ -143,7 +157,6 @@ namespace Game
                 Name = arrayTrimmed[2],
                 Stars = stars
             };
-            Debug.Log("StudentData: Proficiency: " + StudentData.Stars);
             request.Dispose();
         }
     }

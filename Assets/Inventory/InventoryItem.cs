@@ -72,11 +72,11 @@ namespace Inventory
             SocketPlacement.PlaceItemOnSocket.Invoke(itemID);
         }
         
-        public void Initialize(ItemData itemData)
+        public void Initialize(ShopItemData shopItemData)
         {
-            itemID = itemData.ItemID;
-            ItemImage.sprite = itemData.ItemSprite;
-            attributes = itemData.Attributes;
+            itemID = shopItemData.ItemID;
+            ItemImage.sprite = shopItemData.ItemSprite;
+            attributes = shopItemData.Attributes;
             UpdateUI();
         }
         

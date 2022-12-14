@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Enumerations;
 using Interactables;
 using ServerConnection;
@@ -13,7 +14,7 @@ namespace Shop
         [SerializeField] private ItemCreator ItemCreator;
         [SerializeField] private ShopInventoryDisplay ShopInventoryDisplay;
 
-        public static StringIntUnityEvent InitilizePlaceObjectEvent = new StringIntUnityEvent();
+        public static StringGuidUnityEvent InitilizePlaceObjectEvent = new StringGuidUnityEvent();
 
         public static BoolGameObjectUnityEvent OnTriedPlacingGameObjectEvent = new BoolGameObjectUnityEvent();
 
@@ -55,7 +56,7 @@ namespace Shop
             ShopInventoryDisplay.OnPlacedItem(id, wasPlacedSuccessfully, LocalPlayerData.Instance.IsItemPlaceable(id));
         }
 
-        private void OnPlaceObject(string itemId, int uid)
+        private void OnPlaceObject(string itemId, Guid uid)
         {
             if(!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
             var go = ItemCreator.CreateItem(itemId, LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemId));

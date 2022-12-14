@@ -65,13 +65,13 @@ namespace Shop
             Placed.text = unplaced.ToString();
         }
         
-        public void Initialize(ItemData itemData)
+        public void Initialize(ShopItemData shopItemData)
         {
-            itemID = itemData.ItemID;
-            ItemImage.sprite = itemData.ItemSprite;
-            PriceTag.text = itemData.Value.ToString();
-            itemValue = itemData.Value;
-            attributes = itemData.Attributes;
+            itemID = shopItemData.ItemID;
+            ItemImage.sprite = shopItemData.ItemSprite;
+            PriceTag.text = shopItemData.Value.ToString();
+            itemValue = shopItemData.Value;
+            attributes = shopItemData.Attributes;
             
             UpdateUI();
         }

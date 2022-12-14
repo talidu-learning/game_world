@@ -6,11 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ShopInevtory", menuName = "ScriptableObjects/Shop Inventory")]
 public class ShopInventory : ScriptableObject
 {
-    public List<ItemData> ShopItems = new List<ItemData>();
+    public List<ShopItemData> ShopItems = new List<ShopItemData>();
 }
 
 [Serializable]
-public class ItemData
+public class ShopItemData
 {
     public string ItemID;
     public Sprite ItemSprite;

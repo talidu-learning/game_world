@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Shop;
 using UnityEngine;
@@ -72,7 +73,7 @@ namespace ServerConnection
                 _playerDataConatiner._ownedItems.Add(new ItemData
                 {
                     id = id,
-                    uid = _playerDataConatiner._ownedItems.Count + 1
+                    // UID is given by the server
                 });
                 
                 Game.ServerConnection.UpdateStarsEvent.Invoke(_stars);
@@ -84,7 +85,7 @@ namespace ServerConnection
             return false;
         }
 
-        public void OnPlacedItem(int uid, float x, float z)
+        public void OnPlacedItem(Guid uid, float x, float z)
         {
             var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
             item.x = x;
@@ -93,20 +94,20 @@ namespace ServerConnection
             ChangedItemDataEvent.Invoke(item.id);
         }
         
-        public void OnPlacedItem(int uid, float x, float z, int socketcolectionuid, int socketcount, int socketindex)
+        public void OnPlacedItem(Guid uid, float x, float z, Guid socketcolectionuid, int socketcount, int socketindex)
         {
             var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
             item.x = x;
             item.z = z;
             
             var socketItem = _playerDataConatiner._ownedItems.First(i => i.uid == socketcolectionuid);
-            if(socketItem.itemsPlacedOnSockets == null) socketItem.itemsPlacedOnSockets = new int[socketcount];
+            if(socketItem.itemsPlacedOnSockets == null) socketItem.itemsPlacedOnSockets = new Guid[socketcount];
             socketItem.itemsPlacedOnSockets[socketindex] = uid;
             
             ChangedItemDataEvent.Invoke(item.id);
         }
 
-        public void OnWithdrewItem(int uid)
+        public void OnWithdrewItem(Guid uid)
         {
             var item = _playerDataConatiner._ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
             if (item == null) return;
@@ -116,7 +117,7 @@ namespace ServerConnection
             ChangedItemDataEvent.Invoke(item.id);
         }
         
-        public void OnWithdrewItem(int uid, int socketcollectionuid, int socketindex)
+        public void OnWithdrewItem(Guid uid, Guid socketcollectionuid, int socketindex)
         {
             var item = _playerDataConatiner._ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
             if (item == null) return;
@@ -126,7 +127,7 @@ namespace ServerConnection
             var socketcollection = _playerDataConatiner._ownedItems.First(o => o.uid == socketcollectionuid)
                 .itemsPlacedOnSockets;
             
-            socketcollection[socketindex] = 0;
+            socketcollection[socketindex] = Guid.Empty;
             
             ChangedItemDataEvent.Invoke(item.id);
         }
@@ -146,7 +147,7 @@ namespace ServerConnection
             return _playerDataConatiner._ownedItems.Count(i => i.id == itemId && i.x == 0 && i.z == 0);
         }
 
-        public int GetUIDOfUnplacedItem(string itemID)
+        public Guid GetUIDOfUnplacedItem(string itemID)
         {
             return _playerDataConatiner._ownedItems.First(i=> i.id == itemID && i.x == 0 && i.z == 0).uid;
         }

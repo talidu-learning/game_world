@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Interactables;
 using Shop;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,7 +24,7 @@ namespace ServerConnection
         
         private void Awake()
         {
-            //ServerConnection.GetStudentData();
+            ServerConnection.GetStudentData();
             _localPlayerData = gameObject.AddComponent<LocalPlayerData>();
         }
 
@@ -44,15 +44,22 @@ namespace ServerConnection
         {
             yield return new WaitUntil(()=> Game.ServerConnection.Loaded);
             
-            if (!File.Exists(Application.persistentDataPath + "/gamedata.json"))
-            {
-                SaveGameData();
-            }
+            // if (!File.Exists(Application.persistentDataPath + "/gamedata.json"))
+            // {
+            //     SaveGameData();
+            // }
             
-            _localPlayerData.Initialize(
-                JsonUtility.FromJson<PlayerDataContainer>(
-                    File.ReadAllText(Application.persistentDataPath + "/gamedata.json")));
-
+            // _localPlayerData.Initialize(
+            //     JsonUtility.FromJson<PlayerDataContainer>(
+            //         File.ReadAllText(Application.persistentDataPath + "/gamedata.json")));
+            
+            Debug.Log("Purchased ItemData: " + Game.ServerConnection.purchasedItems.Count);
+            
+            _localPlayerData.Initialize(new PlayerDataContainer
+            {
+                _ownedItems = Game.ServerConnection.purchasedItems
+            });
+            
             var itemDatas = _localPlayerData.GetPlacedItems().ToList();
 
             var gos = CreateGameObjects(itemDatas);
@@ -62,6 +69,8 @@ namespace ServerConnection
             StarCountUI.UpdateStarCount.Invoke(Game.ServerConnection.StudentData.Stars.ToString());
             LocalPlayerData.Instance.SetStarCount(Game.ServerConnection.StudentData.Stars);
             
+            Debug.Log("Tables: " + LocalPlayerData.Instance.GetCountOfOwnedItems("Table"));
+            
             yield return null;
             LoadedPlayerData.Invoke();
         }
@@ -69,11 +78,10 @@ namespace ServerConnection
         private List<GameObject> CreateGameObjects(List<ItemData> itemDatas)
         {
             List<GameObject> gos = new List<GameObject>();
-            List<int> uids = new List<int>();
+            List<Guid> uids = new List<Guid>();
 
             var itemswithsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length > 0);
             var itemswithoutsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length == 0).ToList();
-            Debug.Log(itemswithoutsockets.Count);
 
             foreach (var item in itemswithsockets)
             {
@@ -88,7 +96,7 @@ namespace ServerConnection
                 for (int i = 0; i < sockets.Length; i++)
                 {
                     Debug.Log(item.itemsPlacedOnSockets[i]);
-                    if (item.itemsPlacedOnSockets[i] != 0)
+                    if (item.itemsPlacedOnSockets[i] != Guid.Empty)
                     {
                         sockets[i].Place(item.itemsPlacedOnSockets[i]);
                         var data = itemDatas.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i]);
@@ -110,7 +118,7 @@ namespace ServerConnection
             return gos;
         }
 
-        private GameObject CreateSocketItem(string itemId, int uid, Socket currentSocket)
+        private GameObject CreateSocketItem(string itemId, Guid uid, Socket currentSocket)
         {
             var socketItem = Instantiate(SocketItem, currentSocket.gameObject.transform, false);
 
@@ -125,9 +133,9 @@ namespace ServerConnection
             return socketItem;
         }
 
-        private void OnApplicationQuit()
-        {
-            SaveGameData();
-        }
+        // private void OnApplicationQuit()
+        // {
+        //     SaveGameData();
+        // }
     }
 }

@@ -1,14 +1,9 @@
-﻿using UnityEngine.Events;
+﻿using System;
+using UnityEngine.Events;
 
 namespace Shop
 {
-    public class StringUnityEvent : UnityEvent<string>
-    {
-        
-    }
+    public class StringUnityEvent : UnityEvent<string> { }
     
-    public class StringIntUnityEvent : UnityEvent<string, int>
-    {
-        
-    }
+    public class StringGuidUnityEvent : UnityEvent<string, Guid> { }
 }
