@@ -38,7 +38,7 @@ namespace Game
             
             // WebGLPluginJS.SetUpTestToken();
             // var token = WebGLPluginJS.GetTokenFromLocalStorage();
-            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzEwMDM0MDYsImV4cCI6MTY3MTA4OTgwNiwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.KUPcQl2DV9nUvs6HmskGHOagpwScnpz-bZG3FWVvJ1M";
+            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzExODQ4MzIsImV4cCI6MTY3MTI3MTIzMiwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.j9yu02seyhTtyaKfr6PeRTGGUa9b6t5w2977HKzkYxo";
             
             taliduGraphApi.SetAuthToken(token);
             id = new Guid(await GetStudentID());
@@ -47,7 +47,7 @@ namespace Game
 
             purchasedItems = await GetAllItems(id);
 
-            //await UpdateItem(purchasedItems[0].uid, 1, 1);
+            await UpdateItem(purchasedItems[0].uid, 8, -5);
             
             //await CreateItem(id, "Table");
             
@@ -83,8 +83,11 @@ namespace Game
             string idasstring = purchasedItems.First(i => i.uid == itemguid).nodeId;
             Debug.Log(idasstring);
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new {input= new{purchasedItemPatch= new {sockets= socketguids, x= xCoord, z= zCoord, nodeId=idasstring}, uid=itemguid}});
+            query.SetArgs(new {input= new{purchasedItemPatch= new {sockets= socketguids, x= xCoord, z= zCoord}, uid=itemguid}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
+            
+            Debug.Log(request.downloadHandler.text);
+            
             request.Dispose();
         }
         
