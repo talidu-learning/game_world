@@ -117,7 +117,7 @@
     },
     "com.unity.mathematics": {
       "version": "1.2.6",
-      "depth": 3,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -156,10 +156,21 @@
     },
     "com.unity.settings-manager": {
       "version": "1.0.3",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
+    },
+    "com.unity.splines": {
+      "version": "https://github.com/needle-mirror/com.unity.splines.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.settings-manager": "1.0.3",
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.ugui": "1.0.0"
+      },
+      "hash": "b0b27af5a34b20e21b9c854dffa92bf595c1c6eb"
     },
     "com.unity.test-framework": {
       "version": "1.1.31",

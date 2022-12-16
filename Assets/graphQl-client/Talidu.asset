@@ -579,9 +579,7 @@ MonoBehaviour:
   mutations:
   - name: UpdateItem
     type: 1
-    query: "mutation UpdateItem{\n    updatePurchasedItemByUid(  input :{ purchasedItemPatch
-      :{ sockets :null, x :1, z :1, nodeid :\"WyJwdXJjaGFzZWRfaXRlbXMiLCJmZmZkNmE2Yy1iOTgzLTRhMTItOTg5Yi03ZjZmNzFjMmVlNTIiXQ==\",
-      uid :\"fffd6a6c-b983-4a12-989b-7f6f71c2ee52\"}} ){\n        clientMutationId\n       
+    query: "mutation UpdateItem{\n    updatePurchasedItemByUid{\n        clientMutationId\n       
       query{\n            purchasedItem{\n                nodeId\n               
       sockets\n                z\n                x\n            }\n        }\n   
       }\n}"
