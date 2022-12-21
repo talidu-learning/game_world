@@ -14,6 +14,7 @@ namespace Inventory
         public static UnityEvent OpenedInventoryEvent = new UnityEvent();
     
         [SerializeField] private GameObject InventoryUI;
+        private Vector2 initialInventoryPosition = Vector2.zero;
 
         private void Awake()
         {
@@ -24,6 +25,7 @@ namespace Inventory
         private void Start()
         {
             DecorationModeButton.ToggledDecoModeButtonEvent.AddListener(OnToggledDecoMode);
+            initialInventoryPosition = InventoryUI.transform.position;
         }
 
         private void OnToggledDecoMode()
@@ -51,7 +53,7 @@ namespace Inventory
 
         private void Close()
         {
-            LeanTween.moveLocalY(InventoryUI, -1079.0f, 1.0f).setEase(LeanTweenType.easeOutElastic);
+            LeanTween.move(InventoryUI, new Vector2(Screen.width/2,-Screen.height - 10f), 0.8f).setEase(LeanTweenType.easeOutElastic);
             ClosedInventoryUnityEvent.Invoke();
         }
     }
