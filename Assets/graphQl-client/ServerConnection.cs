@@ -121,10 +121,27 @@ namespace Game
             return true;
         }
         
-        public async Task<bool> UpdateItem(Guid itemguid, int xCoord, int zCoord, Guid[] socketguids = null)
+        public async Task<bool> UpdateItemPosition(Guid itemguid, float xCoord, float zCoord, Guid[] socketguids = null)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {input= new{purchasedItemPatch= new {sockets= socketguids, x= xCoord, z= zCoord}, uid=itemguid}});
+            UnityWebRequest request = await taliduGraphApi.Post(query);
+            
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                request.Dispose();
+                return false;
+            }
+            
+            request.Dispose();
+
+            return true;
+        }
+        
+        public async Task<bool> UpdateItemSockets(Guid itemguid, Guid[] socketguids)
+        {
+            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
+            query.SetArgs(new {input= new{purchasedItemPatch= new {sockets= socketguids}, uid=itemguid}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
             
             if (request.result == UnityWebRequest.Result.ConnectionError)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Enumerations;
 using Interactables;
 using ServerConnection;
@@ -24,7 +25,7 @@ namespace Shop
             OnTriedPlacingGameObjectEvent.AddListener(OnTriedPlacingGameObject);
         }
 
-        private void OnTriedPlacingGameObject(bool wasPlacedSuccessfully, GameObject placedObject)
+        private async void OnTriedPlacingGameObject(bool wasPlacedSuccessfully, GameObject placedObject)
         {
             var uid = placedObject.GetComponent<ItemID>().uid;
             var id = placedObject.GetComponent<ItemID>().id;
@@ -32,7 +33,7 @@ namespace Shop
             if (wasPlacedSuccessfully)
             {
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Place);
-                LocalPlayerData.Instance.OnPlacedItem(uid, placedObject.transform.position.x, placedObject.transform.position.z);
+                await LocalPlayerData.Instance.OnPlacedItem(uid, placedObject.transform.position.x, placedObject.transform.position.z);
             }
             else
             {
@@ -43,13 +44,13 @@ namespace Shop
 
                     foreach (var socket in sockets)
                     {
-                        LocalPlayerData.Instance.OnWithdrewItem(socket.Uid, uid, socket.transform.GetSiblingIndex());
+                        await LocalPlayerData.Instance.OnWithdrewItem(socket.Uid, uid, socket.transform.GetSiblingIndex());
                         socket.Withdraw();
                     }
                     
                 }
 
-                LocalPlayerData.Instance.OnWithdrewItem(uid);
+                await LocalPlayerData.Instance.OnWithdrewItem(uid);
                 Destroy(placedObject);
             }
             

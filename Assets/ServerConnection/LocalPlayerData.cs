@@ -88,51 +88,97 @@ namespace ServerConnection
             return false;
         }
 
-        public void OnPlacedItem(Guid uid, float x, float z)
+        public async Task<bool> OnPlacedItem(Guid uid, float x, float z)
         {
             var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
+            
+            var updatedItem = await ServerConnection.UpdateItemPosition(uid, x, z);
+
+            if (!updatedItem) return false;
+            
             item.x = x;
             item.z = z;
             
             ChangedItemDataEvent.Invoke(item.id);
+
+            return true;
         }
         
-        public void OnPlacedItem(Guid uid, float x, float z, Guid socketcolectionuid, int socketcount, int socketindex)
+        public async Task<bool> OnPlacedItem(Guid uid, float x, float z, Guid socketcolectionuid, int socketcount, int socketindex)
         {
             var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
-            item.x = x;
-            item.z = z;
-            
+
+            var updatedItem = await ServerConnection.UpdateItemPosition(uid, x, z);
+
+            if (!updatedItem) return false;
+
             var socketItem = _playerDataConatiner._ownedItems.First(i => i.uid == socketcolectionuid);
+            
+            
             if(socketItem.itemsPlacedOnSockets == null) socketItem.itemsPlacedOnSockets = new Guid[socketcount];
             socketItem.itemsPlacedOnSockets[socketindex] = uid;
+
+            var updatedSocketItem = await ServerConnection.UpdateItemSockets(uid, socketItem.itemsPlacedOnSockets);
+
+            if (!updatedSocketItem)
+            {
+                socketItem.itemsPlacedOnSockets[socketindex] = Guid.Empty;
+                return false;
+            }
+            
+            item.x = x;
+            item.z = z;
             
             ChangedItemDataEvent.Invoke(item.id);
+
+            return true;
         }
 
-        public void OnWithdrewItem(Guid uid)
+        public async Task<bool> OnWithdrewItem(Guid uid)
         {
             var item = _playerDataConatiner._ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
-            if (item == null) return;
+            if (item == null) return false;
+
+            var updatedItem = await ServerConnection.UpdateItemPosition(uid, 0, 0);
+
+            if (!updatedItem) return false;
+            
             item.x = 0;
             item.z = 0;
             
             ChangedItemDataEvent.Invoke(item.id);
+
+            return true;
         }
         
-        public void OnWithdrewItem(Guid uid, Guid socketcollectionuid, int socketindex)
+        public async Task<bool> OnWithdrewItem(Guid uid, Guid socketcollectionuid, int socketindex)
         {
             var item = _playerDataConatiner._ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
-            if (item == null) return;
-            item.x = 0;
-            item.z = 0;
+            if (item == null) return false;
+            var updatedItem = await ServerConnection.UpdateItemPosition(uid, 0, 0);
 
+            if (!updatedItem)
+            {
+                return false;
+            }
+            
             var socketcollection = _playerDataConatiner._ownedItems.First(o => o.uid == socketcollectionuid)
                 .itemsPlacedOnSockets;
             
             socketcollection[socketindex] = Guid.Empty;
+            var updateItemWithSocket = await ServerConnection.UpdateItemSockets(socketcollectionuid, socketcollection);
+
+            if (!updateItemWithSocket)
+            {
+                socketcollection[socketindex] = uid;
+                return false;
+            }
+            item.x = 0;
+            item.z = 0;
             
             ChangedItemDataEvent.Invoke(item.id);
+
+            return true;
         }
 
         public bool IsItemPlaceable(string itemId)
