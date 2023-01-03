@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Shop;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace ServerConnection
 {
     public class LocalPlayerData : MonoBehaviour
     {
+        [SerializeField]private Game.ServerConnection ServerConnection;
+        
         public static StringUnityEvent ChangedItemDataEvent = new StringUnityEvent();
         
         private int _stars = 500;
@@ -64,22 +67,22 @@ namespace ServerConnection
             _stars = stars;
         }
 
-        public bool TryBuyItem(string id, int itemValue)
+        public async Task<bool> TryBuyItem(string id, int itemValue)
         {
+            
             if (_stars - itemValue >= 0)
             {
-                _stars -= itemValue;
-                StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
-                _playerDataConatiner._ownedItems.Add(new ItemData
+                var updateStarCount = await ServerConnection.UpdateStarCount(_stars - itemValue);
+                var newItem = await ServerConnection.CreateNewItemForCurrentPlayer(id);
+                if (updateStarCount && newItem != null)
                 {
-                    id = id,
-                    // UID is given by the server
-                });
+                    _stars -= itemValue;
+                    StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
+                    _playerDataConatiner._ownedItems.Add(newItem);
                 
-                Game.ServerConnection.UpdateStarsEvent.Invoke(_stars);
-                
-                ChangedItemDataEvent.Invoke(id);
-                return true;
+                    ChangedItemDataEvent.Invoke(id);
+                    return true;   
+                }
             }
 
             return false;

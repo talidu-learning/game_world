@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Enumerations;
 using Interactables;
 using Inventory;
@@ -45,9 +46,10 @@ namespace Shop
             UpdateUI();
         }
 
-        private void OnBuyItemButtonClick()
+        private async void OnBuyItemButtonClick()
         {
-            if (BuyItem())
+            var boughtItem = await BuyItem();
+            if (boughtItem)
             {
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Buy);
                 UpdateUI();
@@ -81,9 +83,10 @@ namespace Shop
             UpdateUI();
         }
 
-        private bool BuyItem()
+        private async Task<bool> BuyItem()
         {
-            if (LocalPlayerData.Instance.TryBuyItem(itemID, itemValue))
+            var tryBuyItem = await LocalPlayerData.Instance.TryBuyItem(itemID, itemValue);
+            if (tryBuyItem)
             {
                 return true;
             }

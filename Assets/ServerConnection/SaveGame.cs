@@ -80,8 +80,8 @@ namespace ServerConnection
             List<GameObject> gos = new List<GameObject>();
             List<Guid> uids = new List<Guid>();
 
-            var itemswithsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length > 0);
-            var itemswithoutsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length == 0).ToList();
+            var itemswithsockets = itemDatas.Where(i => i.itemsPlacedOnSockets != null);
+            var itemswithoutsockets = itemDatas.Where(i => i.itemsPlacedOnSockets == null);
 
             foreach (var item in itemswithsockets)
             {

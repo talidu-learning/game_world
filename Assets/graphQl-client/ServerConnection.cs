@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GraphQlClient.Core;
-using Plugins.WebGL;
+using Newtonsoft.Json;
 using ServerConnection;
-using Shop;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -17,7 +15,6 @@ namespace Game
     public class IntUnityEvent : UnityEvent<int>{}
     public class ServerConnection : MonoBehaviour
     {
-        public static IntUnityEvent UpdateStarsEvent = new IntUnityEvent();
         
         [SerializeField] private GraphApi taliduGraphApi;
 
@@ -29,76 +26,133 @@ namespace Game
 
         public static List<ItemData> purchasedItems = new List<ItemData>();
 
-        private void Awake()
-        {
-            UpdateStarsEvent.AddListener(UpdateStarCount);
-        }
-
         public async void GetStudentData(){
             
             // WebGLPluginJS.SetUpTestToken();
             // var token = WebGLPluginJS.GetTokenFromLocalStorage();
-            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzExODQ4MzIsImV4cCI6MTY3MTI3MTIzMiwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.j9yu02seyhTtyaKfr6PeRTGGUa9b6t5w2977HKzkYxo";
+            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzI3NDA0NDUsImV4cCI6MTY3MjgyNjg0NSwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.gLdaDkJZysYnuNN8l4sysXHV5rhAvMLdogyJnTlncl4";
             
             taliduGraphApi.SetAuthToken(token);
             id = new Guid(await GetStudentID());
 
-            await GetStudentData(id);
+            if (id == null || id == Guid.Empty)
+            {
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
+                return;
+            }
 
-            purchasedItems = await GetAllItems(id);
+            var studentData = await GetStudentData(id);
+            
+            if (!studentData)
+            {
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
+                return;
+            }
 
-            await UpdateItem(purchasedItems[0].uid, 8, -5);
+            var items = await GetAllItems(id);
             
-            //await CreateItem(id, "Table");
+            if (items == null)
+            {
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
+                return;
+            }
+
+            purchasedItems = items;
+
+            // await UpdateItem(purchasedItems[0].uid, 7, -5);
             
-            //await GetAllItems(id);
+            // await CreateItem(id, "Table");
+            
+            // await GetAllItems(id);
 
             Loaded = true;
 
         }
 
-        private void UpdateStarCount(int starCount)
+        public async Task<bool> UpdateStarCount(int starCount)
         {
-            UpdateStars(id, starCount);
+            return await UpdateStars(id, starCount);
         }
 
-        private async Task CreateItem(Guid guid, string itemid)
+        public async Task<ItemData> CreateNewItemForCurrentPlayer(string itemId)
+        {
+            return await CreateItem(id, itemId);
+        }
+
+        private async Task<ItemData> CreateItem(Guid guid, string itemid)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("CreateItem", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {input = new{purchasedItem = new{owner = guid, id = itemid}}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
+
+            var uid = RegExJsonParser.GetValueOfField("uid", request.downloadHandler.text);
+
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                request.Dispose();
+                return null;
+            }
+
+            var newItem = new ItemData
+            {
+                id = itemid,
+                uid = new Guid(uid)
+            };
+            purchasedItems.Add(newItem);
+            
             request.Dispose();
+            return newItem;
         }
         
-        private async Task DeleteItem(Guid guid, string itemid)
+        public async Task<bool> DeleteItem(Guid guid, string itemid)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("DeleteItem", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {});
             UnityWebRequest request = await taliduGraphApi.Post(query);
+            
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                request.Dispose();
+                return false;
+            }
+            
             request.Dispose();
+
+            return true;
         }
         
-        private async Task UpdateItem(Guid itemguid, int xCoord, int zCoord, Guid[] socketguids = null)
+        public async Task<bool> UpdateItem(Guid itemguid, int xCoord, int zCoord, Guid[] socketguids = null)
         {
-            string idasstring = purchasedItems.First(i => i.uid == itemguid).nodeId;
-            Debug.Log(idasstring);
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {input= new{purchasedItemPatch= new {sockets= socketguids, x= xCoord, z= zCoord}, uid=itemguid}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
             
-            Debug.Log(request.downloadHandler.text);
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                request.Dispose();
+                return false;
+            }
             
             request.Dispose();
+
+            return true;
         }
         
-        private async Task<List<ItemData>> GetAllItems(Guid guid)
+        public async Task<List<ItemData>> GetAllItems(Guid guid)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("GetAllItems", GraphApi.Query.Type.Query);
             query.SetArgs(new {condition = new {owner = guid}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
+
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                request.Dispose();
+                return null;
+            }
+            
             var result = request.downloadHandler.text;
             request.Dispose();
-            var deserializedData = Welcome.FromJson(result);
+            var deserializedData = AllPurchasedItemsDataContainer.FromJson(result);
             
             List<ItemData> items = new List<ItemData>();
 
@@ -112,37 +166,56 @@ namespace Game
                     x = Convert.ToSingle(node.X),
                     z = Convert.ToSingle(node.Z)
                 };
-                Debug.Log(node.NodeId);
                 items.Add(itemData);
             }
             Debug.Log("Purchased Items: " + items.Count);
             return items;
         }
         
-        private async Task UpdateStars(Guid guid, int starCount)
+        public async Task<bool> UpdateStars(Guid guid, int starCount)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateStars", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {input = new{ studentPatch = new{stars = starCount}, id = guid}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
+            
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                request.Dispose();
+                return false;
+            }
+            
             request.Dispose();
+            return true;
         }
 
-        private async Task<string> GetStudentID()
+        public async Task<string> GetStudentID()
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UserId", GraphApi.Query.Type.Query);
             UnityWebRequest request = await taliduGraphApi.Post(query);
-            string pattern = "(?<=\"currentUserId\":\").*\"";
-            Regex regex = new Regex(pattern);
-            var id = regex.Match(request.downloadHandler.text).Value.Replace('"', ' ').Replace(" ", "");
+            
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                request.Dispose();
+                return String.Empty;
+            }
+            
+            
+            var id = RegExJsonParser.GetValueOfField("currentUserId", request.downloadHandler.text);
             request.Dispose();
             return id;
         }
 
-        private async Task GetStudentData(Guid guid)
+        public async Task<bool> GetStudentData(Guid guid)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("Student", GraphApi.Query.Type.Query);
             query.SetArgs(new {id = guid});
             UnityWebRequest request = await taliduGraphApi.Post(query);
+            
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                request.Dispose();
+                return false;
+            }
 
             var dataString = request.downloadHandler.text.Replace("{\"data\":{\"studentById\":{", "")
                 .Replace("}", "").Replace('"', ' ').Replace(" ", "");
@@ -168,6 +241,8 @@ namespace Game
                 Stars = stars
             };
             request.Dispose();
+
+            return true;
         }
     }
 

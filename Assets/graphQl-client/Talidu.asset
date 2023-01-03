@@ -940,7 +940,7 @@ MonoBehaviour:
   - name: UpdateItem
     type: 1
     query: "mutation UpdateItem{\n    updatePurchasedItemByUid(  input :{ purchasedItemPatch
-      :{ sockets :null, x :1, z :1}, uid :\"fffd6a6c-b983-4a12-989b-7f6f71c2ee52\"}
+      :{ sockets :null, x :7, z :-5}, uid :\"fffd6a6c-b983-4a12-989b-7f6f71c2ee52\"}
       ){\n        clientMutationId\n        purchasedItem{\n            sockets\n           
       x\n            z\n            uid\n            id\n        }\n    }\n}"
     queryString: updatePurchasedItemByUid
@@ -1267,4 +1267,4 @@ MonoBehaviour:
       hasChanged: 0
     isComplete: 1
   subscriptions: []
-  loading: 0
+  loading: 1
