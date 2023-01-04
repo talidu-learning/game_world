@@ -5,15 +5,18 @@ namespace Shop
     public class ShopPanelTweening : MonoBehaviour
     {
         private bool isOpen = false;
+        public RectTransform ShopPanel;
+        public Canvas Canvas;
 
         private void Open()
         {
-            LeanTween.moveX(gameObject, 0, 0.8f).setEase(LeanTweenType.easeOutElastic);
+            LeanTween.moveX(gameObject, 0, 0.4f).setEaseOutExpo();
         }
 
         private void Close()
-        {
-            LeanTween.moveX(gameObject, -840.0f, 0.8f).setEase(LeanTweenType.easeOutElastic);
+        { // mach das hier fenstergrößenabhänging
+            Debug.Log("width is: " + -ShopPanel.transform.GetComponent<RectTransform>().sizeDelta.x);
+            LeanTween.moveX(gameObject, -ShopPanel.transform.GetComponent<RectTransform>().sizeDelta.x * Canvas.scaleFactor, 0.1f).setEase(LeanTweenType.easeInCirc);
         }
 
         public void Toggle()
