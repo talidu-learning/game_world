@@ -87,7 +87,7 @@ namespace Game
 
             var uid = RegExJsonParser.GetValueOfField("uid", request.downloadHandler.text);
 
-            if (request.result == UnityWebRequest.Result.ConnectionError)
+            if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
                 request.Dispose();
                 return null;
@@ -104,54 +104,88 @@ namespace Game
             return newItem;
         }
         
-        public async Task<bool> DeleteItem(Guid guid, string itemid)
-        {
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("DeleteItem", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new {});
-            UnityWebRequest request = await taliduGraphApi.Post(query);
-            
-            if (request.result == UnityWebRequest.Result.ConnectionError)
-            {
-                request.Dispose();
-                return false;
-            }
-            
-            request.Dispose();
-
-            return true;
-        }
+        // public async Task<bool> DeleteItem(Guid guid, string itemid)
+        // {
+        //     GraphApi.Query query = taliduGraphApi.GetQueryByName("DeleteItem", GraphApi.Query.Type.Mutation);
+        //     query.SetArgs(new {});
+        //     UnityWebRequest request = await taliduGraphApi.Post(query);
+        //     
+        //     if (request.result == UnityWebRequest.Result.ConnectionError)
+        //     {
+        //         request.Dispose();
+        //         return false;
+        //     }
+        //     
+        //     request.Dispose();
+        //
+        //     return true;
+        // }
         
-        public async Task<bool> UpdateItemPosition(Guid itemguid, float xCoord, float zCoord, Guid[] socketguids = null)
+        public async Task UpdateItemPosition(Guid itemguid, string itemID, float xCoord, float zCoord, Action<bool, string, Guid> callBack)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new {input= new{purchasedItemPatch= new {sockets= socketguids, x= xCoord, z= zCoord}, uid=itemguid}});
+            query.SetArgs(new {input= new{purchasedItemPatch= new {x= xCoord, z= zCoord}, uid=itemguid}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
             
-            if (request.result == UnityWebRequest.Result.ConnectionError)
+            if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
                 request.Dispose();
-                return false;
+                callBack.Invoke(false, itemID, itemguid);
+                return;
             }
             
             request.Dispose();
 
-            return true;
+            callBack.Invoke(true, itemID, itemguid);
+        }
+
+        public async Task OnPlacedItemOnSocket(Guid onSocketPlacedItemguid, int socketcount, int socketindex, Guid itemWithSocketsGuid,string itemId, Action<bool, string, Guid> callBack)
+        {
+            var itemWithSocket = purchasedItems.FirstOrDefault(i => i.uid == itemWithSocketsGuid);
+
+            if (itemWithSocket == null)
+            {
+                callBack.Invoke(false,itemId, onSocketPlacedItemguid);
+                return;
+            }
+            
+            if (itemWithSocket.itemsPlacedOnSockets == null)
+                itemWithSocket.itemsPlacedOnSockets = new Guid[socketcount];
+            
+            itemWithSocket.itemsPlacedOnSockets[socketindex] = onSocketPlacedItemguid;
+            
+            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
+            query.SetArgs(new {input= new{purchasedItemPatch= new {sockets= itemWithSocket.itemsPlacedOnSockets}, uid=itemWithSocketsGuid}});
+            UnityWebRequest request = await taliduGraphApi.Post(query);
+            
+            if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
+            {
+                request.Dispose();
+                callBack.Invoke(false,itemId, onSocketPlacedItemguid);
+                return;
+            }
+            
+            request.Dispose();
+
+            callBack.Invoke(true,itemId, onSocketPlacedItemguid);
         }
         
-        public async Task<bool> UpdateItemSockets(Guid itemguid, Guid[] socketguids)
+        public async Task<bool> UpdateItemSockets(Guid itemguid, Guid[] socketguids, Action<bool> callBack = null)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {input= new{purchasedItemPatch= new {sockets= socketguids}, uid=itemguid}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
             
-            if (request.result == UnityWebRequest.Result.ConnectionError)
+            if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
                 request.Dispose();
+                callBack?.Invoke(false);
                 return false;
             }
             
             request.Dispose();
 
+            callBack?.Invoke(true);
             return true;
         }
         
@@ -161,7 +195,7 @@ namespace Game
             query.SetArgs(new {condition = new {owner = guid}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
 
-            if (request.result == UnityWebRequest.Result.ConnectionError)
+            if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
                 request.Dispose();
                 return null;
@@ -195,7 +229,7 @@ namespace Game
             query.SetArgs(new {input = new{ studentPatch = new{stars = starCount}, id = guid}});
             UnityWebRequest request = await taliduGraphApi.Post(query);
             
-            if (request.result == UnityWebRequest.Result.ConnectionError)
+            if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
                 request.Dispose();
                 return false;
@@ -210,7 +244,7 @@ namespace Game
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UserId", GraphApi.Query.Type.Query);
             UnityWebRequest request = await taliduGraphApi.Post(query);
             
-            if (request.result == UnityWebRequest.Result.ConnectionError)
+            if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
                 request.Dispose();
                 return String.Empty;
@@ -228,7 +262,7 @@ namespace Game
             query.SetArgs(new {id = guid});
             UnityWebRequest request = await taliduGraphApi.Post(query);
             
-            if (request.result == UnityWebRequest.Result.ConnectionError)
+            if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
                 request.Dispose();
                 return false;

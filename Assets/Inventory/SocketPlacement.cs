@@ -20,9 +20,14 @@ namespace Inventory
 
         private Socket currentSocket;
 
+        [SerializeField] private Game.ServerConnection ServerConnection;
+        private Action<bool, string, Guid> serverCallback;
+
         private void Awake()
         {
             WithdrawItemOnSocket.AddListener(OnWithdrawItem);
+
+            serverCallback = ServerCallbackOnTriedPlacing;
         }
 
         private void OnWithdrawItem()
@@ -41,6 +46,19 @@ namespace Inventory
         {
             if (!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
             Guid uid = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemId);
+
+            ServerConnection.OnPlacedItemOnSocket(uid, currentSocket.transform.parent.childCount,currentSocket.transform.GetSiblingIndex(),currentSocket.transform.parent.parent.GetComponent<ItemID>().uid,itemId, serverCallback);
+        }
+        
+        private void ServerCallbackOnTriedPlacing(bool sucessfullyConnected, string itemID, Guid uid)
+        {
+            if(sucessfullyConnected)
+                OnSuccessfulPlacement(itemID, uid);
+            else OnFailedPlacement();
+        }
+
+        private void OnSuccessfulPlacement(string itemId, Guid uid)
+        {
             var go = CreateSocketItem(itemId, uid);
 
             currentSocket.Place(uid);
@@ -49,6 +67,11 @@ namespace Inventory
                 currentSocket.transform.parent.parent.GetComponent<ItemID>().uid,
                 currentSocket.transform.parent.childCount, currentSocket.transform.GetSiblingIndex());
             
+            SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
+        }
+        
+        private void OnFailedPlacement()
+        {
             SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
         }
 

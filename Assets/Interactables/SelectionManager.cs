@@ -1,6 +1,6 @@
-﻿using BuildingSystem;
+﻿using System;
+using BuildingSystem;
 using Inventory;
-using ServerConnection;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,6 +25,8 @@ namespace Interactables
         public static readonly SocketUnityEvent WITHDRAW_SOCKET_EVENT = new SocketUnityEvent();
         
         private Socket selectedSocket;
+
+        private Action serverCallback;
 
         private void Awake()
         {

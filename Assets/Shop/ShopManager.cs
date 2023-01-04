@@ -33,7 +33,8 @@ namespace Shop
             if (wasPlacedSuccessfully)
             {
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Place);
-                await LocalPlayerData.Instance.OnPlacedItem(uid, placedObject.transform.position.x, placedObject.transform.position.z);
+                // var updatedItem = await ServerConnection.UpdateItemPosition(uid, x, z);
+                LocalPlayerData.Instance.OnPlacedItem(uid, placedObject.transform.position.x, placedObject.transform.position.z);
             }
             else
             {
@@ -44,13 +45,14 @@ namespace Shop
 
                     foreach (var socket in sockets)
                     {
-                        await LocalPlayerData.Instance.OnWithdrewItem(socket.Uid, uid, socket.transform.GetSiblingIndex());
+                        // var updatedItem = await ServerConnection.UpdateItemPosition(uid, 0, 0);
+                        //var onWithdrewItem =await LocalPlayerData.Instance.OnWithdrewItem(socket.Uid, uid, socket.transform.GetSiblingIndex());
                         socket.Withdraw();
                     }
                     
                 }
-
-                await LocalPlayerData.Instance.OnWithdrewItem(uid);
+                // var updatedItem = await ServerConnection.UpdateItemPosition(uid, 0, 0);
+                // var onWithdrewItem2 = await LocalPlayerData.Instance.OnWithdrewItem(uid);
                 Destroy(placedObject);
             }
             

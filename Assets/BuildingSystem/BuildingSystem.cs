@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using Shop;
@@ -21,9 +22,13 @@ namespace BuildingSystem
         
         [SerializeField] private TileBase TileBase;
 
+        [SerializeField] private Game.ServerConnection ServerConnection;
+
         private Grid grid;
         private PlaceableObject placeableObject;
         private TilemapRenderer visibleMapRenderer;
+
+        private Action<bool, string, Guid> serverCallback;
 
         private void Awake()
         {
@@ -31,6 +36,8 @@ namespace BuildingSystem
             grid = GridLayout.gameObject.GetComponent<Grid>();
             visibleMapRenderer = VisibleTilemap.GetComponent<TilemapRenderer>();
             visibleMapRenderer.enabled = false;
+
+            serverCallback = ServerCallbackOnTriedPlacing;
         }
 
         public void OnLoadedGame(GameObject[] placedObjects)
@@ -54,27 +61,47 @@ namespace BuildingSystem
         {
             if (CanBePlaced(placeableObject))
             {
-                PlacePlaceable(placeableObject);
-                ShopManager.OnTriedPlacingGameObjectEvent.Invoke(true, placeableObject.gameObject);
+                ServerConnection.UpdateItemPosition(placeableObject.gameObject.GetComponent<ItemID>().uid, placeableObject.gameObject.GetComponent<ItemID>().id,
+                    placeableObject.gameObject.transform.position.x, placeableObject.gameObject.transform.position.z,
+                    serverCallback);
             }
             else
             {
-                if (placeableObject.WasPlacedBefore)
-                {
-                    placeableObject.transform.position = placeableObject.PlacePosition;
-                    placeableObject.Place(placeableObject.PlacedPosition);
-                    TakeArea(placeableObject.PlacedPosition, placeableObject.Size, TileBase);
-                    return;
-                }
-                
-                ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
+                OnFailedPlacement();
             }
 
-            visibleMapRenderer.enabled = false;
-
-            placeableObject = null;
         }
 
+        private void ServerCallbackOnTriedPlacing(bool sucessfullyConnected, string itemID, Guid uid)
+        {
+            if(sucessfullyConnected)
+                OnSuccessfulPlacement();
+            else OnFailedPlacement();
+        }
+
+        private void OnSuccessfulPlacement()
+        {
+            PlacePlaceable(placeableObject);
+            ShopManager.OnTriedPlacingGameObjectEvent.Invoke(true, placeableObject.gameObject);
+            visibleMapRenderer.enabled = false;
+            placeableObject = null;
+        }
+        
+        private void OnFailedPlacement()
+        {
+            if (placeableObject.WasPlacedBefore)
+            {
+                placeableObject.transform.position = placeableObject.PlacePosition;
+                placeableObject.Place(placeableObject.PlacedPosition);
+                TakeArea(placeableObject.PlacedPosition, placeableObject.Size, TileBase);
+                return;
+            }
+                
+            ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
+            visibleMapRenderer.enabled = false;
+            placeableObject = null;
+        }
+        
         public void PlaceObjectOnGrid(PlaceableObject placeableObject)
         {
             PlacePlaceable(placeableObject);
