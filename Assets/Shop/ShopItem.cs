@@ -32,7 +32,7 @@ namespace Shop
         private void Start()
         {
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(StartAsyncUpdate);
-            SelectionManager.WITHDRAW_OBJECT_EVENT.AddListener(StartAsyncUpdate);
+            SelectionManager.DELETE_OBJECT_EVENT.AddListener(StartAsyncUpdate);
         }
 
         private void StartAsyncUpdate()

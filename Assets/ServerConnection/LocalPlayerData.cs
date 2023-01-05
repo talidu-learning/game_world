@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Shop;
@@ -8,13 +9,13 @@ namespace ServerConnection
 {
     public class LocalPlayerData : MonoBehaviour
     {
-        [SerializeField]private Game.ServerConnection ServerConnection;
+        private Game.ServerConnection ServerConnection;
         
         public static StringUnityEvent ChangedItemDataEvent = new StringUnityEvent();
         
         private int _stars = 500;
         
-        private PlayerDataContainer _playerDataConatiner = new PlayerDataContainer();
+        public List<ItemData> _ownedItems = new List<ItemData>();
 
         private static LocalPlayerData _instance;
 
@@ -26,9 +27,10 @@ namespace ServerConnection
 
         private void Awake()
         {
+            ServerConnection = FindObjectOfType<Game.ServerConnection>();
             if (_instance != null && _instance != this)
             {
-                Destroy(this.gameObject);
+                Destroy(this);
             }
             else
             {
@@ -36,25 +38,25 @@ namespace ServerConnection
             }
         }
 
-        public string GetJsonData()
-        {
-            return JsonUtility.ToJson(_playerDataConatiner);
-        }
+        // public string GetJsonData()
+        // {
+        //     return JsonUtility.ToJson(_playerDataConatiner);
+        // }
 
         public void Initialize(PlayerDataContainer playerDataContainer)
         {
-            _playerDataConatiner = playerDataContainer;
+            // _playerDataConatiner = playerDataContainer;
             StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
         }
 
         public ItemData[] GetOwnedItems()
         {
-            return _playerDataConatiner._ownedItems.ToArray();
+            return _ownedItems.ToArray();
         }
         
         public ItemData[] GetPlacedItems()
         {
-            return _playerDataConatiner._ownedItems.Where(o=> o.x != 0 && o.z != 0).ToArray();
+            return _ownedItems.Where(o=> o.x != 0 && o.z != 0).ToArray();
         }
 
         public int GetStarCount()
@@ -78,7 +80,7 @@ namespace ServerConnection
                 {
                     _stars -= itemValue;
                     StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
-                    _playerDataConatiner._ownedItems.Add(newItem);
+                    _ownedItems.Add(newItem);
                 
                     ChangedItemDataEvent.Invoke(id);
                     return true;   
@@ -90,7 +92,7 @@ namespace ServerConnection
 
         public void OnPlacedItem(Guid uid, float x, float z)
         {
-            var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
+            var item = _ownedItems.First(i => i.uid == uid);
             
             item.x = x;
             item.z = z;
@@ -100,9 +102,9 @@ namespace ServerConnection
         
         public void OnPlacedItem(Guid uid, float x, float z, Guid socketcolectionuid, int socketcount, int socketindex)
         {
-            var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
+            var item = _ownedItems.First(i => i.uid == uid);
 
-            var socketItem = _playerDataConatiner._ownedItems.First(i => i.uid == socketcolectionuid);
+            var socketItem = _ownedItems.First(i => i.uid == socketcolectionuid);
             
             
             if(socketItem.itemsPlacedOnSockets == null) socketItem.itemsPlacedOnSockets = new Guid[socketcount];
@@ -114,9 +116,9 @@ namespace ServerConnection
             ChangedItemDataEvent.Invoke(item.id);
         }
 
-        public void OnWithdrewItem(Guid uid)
+        public void OnDeletedItem(Guid uid)
         {
-            var item = _playerDataConatiner._ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
+            var item = _ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
 
             item.x = 0;
             item.z = 0;
@@ -125,11 +127,11 @@ namespace ServerConnection
 
         }
         
-        public void OnWithdrewItem(Guid uid, Guid socketcollectionuid, int socketindex)
+        public void OnDeletedItem(Guid uid, Guid socketcollectionuid, int socketindex)
         {
-            var item = _playerDataConatiner._ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
+            var item = _ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
             
-            var socketcollection = _playerDataConatiner._ownedItems.First(o => o.uid == socketcollectionuid)
+            var socketcollection = _ownedItems.First(o => o.uid == socketcollectionuid)
                 .itemsPlacedOnSockets;
             
             socketcollection[socketindex] = Guid.Empty;
@@ -141,22 +143,22 @@ namespace ServerConnection
 
         public bool IsItemPlaceable(string itemId)
         {
-            return _playerDataConatiner._ownedItems.Any(o => o.id == itemId && o.x == 0 && o.z == 0);
+            return _ownedItems.Any(o => o.id == itemId && o.x == 0 && o.z == 0);
         }
         
         public int GetCountOfOwnedItems(string itemId)
         {
-            return _playerDataConatiner._ownedItems.Count(i => i.id == itemId);
+            return _ownedItems.Count(i => i.id == itemId);
         }
 
         public int GetCountOfUnplacedItems(string itemId)
         {
-            return _playerDataConatiner._ownedItems.Count(i => i.id == itemId && i.x == 0 && i.z == 0);
+            return _ownedItems.Count(i => i.id == itemId && i.x == 0 && i.z == 0);
         }
 
         public Guid GetUIDOfUnplacedItem(string itemID)
         {
-            return _playerDataConatiner._ownedItems.First(i=> i.id == itemID && i.x == 0 && i.z == 0).uid;
+            return _ownedItems.First(i=> i.id == itemID && i.x == 0 && i.z == 0).uid;
         }
     }
 }

@@ -26,11 +26,11 @@ namespace Game
 
         public static List<ItemData> purchasedItems = new List<ItemData>();
 
-        public async void GetStudentData(){
+        public async Task GetStudentData(){
             
             // WebGLPluginJS.SetUpTestToken();
             // var token = WebGLPluginJS.GetTokenFromLocalStorage();
-            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzI3NDA0NDUsImV4cCI6MTY3MjgyNjg0NSwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.gLdaDkJZysYnuNN8l4sysXHV5rhAvMLdogyJnTlncl4";
+            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzI5MzEyOTMsImV4cCI6MTY3MzAxNzY5MywiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.x4f4Pss-V-AfsN4wFenTCvssenLjnAYwr1qI9U0XCKM";
             
             taliduGraphApi.SetAuthToken(token);
             id = new Guid(await GetStudentID());
@@ -121,7 +121,7 @@ namespace Game
         //     return true;
         // }
         
-        public async Task UpdateItemPosition(Guid itemguid, string itemID, float xCoord, float zCoord, Action<bool, string, Guid> callBack)
+        public async void UpdateItemPosition(Guid itemguid, string itemID, float xCoord, float zCoord, Action<bool, string, Guid> callBack = null)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {input= new{purchasedItemPatch= new {x= xCoord, z= zCoord}, uid=itemguid}});
@@ -130,16 +130,57 @@ namespace Game
             if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
                 request.Dispose();
-                callBack.Invoke(false, itemID, itemguid);
+                callBack?.Invoke(false, itemID, itemguid);
                 return;
             }
             
             request.Dispose();
 
-            callBack.Invoke(true, itemID, itemguid);
+            callBack?.Invoke(true, itemID, itemguid);
+        }
+        
+        public async void DeleteItem(Guid itemguid, string itemID, Action<bool, string, Guid> callBack = null)
+        {
+            var itemWithSocket = purchasedItems.FirstOrDefault(i => i.uid == itemguid);
+
+            if (itemWithSocket == null)
+            {
+                callBack?.Invoke(false,itemID, itemguid);
+                Debug.Log("Failed 1");
+                return;
+            }
+
+            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
+            
+            if (itemWithSocket.itemsPlacedOnSockets != null)
+            {
+                Guid[] newSockets = new Guid[itemWithSocket.itemsPlacedOnSockets.Length];
+                query.SetArgs(new {input= new{purchasedItemPatch= new {sockets = newSockets, x= 0, z= 0}, uid=itemguid}});
+            }
+            else
+            {
+                query.SetArgs(new {input= new{purchasedItemPatch= new {x= 0, z= 0}, uid=itemguid}});
+            }
+
+            
+            UnityWebRequest request = await taliduGraphApi.Post(query);
+            
+            if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
+            {
+                request.Dispose();
+                callBack?.Invoke(false, itemID, itemguid);
+                Debug.Log("Failed 2");
+                return;
+            }
+            
+            Debug.Log("Success");
+            
+            request.Dispose();
+
+            callBack?.Invoke(true, itemID, itemguid);
         }
 
-        public async Task OnPlacedItemOnSocket(Guid onSocketPlacedItemguid, int socketcount, int socketindex, Guid itemWithSocketsGuid,string itemId, Action<bool, string, Guid> callBack)
+        public async void OnPlacedItemOnSocket(Guid onSocketPlacedItemguid, int socketcount, int socketindex, Guid itemWithSocketsGuid,string itemId, Action<bool, string, Guid> callBack)
         {
             var itemWithSocket = purchasedItems.FirstOrDefault(i => i.uid == itemWithSocketsGuid);
 
@@ -153,6 +194,7 @@ namespace Game
                 itemWithSocket.itemsPlacedOnSockets = new Guid[socketcount];
             
             itemWithSocket.itemsPlacedOnSockets[socketindex] = onSocketPlacedItemguid;
+            Debug.Log(itemWithSocket.itemsPlacedOnSockets[socketindex]);
             
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {input= new{purchasedItemPatch= new {sockets= itemWithSocket.itemsPlacedOnSockets}, uid=itemWithSocketsGuid}});
@@ -168,6 +210,34 @@ namespace Game
             request.Dispose();
 
             callBack.Invoke(true,itemId, onSocketPlacedItemguid);
+        }
+        
+        public async void OnDeletedItemOnSocket(Guid onSocketPlacedItemguid, int socketindex, Guid itemWithSocketsGuid, Action<bool, Guid, Guid, int> callBack)
+        {
+            var itemWithSocket = purchasedItems.FirstOrDefault(i => i.uid == itemWithSocketsGuid);
+
+            if (itemWithSocket == null)
+            {
+                callBack.Invoke(false,onSocketPlacedItemguid, itemWithSocketsGuid, socketindex);
+                return;
+            }
+            
+            itemWithSocket.itemsPlacedOnSockets[socketindex] = Guid.Empty;
+            
+            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
+            query.SetArgs(new {input= new{purchasedItemPatch= new {sockets= itemWithSocket.itemsPlacedOnSockets}, uid=itemWithSocketsGuid}});
+            UnityWebRequest request = await taliduGraphApi.Post(query);
+            
+            if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
+            {
+                request.Dispose();
+                callBack.Invoke(false,onSocketPlacedItemguid, itemWithSocketsGuid, socketindex);
+                return;
+            }
+            
+            request.Dispose();
+
+            callBack.Invoke(true,onSocketPlacedItemguid, itemWithSocketsGuid, socketindex);
         }
         
         public async Task<bool> UpdateItemSockets(Guid itemguid, Guid[] socketguids, Action<bool> callBack = null)

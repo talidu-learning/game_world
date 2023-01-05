@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1314858847, guid: b1f5a9049bf255c4581b5b40f0174aa9, type: 3}
+      propertyPath: DeleteButton
+      value: 
+      objectReference: {fileID: 645673374}
     - target: {fileID: 174320061819754458, guid: b1f5a9049bf255c4581b5b40f0174aa9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1382,6 +1386,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &645673374 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7593015385582642325, guid: b1f5a9049bf255c4581b5b40f0174aa9, type: 3}
+  m_PrefabInstance: {fileID: 10046218}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1241463651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1389,6 +1398,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1925364582, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: delete
+      value: 
+      objectReference: {fileID: 8300000, guid: b846609b0f47fbc42a2e138b6925ece3, type: 3}
     - target: {fileID: 5160054078279577941, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1457,6 +1470,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 599489675, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+      propertyPath: serverConnection
+      value: 
+      objectReference: {fileID: 1303059408}
+    - target: {fileID: 980725196, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+      propertyPath: ServerConnection
+      value: 
+      objectReference: {fileID: 1303059408}
     - target: {fileID: 5557176907690520787, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
       propertyPath: ContentViewport
       value: 
@@ -1511,6 +1532,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+--- !u!114 &1303059408 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1277939598, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+  m_PrefabInstance: {fileID: 1277939596}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cf66b1722d8ea4289258403ff891ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1413335016 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4787235970136780888, guid: b1f5a9049bf255c4581b5b40f0174aa9, type: 3}
@@ -1527,6 +1559,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grid
       objectReference: {fileID: 0}
+    - target: {fileID: 3684780545696161066, guid: f9e513129a4896148ad22438606db08c, type: 3}
+      propertyPath: ServerConnection
+      value: 
+      objectReference: {fileID: 1303059408}
     - target: {fileID: 3684780545696161067, guid: f9e513129a4896148ad22438606db08c, type: 3}
       propertyPath: m_RootOrder
       value: 2

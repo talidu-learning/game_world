@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Interactables;
 using Shop;
 using UnityEngine;
@@ -22,23 +23,23 @@ namespace ServerConnection
 
         private LocalPlayerData _localPlayerData;
         
-        private void Awake()
+        private async Task Awake()
         {
-            ServerConnection.GetStudentData();
             _localPlayerData = gameObject.AddComponent<LocalPlayerData>();
         }
 
-        private void Start()
+        async void Start()
         {
+            await ServerConnection.GetStudentData();
             StartCoroutine(LoadGameData());
         }
 
-        private void SaveGameData()
-        {
-            string json = _localPlayerData.GetJsonData();
-            
-            File.WriteAllText(Application.persistentDataPath + "/gamedata.json", json);
-        }
+        // private void SaveGameData()
+        // {
+        //     string json = _localPlayerData.GetJsonData();
+        //     
+        //     File.WriteAllText(Application.persistentDataPath + "/gamedata.json", json);
+        // }
 
         private IEnumerator LoadGameData()
         {
@@ -54,12 +55,9 @@ namespace ServerConnection
             //         File.ReadAllText(Application.persistentDataPath + "/gamedata.json")));
             
             Debug.Log("Purchased ItemData: " + Game.ServerConnection.purchasedItems.Count);
-            
-            _localPlayerData.Initialize(new PlayerDataContainer
-            {
-                _ownedItems = Game.ServerConnection.purchasedItems
-            });
-            
+
+            _localPlayerData._ownedItems = Game.ServerConnection.purchasedItems;
+
             var itemDatas = _localPlayerData.GetPlacedItems().ToList();
 
             var gos = CreateGameObjects(itemDatas);
@@ -69,7 +67,14 @@ namespace ServerConnection
             StarCountUI.UpdateStarCount.Invoke(Game.ServerConnection.StudentData.Stars.ToString());
             LocalPlayerData.Instance.SetStarCount(Game.ServerConnection.StudentData.Stars);
             
-            Debug.Log("Tables: " + LocalPlayerData.Instance.GetCountOfOwnedItems("Table"));
+            Debug.Log("Tables: " + LocalPlayerData.Instance._ownedItems.Count);
+
+            foreach (var item in Game.ServerConnection.purchasedItems)
+            {
+                Debug.Log(item.id);
+                if(item.itemsPlacedOnSockets != null)
+                    Debug.Log(item.itemsPlacedOnSockets[2]);
+            }
             
             yield return null;
             LoadedPlayerData.Invoke();
@@ -81,7 +86,9 @@ namespace ServerConnection
             List<Guid> uids = new List<Guid>();
 
             var itemswithsockets = itemDatas.Where(i => i.itemsPlacedOnSockets != null);
+            Debug.Log("SocketedItems: " + itemswithsockets.ToList().Count);
             var itemswithoutsockets = itemDatas.Where(i => i.itemsPlacedOnSockets == null);
+            Debug.Log("UnsocketedItems: " + itemswithoutsockets.ToList().Count);
 
             foreach (var item in itemswithsockets)
             {
@@ -95,7 +102,7 @@ namespace ServerConnection
 
                 for (int i = 0; i < sockets.Length; i++)
                 {
-                    Debug.Log(item.itemsPlacedOnSockets[i]);
+                    Debug.Log("Item on Socket: " + item.itemsPlacedOnSockets[i]);
                     if (item.itemsPlacedOnSockets[i] != Guid.Empty)
                     {
                         sockets[i].Place(item.itemsPlacedOnSockets[i]);

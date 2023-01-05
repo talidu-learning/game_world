@@ -10,7 +10,7 @@ public class GameAudio : MonoBehaviour
     [SerializeField] private AudioClip buy;
     [SerializeField] private AudioClip place;
     [SerializeField] private AudioClip placeSocket;
-    [SerializeField] private AudioClip withdraw;
+    [SerializeField] private AudioClip delete;
     [SerializeField] private AudioClip select;
     [SerializeField] private AudioClip selectSocket;
     [SerializeField] private AudioClip OpenShop;
@@ -49,8 +49,8 @@ public class GameAudio : MonoBehaviour
             case SoundType.Place: 
                 _audioSource.PlayOneShot(place);
                 break;
-            case SoundType.Withdraw: 
-                _audioSource.PlayOneShot(withdraw);
+            case SoundType.Delete: 
+                _audioSource.PlayOneShot(delete);
                 break;
             case SoundType.PlaceSocket: 
                 _audioSource.PlayOneShot(placeSocket);

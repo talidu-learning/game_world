@@ -580,7 +580,7 @@ MonoBehaviour:
   - name: UpdateStars
     type: 1
     query: "mutation UpdateStars{\n    updateStudentById(  input :{ studentPatch
-      :{ stars :498}, id :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\"} ){\n        student{\n           
+      :{ stars :496}, id :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\"} ){\n        student{\n           
       stars\n        }\n    }\n}"
     queryString: updateStudentById
     returnType: UpdateStudentPayload
@@ -713,7 +713,7 @@ MonoBehaviour:
   - name: CreateItem
     type: 1
     query: "mutation CreateItem{\n    createPurchasedItem(  input :{ purchasedItem
-      :{ owner :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\", id :\"Table\"}} ){\n       
+      :{ owner :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\", id :\"Kaktus\"}} ){\n       
       purchasedItem{\n            sockets\n            z\n            x\n           
       uid\n            id\n            owner\n        }\n    }\n}"
     queryString: createPurchasedItem
@@ -940,9 +940,10 @@ MonoBehaviour:
   - name: UpdateItem
     type: 1
     query: "mutation UpdateItem{\n    updatePurchasedItemByUid(  input :{ purchasedItemPatch
-      :{ sockets :null, x :7, z :-5}, uid :\"fffd6a6c-b983-4a12-989b-7f6f71c2ee52\"}
-      ){\n        clientMutationId\n        purchasedItem{\n            sockets\n           
-      x\n            z\n            uid\n            id\n        }\n    }\n}"
+      :{ sockets :[\"00000000-0000-0000-0000-000000000000\",\"00000000-0000-0000-0000-000000000000\",\"cad31928-787f-4332-a485-0dda6e0bdfb8\",\"00000000-0000-0000-0000-000000000000\",\"00000000-0000-0000-0000-000000000000\"]},
+      uid :\"0159ec16-aaec-4f10-bb17-b9782b673f32\"} ){\n        clientMutationId\n       
+      purchasedItem{\n            sockets\n            x\n            z\n           
+      uid\n            id\n        }\n    }\n}"
     queryString: updatePurchasedItemByUid
     returnType: UpdatePurchasedItemPayload
     queryOptions:
@@ -1267,4 +1268,4 @@ MonoBehaviour:
       hasChanged: 0
     isComplete: 1
   subscriptions: []
-  loading: 1
+  loading: 0

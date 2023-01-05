@@ -16,7 +16,7 @@ namespace BuildingSystem
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                BuildingSystem.Current.WithdrawSelectedObject();
+                BuildingSystem.Current.DeleteSelectedObject();
             }
         }
 

@@ -28,11 +28,11 @@ namespace Inventory
         private void Start()
         {
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(StartAsyncUpdate);
-            SelectionManager.WITHDRAW_OBJECT_EVENT.AddListener(StartAsyncUpdate);
+            SelectionManager.DELETE_OBJECT_EVENT.AddListener(StartAsyncUpdate);
             
             SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);
             SelectionManager.DESELECT_SOCKET_EVENT.AddListener(OnDeselectedSocket);
-            SelectionManager.WITHDRAW_SOCKET_EVENT.AddListener(OnDeselectedSocket);
+            SelectionManager.DELETE_SOCKET_EVENT.AddListener(OnDeselectedSocket);
         }
 
         private void OnDeselectedSocket(Socket socket)

@@ -14,26 +14,28 @@ namespace Inventory
 
         public static StringUnityEvent PlaceItemOnSocket = new StringUnityEvent();
 
-        public static UnityEvent WithdrawItemOnSocket = new UnityEvent();
+        public static UnityEvent DeleteItemOnSocket = new UnityEvent();
 
         [SerializeField] private GameObject SocketItem;
 
         private Socket currentSocket;
 
         [SerializeField] private Game.ServerConnection ServerConnection;
-        private Action<bool, string, Guid> serverCallback;
+        private Action<bool, string, Guid> serverCallbackPlacing;
+        private Action<bool, Guid, Guid, int> serverCallbackDelete;
 
         private void Awake()
         {
-            WithdrawItemOnSocket.AddListener(OnWithdrawItem);
+            DeleteItemOnSocket.AddListener(OnDeleteItem);
 
-            serverCallback = ServerCallbackOnTriedPlacing;
+            serverCallbackPlacing = ServerCallbackOnTriedPlacing;
+            serverCallbackDelete = ServerCallbackOnTriedDeleting;
         }
 
-        private void OnWithdrawItem()
+        private void OnDeleteItem()
         {
-            LocalPlayerData.Instance.OnWithdrewItem(currentSocket.Uid,currentSocket.transform.parent.parent.GetComponent<ItemID>().uid, currentSocket.transform.GetSiblingIndex());
-            currentSocket.Withdraw();
+            ServerConnection.OnDeletedItemOnSocket(currentSocket.Uid, currentSocket.transform.GetSiblingIndex(),
+                currentSocket.transform.parent.parent.GetComponent<ItemID>().uid, serverCallbackDelete);
         }
 
         private void Start()
@@ -47,12 +49,33 @@ namespace Inventory
             if (!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
             Guid uid = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemId);
 
-            ServerConnection.OnPlacedItemOnSocket(uid, currentSocket.transform.parent.childCount,currentSocket.transform.GetSiblingIndex(),currentSocket.transform.parent.parent.GetComponent<ItemID>().uid,itemId, serverCallback);
+            ServerConnection.OnPlacedItemOnSocket(uid, currentSocket.transform.parent.childCount,
+                currentSocket.transform.GetSiblingIndex(),
+                currentSocket.transform.parent.parent.GetComponent<ItemID>().uid, itemId, serverCallbackPlacing);
         }
-        
+
+        private void ServerCallbackOnTriedDeleting(bool sucessfullyConnected, Guid socketItemUid,
+            Guid socketcollectionuid, int siblingindex)
+        {
+            if (sucessfullyConnected)
+                OnSuccessfulDeletion(socketItemUid, socketcollectionuid, siblingindex);
+            else OnFailedDeletion();
+        }
+
+        private void OnSuccessfulDeletion(Guid socketItemUid, Guid uid, int siblingindex)
+        {
+            LocalPlayerData.Instance.OnDeletedItem(socketItemUid, uid, siblingindex);
+            currentSocket.Delete();
+        }
+
+        private void OnFailedDeletion()
+        {
+            currentSocket.Delete();
+        }
+
         private void ServerCallbackOnTriedPlacing(bool sucessfullyConnected, string itemID, Guid uid)
         {
-            if(sucessfullyConnected)
+            if (sucessfullyConnected)
                 OnSuccessfulPlacement(itemID, uid);
             else OnFailedPlacement();
         }
@@ -66,10 +89,10 @@ namespace Inventory
             LocalPlayerData.Instance.OnPlacedItem(uid, go.transform.position.x, go.transform.position.z,
                 currentSocket.transform.parent.parent.GetComponent<ItemID>().uid,
                 currentSocket.transform.parent.childCount, currentSocket.transform.GetSiblingIndex());
-            
+
             SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
         }
-        
+
         private void OnFailedPlacement()
         {
             SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);

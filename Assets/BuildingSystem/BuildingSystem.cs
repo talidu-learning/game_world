@@ -28,7 +28,8 @@ namespace BuildingSystem
         private PlaceableObject placeableObject;
         private TilemapRenderer visibleMapRenderer;
 
-        private Action<bool, string, Guid> serverCallback;
+        private Action<bool, string, Guid> serverCallbackPlacing;
+        private Action<bool, string, Guid> serverCallbackDelete;
 
         private void Awake()
         {
@@ -37,7 +38,8 @@ namespace BuildingSystem
             visibleMapRenderer = VisibleTilemap.GetComponent<TilemapRenderer>();
             visibleMapRenderer.enabled = false;
 
-            serverCallback = ServerCallbackOnTriedPlacing;
+            serverCallbackPlacing = ServerCallbackOnTriedPlacing;
+            serverCallbackDelete = ServerCallbackOnTriedDeleting;
         }
 
         public void OnLoadedGame(GameObject[] placedObjects)
@@ -45,16 +47,12 @@ namespace BuildingSystem
             StartCoroutine(LoadItems(placedObjects));
         }
 
-        public void WithdrawSelectedObject()
+        public void DeleteSelectedObject()
         {
             if (!placeableObject) return;
-            if (placeableObject.WasPlacedBefore)
-            {
-                RemoveArea(placeableObject.PlacedPosition, placeableObject.Size);
-            }
-            ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
-            placeableObject = null;
-            visibleMapRenderer.enabled = false;
+            var itemId = placeableObject.gameObject.GetComponent<ItemID>();
+            Debug.Log("Delete!");
+            ServerConnection.DeleteItem(itemId.uid, itemId.id, serverCallbackDelete);
         }
 
         public void PlaceLastObjectOnGrid()
@@ -63,13 +61,38 @@ namespace BuildingSystem
             {
                 ServerConnection.UpdateItemPosition(placeableObject.gameObject.GetComponent<ItemID>().uid, placeableObject.gameObject.GetComponent<ItemID>().id,
                     placeableObject.gameObject.transform.position.x, placeableObject.gameObject.transform.position.z,
-                    serverCallback);
+                    serverCallbackPlacing);
             }
             else
             {
                 OnFailedPlacement();
             }
 
+        }
+        
+        private void ServerCallbackOnTriedDeleting(bool sucessfullyConnected, string itemID, Guid uid)
+        {
+            if(sucessfullyConnected)
+                OnSuccessfulDelete();
+            else OnFailedDeleting();
+        }
+
+        private void OnFailedDeleting()
+        {
+            Debug.Log("Failed to delete");
+            // dunno
+        }
+
+        private void OnSuccessfulDelete()
+        {
+            Debug.Log("Successful to delete");
+            if (placeableObject.WasPlacedBefore)
+            {
+                RemoveArea(placeableObject.PlacedPosition, placeableObject.Size);
+            }
+            ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
+            placeableObject = null;
+            visibleMapRenderer.enabled = false;
         }
 
         private void ServerCallbackOnTriedPlacing(bool sucessfullyConnected, string itemID, Guid uid)
