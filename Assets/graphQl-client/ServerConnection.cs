@@ -30,7 +30,7 @@ namespace Game
             
             // WebGLPluginJS.SetUpTestToken();
             // var token = WebGLPluginJS.GetTokenFromLocalStorage();
-            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzI5MzEyOTMsImV4cCI6MTY3MzAxNzY5MywiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.x4f4Pss-V-AfsN4wFenTCvssenLjnAYwr1qI9U0XCKM";
+            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzI5OTkzOTgsImV4cCI6MTY3MzA4NTc5OCwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.IhS9GMnCn7-iPDmHhQmtJYT-FPrD5pF7KgMjEXaE4ds";
             
             taliduGraphApi.SetAuthToken(token);
             id = new Guid(await GetStudentID());
@@ -90,6 +90,7 @@ namespace Game
             if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
                 request.Dispose();
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
                 return null;
             }
 
@@ -131,6 +132,7 @@ namespace Game
             {
                 request.Dispose();
                 callBack?.Invoke(false, itemID, itemguid);
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
                 return;
             }
             
@@ -146,7 +148,6 @@ namespace Game
             if (itemWithSocket == null)
             {
                 callBack?.Invoke(false,itemID, itemguid);
-                Debug.Log("Failed 1");
                 return;
             }
 
@@ -169,11 +170,9 @@ namespace Game
             {
                 request.Dispose();
                 callBack?.Invoke(false, itemID, itemguid);
-                Debug.Log("Failed 2");
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
                 return;
             }
-            
-            Debug.Log("Success");
             
             request.Dispose();
 
@@ -204,6 +203,7 @@ namespace Game
             {
                 request.Dispose();
                 callBack.Invoke(false,itemId, onSocketPlacedItemguid);
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
                 return;
             }
             
@@ -232,6 +232,7 @@ namespace Game
             {
                 request.Dispose();
                 callBack.Invoke(false,onSocketPlacedItemguid, itemWithSocketsGuid, socketindex);
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
                 return;
             }
             
@@ -250,6 +251,7 @@ namespace Game
             {
                 request.Dispose();
                 callBack?.Invoke(false);
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
                 return false;
             }
             
@@ -267,6 +269,7 @@ namespace Game
 
             if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
                 request.Dispose();
                 return null;
             }
@@ -279,15 +282,37 @@ namespace Game
 
             foreach (var node in deserializedData.Data.AllPurchasedItems.Nodes)
             {
-                ItemData itemData = new ItemData
+                if (node.Sockets != null)
                 {
-                    nodeId = node.NodeId,
-                    id = node.Id,
-                    uid = node.Uid,
-                    x = Convert.ToSingle(node.X),
-                    z = Convert.ToSingle(node.Z)
-                };
-                items.Add(itemData);
+                    Guid[] socketData = new Guid[node.Sockets.Length];
+
+                    for (int i = 0; i < node.Sockets.Length; i++)
+                    {
+                        socketData[i] = new Guid(node.Sockets[i]);
+                    }
+                
+                    ItemData itemData = new ItemData
+                    {
+                        id = node.Id,
+                        uid = node.Uid,
+                        x = Convert.ToSingle(node.X),
+                        z = Convert.ToSingle(node.Z),
+                        itemsPlacedOnSockets = socketData
+                    };
+                    items.Add(itemData);
+                }
+                else
+                {
+                    ItemData itemData = new ItemData
+                    {
+                        id = node.Id,
+                        uid = node.Uid,
+                        x = Convert.ToSingle(node.X),
+                        z = Convert.ToSingle(node.Z),
+                    };    
+                    items.Add(itemData);
+                }
+                
             }
             Debug.Log("Purchased Items: " + items.Count);
             return items;
@@ -301,6 +326,7 @@ namespace Game
             
             if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
                 request.Dispose();
                 return false;
             }
@@ -316,6 +342,7 @@ namespace Game
             
             if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
                 request.Dispose();
                 return String.Empty;
             }
@@ -334,6 +361,7 @@ namespace Game
             
             if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError or UnityWebRequest.Result.DataProcessingError)
             {
+                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
                 request.Dispose();
                 return false;
             }

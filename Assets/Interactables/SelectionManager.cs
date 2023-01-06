@@ -37,6 +37,12 @@ namespace Interactables
             SELECT_SOCKET_EVENT.AddListener(SelectSocket);
             DESELECT_SOCKET_EVENT.AddListener(DeselectSocket);
             DELETE_SOCKET_EVENT.AddListener(DeleteSocket);
+            DisableDecoration.AddListener(OnDisableDecoMode);
+        }
+
+        private void OnDisableDecoMode()
+        {
+            DeselectSocket(selectedSocket);
         }
 
         private void DeleteSocket(Socket socket)
@@ -65,6 +71,7 @@ namespace Interactables
             if (selectedSocket != null)
             {
                 SocketPlacement.DeleteItemOnSocket.Invoke();
+                selectedSocket = null;
             }
             else
             {

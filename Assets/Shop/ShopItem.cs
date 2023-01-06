@@ -53,7 +53,7 @@ namespace Shop
             {
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Buy);
                 UpdateUI();
-                var uitemID = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemID);
+                var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemID);
                 ShopManager.InitilizePlaceObjectEvent.Invoke(itemID, uitemID);
                 ItemInventoryUI.OnBoughtItemEvent.Invoke(itemID);
             }

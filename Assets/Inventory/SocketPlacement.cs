@@ -47,7 +47,7 @@ namespace Inventory
         private void OnPlaceItemOnSocket(string itemId)
         {
             if (!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
-            Guid uid = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemId);
+            Guid uid = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId);
 
             ServerConnection.OnPlacedItemOnSocket(uid, currentSocket.transform.parent.childCount,
                 currentSocket.transform.GetSiblingIndex(),

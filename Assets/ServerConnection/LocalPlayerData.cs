@@ -43,9 +43,8 @@ namespace ServerConnection
         //     return JsonUtility.ToJson(_playerDataConatiner);
         // }
 
-        public void Initialize(PlayerDataContainer playerDataContainer)
+        public void Initialize()
         {
-            // _playerDataConatiner = playerDataContainer;
             StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
         }
 
@@ -56,7 +55,7 @@ namespace ServerConnection
         
         public ItemData[] GetPlacedItems()
         {
-            return _ownedItems.Where(o=> o.x != 0 && o.z != 0).ToArray();
+            return _ownedItems.Where(o=> o.x != 0 && o.z != 0 || o.isPlacedOnSocket == true).ToArray();
         }
 
         public int GetStarCount()
@@ -96,6 +95,7 @@ namespace ServerConnection
             
             item.x = x;
             item.z = z;
+            item.isPlacedOnSocket = false;
             
             ChangedItemDataEvent.Invoke(item.id);
         }
@@ -112,6 +112,7 @@ namespace ServerConnection
 
             item.x = x;
             item.z = z;
+            item.isPlacedOnSocket = true;
             
             ChangedItemDataEvent.Invoke(item.id);
         }
@@ -129,7 +130,7 @@ namespace ServerConnection
         
         public void OnDeletedItem(Guid uid, Guid socketcollectionuid, int socketindex)
         {
-            var item = _ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
+            var item = _ownedItems.FirstOrDefault(o => o.uid == uid);
             
             var socketcollection = _ownedItems.First(o => o.uid == socketcollectionuid)
                 .itemsPlacedOnSockets;
@@ -137,6 +138,7 @@ namespace ServerConnection
             socketcollection[socketindex] = Guid.Empty;
             item.x = 0;
             item.z = 0;
+            item.isPlacedOnSocket = false;
             
             ChangedItemDataEvent.Invoke(item.id);
         }
@@ -153,12 +155,12 @@ namespace ServerConnection
 
         public int GetCountOfUnplacedItems(string itemId)
         {
-            return _ownedItems.Count(i => i.id == itemId && i.x == 0 && i.z == 0);
+            return _ownedItems.Count(i => i.id == itemId && i.x == 0 && i.z == 0 && i.isPlacedOnSocket == false);
         }
 
-        public Guid GetUIDOfUnplacedItem(string itemID)
+        public Guid GetUidOfUnplacedItem(string itemID)
         {
-            return _ownedItems.First(i=> i.id == itemID && i.x == 0 && i.z == 0).uid;
+            return _ownedItems.First(i=> i.id == itemID && i.x == 0 && i.z == 0 && i.isPlacedOnSocket == false).uid;
         }
     }
 }

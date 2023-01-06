@@ -61,7 +61,7 @@ namespace Inventory
 
         private void PlaceItem()
         {
-            var uitemID = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemID);
+            var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemID);
             ShopManager.InitilizePlaceObjectEvent.Invoke(itemID, uitemID);
             ToggleInventoryButton.CloseInventoryUnityEvent.Invoke();
         }

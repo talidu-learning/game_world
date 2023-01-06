@@ -35,11 +35,8 @@ namespace ServerConnection
 
     public partial class Node
     {
-        [JsonProperty("nodeId")]
-        public string NodeId { get; set; }
-        
         [JsonProperty("sockets")]
-        public object Sockets { get; set; }
+        public string[] Sockets { get; set; }
 
         [JsonProperty("z")]
         public object Z { get; set; }

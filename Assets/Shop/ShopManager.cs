@@ -26,7 +26,7 @@ namespace Shop
             OnTriedPlacingGameObjectEvent.AddListener(OnTriedPlacingGameObject);
         }
 
-        private async void OnTriedPlacingGameObject(bool wasPlacedSuccessfully, GameObject placedObject)
+        private void OnTriedPlacingGameObject(bool wasPlacedSuccessfully, GameObject placedObject)
         {
             var uid = placedObject.GetComponent<ItemID>().uid;
             var id = placedObject.GetComponent<ItemID>().id;
@@ -63,7 +63,7 @@ namespace Shop
         private void OnPlaceObject(string itemId, Guid uid)
         {
             if(!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
-            var go = ItemCreator.CreateItem(itemId, LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemId));
+            var go = ItemCreator.CreateItem(itemId, LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId));
             SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
         }
     }

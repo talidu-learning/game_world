@@ -23,7 +23,7 @@ namespace ServerConnection
 
         private LocalPlayerData _localPlayerData;
         
-        private async Task Awake()
+        private void Awake()
         {
             _localPlayerData = gameObject.AddComponent<LocalPlayerData>();
         }
@@ -57,10 +57,11 @@ namespace ServerConnection
             Debug.Log("Purchased ItemData: " + Game.ServerConnection.purchasedItems.Count);
 
             _localPlayerData._ownedItems = Game.ServerConnection.purchasedItems;
+            _localPlayerData.Initialize();
 
             var itemDatas = _localPlayerData.GetPlacedItems().ToList();
 
-            var gos = CreateGameObjects(itemDatas);
+            var gos = CreateGameObjects(itemDatas, ref _localPlayerData._ownedItems);
 
             BuildingSystem.BuildingSystem.Current.OnLoadedGame(gos.ToArray());
             
@@ -69,25 +70,18 @@ namespace ServerConnection
             
             Debug.Log("Tables: " + LocalPlayerData.Instance._ownedItems.Count);
 
-            foreach (var item in Game.ServerConnection.purchasedItems)
-            {
-                Debug.Log(item.id);
-                if(item.itemsPlacedOnSockets != null)
-                    Debug.Log(item.itemsPlacedOnSockets[2]);
-            }
-            
             yield return null;
             LoadedPlayerData.Invoke();
         }
 
-        private List<GameObject> CreateGameObjects(List<ItemData> itemDatas)
+        private List<GameObject> CreateGameObjects(List<ItemData> placedItems, ref List<ItemData> allObjects)
         {
             List<GameObject> gos = new List<GameObject>();
             List<Guid> uids = new List<Guid>();
 
-            var itemswithsockets = itemDatas.Where(i => i.itemsPlacedOnSockets != null);
+            var itemswithsockets = placedItems.Where(i => i.itemsPlacedOnSockets != null);
             Debug.Log("SocketedItems: " + itemswithsockets.ToList().Count);
-            var itemswithoutsockets = itemDatas.Where(i => i.itemsPlacedOnSockets == null);
+            var itemswithoutsockets = placedItems.Where(i => i.itemsPlacedOnSockets == null);
             Debug.Log("UnsocketedItems: " + itemswithoutsockets.ToList().Count);
 
             foreach (var item in itemswithsockets)
@@ -106,7 +100,9 @@ namespace ServerConnection
                     if (item.itemsPlacedOnSockets[i] != Guid.Empty)
                     {
                         sockets[i].Place(item.itemsPlacedOnSockets[i]);
-                        var data = itemDatas.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i]);
+                        var data = allObjects.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i]);
+                        allObjects.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i])!.isPlacedOnSocket =
+                            true;
                         CreateSocketItem(data.id, item.itemsPlacedOnSockets[i], sockets[i]);
                         uids.Add(item.itemsPlacedOnSockets[i]);
                     }
