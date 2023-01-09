@@ -33,6 +33,8 @@ namespace Inventory
             SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);
             SelectionManager.DESELECT_SOCKET_EVENT.AddListener(OnDeselectedSocket);
             SelectionManager.DELETE_SOCKET_EVENT.AddListener(OnDeselectedSocket);
+            SelectionManager.DisableDecoration.AddListener(OnDeselectedSocket);
+            SelectionManager.EnableDecoration.AddListener(OnSelectedSocket);
         }
 
         private void OnDeselectedSocket(Socket socket)
@@ -40,8 +42,18 @@ namespace Inventory
             GetComponent<Button>().onClick.RemoveAllListeners();
             GetComponent<Button>().onClick.AddListener(PlaceItem);
         }
+        private void OnDeselectedSocket()
+        {
+            GetComponent<Button>().onClick.RemoveAllListeners();
+            GetComponent<Button>().onClick.AddListener(PlaceItem);
+        }
 
         private void OnSelectedSocket(Socket socket)
+        {
+            GetComponent<Button>().onClick.RemoveAllListeners();
+            GetComponent<Button>().onClick.AddListener(PlaceOnSocket);
+        }
+        private void OnSelectedSocket()
         {
             GetComponent<Button>().onClick.RemoveAllListeners();
             GetComponent<Button>().onClick.AddListener(PlaceOnSocket);

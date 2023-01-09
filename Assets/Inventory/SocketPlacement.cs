@@ -46,6 +46,7 @@ namespace Inventory
 
         private void OnPlaceItemOnSocket(string itemId)
         {
+            if (currentSocket == null) return;
             if (!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
             Guid uid = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId);
 
@@ -66,11 +67,13 @@ namespace Inventory
         {
             LocalPlayerData.Instance.OnDeletedItem(socketItemUid, uid, siblingindex);
             currentSocket.Delete();
+            currentSocket = null;
         }
 
         private void OnFailedDeletion()
         {
-            currentSocket.Delete();
+            // currentSocket.Delete();
+            currentSocket = null;
         }
 
         private void ServerCallbackOnTriedPlacing(bool sucessfullyConnected, string itemID, Guid uid)
@@ -91,11 +94,13 @@ namespace Inventory
                 currentSocket.transform.parent.childCount, currentSocket.transform.GetSiblingIndex());
 
             SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
+            currentSocket = null;
         }
 
         private void OnFailedPlacement()
         {
             SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
+            currentSocket = null;
         }
 
         private GameObject CreateSocketItem(string itemId, Guid uid)

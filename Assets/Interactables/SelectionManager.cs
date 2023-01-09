@@ -54,6 +54,7 @@ namespace Interactables
         private void DeselectSocket(Socket socket)
         {
             if(selectedSocket == null) return;
+            Debug.Log("DeselectSocket");
             selectedSocket.Deselect();
             selectedSocket = null;
         }
@@ -71,7 +72,6 @@ namespace Interactables
             if (selectedSocket != null)
             {
                 SocketPlacement.DeleteItemOnSocket.Invoke();
-                selectedSocket = null;
             }
             else
             {
