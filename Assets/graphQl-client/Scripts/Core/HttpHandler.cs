@@ -37,8 +37,8 @@ namespace GraphQlClient.Core
                 requestFailed.FireEvent();
             }
 			Debug.Log(request.downloadHandler.text);
-            
-            OnRequestEnded requestSucceeded = new OnRequestEnded(request.downloadHandler.text);
+
+			OnRequestEnded requestSucceeded = new OnRequestEnded(request.downloadHandler.text);
             requestSucceeded.FireEvent();
             return request;
         }

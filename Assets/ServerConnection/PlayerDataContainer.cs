@@ -12,9 +12,10 @@ namespace ServerConnection
     public class ItemData
     {
         public string id;
-        public int uid;
+        public Guid uid;
         public float x;
         public float z;
-        public int[] itemsPlacedOnSockets;
+        public Guid[] itemsPlacedOnSockets;
+        public bool isPlacedOnSocket;
     }
 }

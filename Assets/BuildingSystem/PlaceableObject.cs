@@ -14,6 +14,8 @@ namespace BuildingSystem
         private void Awake()
         {
             WasPlacedBefore = false;
+            GetColliderVertexPositionsLocal();
+            CalculateSizeInCells();
         }
 
         private void GetColliderVertexPositionsLocal()
@@ -41,13 +43,8 @@ namespace BuildingSystem
 
         public Vector3 GetStartPosition()
         {
+            Debug.Log(transform);
             return transform.TransformPoint(vertices[0]);
-        }
-
-        private void Start()
-        {
-            GetColliderVertexPositionsLocal();
-            CalculateSizeInCells();
         }
 
         public void Place(Vector3Int position)

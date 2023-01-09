@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Linq;
+using ServerConnection;
 using Shop;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -21,9 +23,14 @@ namespace BuildingSystem
         
         [SerializeField] private TileBase TileBase;
 
+        [SerializeField] private Game.ServerConnection ServerConnection;
+
         private Grid grid;
         private PlaceableObject placeableObject;
         private TilemapRenderer visibleMapRenderer;
+
+        private Action<bool, string, Guid> serverCallbackPlacing;
+        private Action<bool, string, Guid> serverCallbackDelete;
 
         private void Awake()
         {
@@ -31,6 +38,9 @@ namespace BuildingSystem
             grid = GridLayout.gameObject.GetComponent<Grid>();
             visibleMapRenderer = VisibleTilemap.GetComponent<TilemapRenderer>();
             visibleMapRenderer.enabled = false;
+
+            serverCallbackPlacing = ServerCallbackOnTriedPlacing;
+            serverCallbackDelete = ServerCallbackOnTriedDeleting;
         }
 
         public void OnLoadedGame(GameObject[] placedObjects)
@@ -38,41 +48,88 @@ namespace BuildingSystem
             StartCoroutine(LoadItems(placedObjects));
         }
 
-        public void WithdrawSelectedObject()
+        public void DeleteSelectedObject()
         {
             if (!placeableObject) return;
-            if (placeableObject.WasPlacedBefore)
-            {
-                RemoveArea(placeableObject.PlacedPosition, placeableObject.Size);
-            }
-            ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
-            placeableObject = null;
-            visibleMapRenderer.enabled = false;
+            var itemId = placeableObject.gameObject.GetComponent<ItemID>();
+            Debug.Log("Delete!");
+            ServerConnection.DeleteItem(itemId.uid, itemId.id, serverCallbackDelete);
         }
 
         public void PlaceLastObjectOnGrid()
         {
             if (CanBePlaced(placeableObject))
             {
-                PlacePlaceable(placeableObject);
-                ShopManager.OnTriedPlacingGameObjectEvent.Invoke(true, placeableObject.gameObject);
+                ServerConnection.UpdateItemPosition(placeableObject.gameObject.GetComponent<ItemID>().uid, placeableObject.gameObject.GetComponent<ItemID>().id,
+                    placeableObject.gameObject.transform.position.x, placeableObject.gameObject.transform.position.z,
+                    serverCallbackPlacing);
             }
             else
             {
-                if (placeableObject.WasPlacedBefore)
-                {
-                    placeableObject.transform.position = placeableObject.PlacePosition;
-                    placeableObject.Place(placeableObject.PlacedPosition);
-                    TakeArea(placeableObject.PlacedPosition, placeableObject.Size, TileBase);
-                    return;
-                }
-                
-                ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
+                OnFailedPlacement();
             }
 
-            visibleMapRenderer.enabled = false;
+        }
+        
+        private void ServerCallbackOnTriedDeleting(bool sucessfullyConnected, string itemID, Guid uid)
+        {
+            if(sucessfullyConnected)
+                OnSuccessfulDelete();
+            else OnFailedDeleting();
+        }
 
+        private void OnFailedDeleting()
+        {
+            Debug.Log("Failed to delete");
+            // dunno
+        }
+
+        private void OnSuccessfulDelete()
+        {
+            Debug.Log("Successful to delete");
+            if (placeableObject.WasPlacedBefore)
+            {
+                RemoveArea(placeableObject.PlacedPosition, placeableObject.Size);
+            }
+            ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
+            LocalPlayerData.Instance.OnDeletedItem(placeableObject.GetComponent<ItemID>().uid);
             placeableObject = null;
+            visibleMapRenderer.enabled = false;
+        }
+
+        private void ServerCallbackOnTriedPlacing(bool sucessfullyConnected, string itemID, Guid uid)
+        {
+            if(sucessfullyConnected)
+                OnSuccessfulPlacement();
+            else OnFailedPlacement();
+        }
+
+        private void OnSuccessfulPlacement()
+        {
+            PlacePlaceable(placeableObject);
+            ShopManager.OnTriedPlacingGameObjectEvent.Invoke(true, placeableObject.gameObject);
+            visibleMapRenderer.enabled = false;
+            placeableObject = null;
+        }
+        
+        private void OnFailedPlacement()
+        {
+            if (placeableObject.WasPlacedBefore)
+            {
+                placeableObject.transform.position = placeableObject.PlacePosition;
+                placeableObject.Place(placeableObject.PlacedPosition);
+                TakeArea(placeableObject.PlacedPosition, placeableObject.Size, TileBase);
+                return;
+            }
+                
+            ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
+            visibleMapRenderer.enabled = false;
+            placeableObject = null;
+        }
+        
+        public void PlaceObjectOnGrid(PlaceableObject placeableObject)
+        {
+            PlacePlaceable(placeableObject);
         }
 
         private void PlacePlaceable(PlaceableObject objectToPlace)

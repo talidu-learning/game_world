@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BuildingSystem
 {
-    public class WithdrawButton : MonoBehaviour
+    public class DeleteItemButton : MonoBehaviour
     {
         void Awake()
         {
@@ -14,8 +14,8 @@ namespace BuildingSystem
 
         private void OnClick()
         {
-            GameAudio.PlaySoundEvent.Invoke(SoundType.Withdraw);
-            SelectionManager.WITHDRAW_OBJECT_EVENT.Invoke();
+            GameAudio.PlaySoundEvent.Invoke(SoundType.Delete);
+            SelectionManager.DELETE_OBJECT_EVENT.Invoke();
         }
     }
 }

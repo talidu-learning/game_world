@@ -28,8 +28,38 @@ MonoBehaviour:
     Value: 2
     Prefab: {fileID: 4883471184429529526, guid: 48237f5c94496c746b5599555f3cdce8, type: 3}
     Attributes: 01000000
-  - ItemID: CrateForWater
-    ItemSprite: {fileID: 21300000, guid: 8bc20814a9216174aba27ed2f144dfca, type: 3}
-    Value: 2
-    Prefab: {fileID: 4883471184429529526, guid: 48237f5c94496c746b5599555f3cdce8, type: 3}
-    Attributes: 04000000
+  - ItemID: Grammophon
+    ItemSprite: {fileID: 21300000, guid: dcaa8dffbefb67d4aae8845c5414219a, type: 3}
+    Value: 50
+    Prefab: {fileID: 4883471184429529526, guid: 7c51bf2706ad5fd43a48be3e409e30ee, type: 3}
+    Attributes: 00000000
+  - ItemID: Doggo
+    ItemSprite: {fileID: 21300000, guid: 99b4dc152061c3a40b4d6bd80977c0a7, type: 3}
+    Value: 10
+    Prefab: {fileID: 4883471184429529526, guid: a0181cf4826fbcd47b2ac200fbc78fc8, type: 3}
+    Attributes: 02000000
+  - ItemID: Bed
+    ItemSprite: {fileID: 21300000, guid: 8c5bf6764f7ac604493a4cca3b457ad7, type: 3}
+    Value: 10
+    Prefab: {fileID: 4883471184429529526, guid: 550f9341963b3f74fa364eea402bdc99, type: 3}
+    Attributes: 02000000
+  - ItemID: Duck
+    ItemSprite: {fileID: 21300000, guid: 9286366d1bc9947469fa09324692eae2, type: 3}
+    Value: 5
+    Prefab: {fileID: 4883471184429529526, guid: cd1f4f4b00941df4fad05e544ab3bba4, type: 3}
+    Attributes: 0400000000000000
+  - ItemID: PileOfCrates
+    ItemSprite: {fileID: 21300000, guid: c5d1b630caa41264c946439caf9d8f71, type: 3}
+    Value: 40
+    Prefab: {fileID: 4883471184429529526, guid: 8956601fccc25134f83bd81791aea7c7, type: 3}
+    Attributes: 02000000
+  - ItemID: LogBank
+    ItemSprite: {fileID: 21300000, guid: 0cf5f40326bb7b54dabfe83714ae676a, type: 3}
+    Value: 30
+    Prefab: {fileID: 4883471184429529526, guid: 43d2805e791e5794e9aab7bb4a527f0b, type: 3}
+    Attributes: 02000000
+  - ItemID: Betonmischer
+    ItemSprite: {fileID: 21300000, guid: daeceaaec0ed2d246bcb2f8185272eb9, type: 3}
+    Value: 100
+    Prefab: {fileID: 4883471184429529526, guid: accc6c77851e58744a568dad389a5f7e, type: 3}
+    Attributes: 03000000

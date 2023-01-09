@@ -14,21 +14,28 @@ namespace Inventory
 
         public static StringUnityEvent PlaceItemOnSocket = new StringUnityEvent();
 
-        public static UnityEvent WithdrawItemOnSocket = new UnityEvent();
+        public static UnityEvent DeleteItemOnSocket = new UnityEvent();
 
         [SerializeField] private GameObject SocketItem;
 
         private Socket currentSocket;
 
+        [SerializeField] private Game.ServerConnection ServerConnection;
+        private Action<bool, string, Guid> serverCallbackPlacing;
+        private Action<bool, Guid, Guid, int> serverCallbackDelete;
+
         private void Awake()
         {
-            WithdrawItemOnSocket.AddListener(OnWithdrawItem);
+            DeleteItemOnSocket.AddListener(OnDeleteItem);
+
+            serverCallbackPlacing = ServerCallbackOnTriedPlacing;
+            serverCallbackDelete = ServerCallbackOnTriedDeleting;
         }
 
-        private void OnWithdrawItem()
+        private void OnDeleteItem()
         {
-            LocalPlayerData.Instance.OnWithdrewItem(currentSocket.Uid,currentSocket.transform.parent.parent.GetComponent<ItemID>().uid, currentSocket.transform.GetSiblingIndex());
-            currentSocket.Withdraw();
+            ServerConnection.OnDeletedItemOnSocket(currentSocket.Uid, currentSocket.transform.GetSiblingIndex(),
+                currentSocket.transform.parent.parent.GetComponent<ItemID>().uid, serverCallbackDelete);
         }
 
         private void Start()
@@ -39,8 +46,45 @@ namespace Inventory
 
         private void OnPlaceItemOnSocket(string itemId)
         {
+            if (currentSocket == null) return;
             if (!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
-            int uid = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemId);
+            Guid uid = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId);
+
+            ServerConnection.OnPlacedItemOnSocket(uid, currentSocket.transform.parent.childCount,
+                currentSocket.transform.GetSiblingIndex(),
+                currentSocket.transform.parent.parent.GetComponent<ItemID>().uid, itemId, serverCallbackPlacing);
+        }
+
+        private void ServerCallbackOnTriedDeleting(bool sucessfullyConnected, Guid socketItemUid,
+            Guid socketcollectionuid, int siblingindex)
+        {
+            if (sucessfullyConnected)
+                OnSuccessfulDeletion(socketItemUid, socketcollectionuid, siblingindex);
+            else OnFailedDeletion();
+        }
+
+        private void OnSuccessfulDeletion(Guid socketItemUid, Guid uid, int siblingindex)
+        {
+            LocalPlayerData.Instance.OnDeletedItem(socketItemUid, uid, siblingindex);
+            currentSocket.Delete();
+            currentSocket = null;
+        }
+
+        private void OnFailedDeletion()
+        {
+            // currentSocket.Delete();
+            currentSocket = null;
+        }
+
+        private void ServerCallbackOnTriedPlacing(bool sucessfullyConnected, string itemID, Guid uid)
+        {
+            if (sucessfullyConnected)
+                OnSuccessfulPlacement(itemID, uid);
+            else OnFailedPlacement();
+        }
+
+        private void OnSuccessfulPlacement(string itemId, Guid uid)
+        {
             var go = CreateSocketItem(itemId, uid);
 
             currentSocket.Place(uid);
@@ -48,11 +92,18 @@ namespace Inventory
             LocalPlayerData.Instance.OnPlacedItem(uid, go.transform.position.x, go.transform.position.z,
                 currentSocket.transform.parent.parent.GetComponent<ItemID>().uid,
                 currentSocket.transform.parent.childCount, currentSocket.transform.GetSiblingIndex());
-            
+
             SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
+            currentSocket = null;
         }
 
-        private GameObject CreateSocketItem(string itemId, int uid)
+        private void OnFailedPlacement()
+        {
+            SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
+            currentSocket = null;
+        }
+
+        private GameObject CreateSocketItem(string itemId, Guid uid)
         {
             var socketItem = Instantiate(SocketItem, currentSocket.gameObject.transform, false);
 

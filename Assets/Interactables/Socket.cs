@@ -9,7 +9,7 @@ namespace Interactables
     {
         public Socket Neighbour;
         public bool IsUsed;
-        public int Uid;
+        public Guid Uid;
 
         private void Awake()
         {
@@ -31,14 +31,14 @@ namespace Interactables
             GetComponent<SpriteRenderer>().color = IsUsed? Color.red : Color.white;
         }
 
-        public void Place(int uid)
+        public void Place(Guid uid)
         {
             IsUsed = true;
             Uid = uid;
             GetComponent<SpriteRenderer>().color = Color.red;
         }
 
-        public void Withdraw()
+        public void Delete()
         {
             Destroy(transform.GetChild(0).gameObject);
             IsUsed = false;

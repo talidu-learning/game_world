@@ -46,7 +46,7 @@ namespace TouchScript.Examples.CameraControl
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
                 Vector3 newZoom = cam.transform.localPosition + Vector3.up * Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
-                newZoom.y = Mathf.Clamp(newZoom.y, 5.0f, 11.5f);
+                newZoom.y = Mathf.Clamp(newZoom.y, 5.0f, 40.5f);
                 cam.transform.localPosition = newZoom;
             }
         }
@@ -66,7 +66,7 @@ namespace TouchScript.Examples.CameraControl
         private void ManipulationTransformedHandler(object sender, System.EventArgs e)
         {
             Vector3 newZoom = cam.transform.localPosition + Vector3.up * (ManipulationGesture.DeltaScale - 1f) * ZoomSpeed;
-            newZoom.y = Mathf.Clamp(newZoom.y, 5.0f, 11.5f);
+            newZoom.y = Mathf.Clamp(newZoom.y, 5.0f, 40.5f);
             cam.transform.localPosition = newZoom;
         }
 

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Enumerations;
 using Interactables;
 using ServerConnection;
@@ -12,8 +14,9 @@ namespace Shop
     {
         [SerializeField] private ItemCreator ItemCreator;
         [SerializeField] private ShopInventoryDisplay ShopInventoryDisplay;
+        [SerializeField] private Game.ServerConnection serverConnection;
 
-        public static StringIntUnityEvent InitilizePlaceObjectEvent = new StringIntUnityEvent();
+        public static StringGuidUnityEvent InitilizePlaceObjectEvent = new StringGuidUnityEvent();
 
         public static BoolGameObjectUnityEvent OnTriedPlacingGameObjectEvent = new BoolGameObjectUnityEvent();
 
@@ -31,6 +34,7 @@ namespace Shop
             if (wasPlacedSuccessfully)
             {
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Place);
+                // var updatedItem = await serverConnection.UpdateItemPosition(uid, id,placedObject.transform.position.x, placedObject.transform.position.z);
                 LocalPlayerData.Instance.OnPlacedItem(uid, placedObject.transform.position.x, placedObject.transform.position.z);
             }
             else
@@ -42,23 +46,24 @@ namespace Shop
 
                     foreach (var socket in sockets)
                     {
-                        LocalPlayerData.Instance.OnWithdrewItem(socket.Uid, uid, socket.transform.GetSiblingIndex());
-                        socket.Withdraw();
+                        // var updatedItem = await ServerConnection.UpdateItemPosition(uid, 0, 0);
+                        LocalPlayerData.Instance.OnDeletedItem(socket.Uid, uid, socket.transform.GetSiblingIndex());
+                        socket.Delete();
                     }
                     
                 }
-
-                LocalPlayerData.Instance.OnWithdrewItem(uid);
+                // var updatedItem = await ServerConnection.UpdateItemPosition(uid, 0, 0);
+                // var onWithdrewItem2 = await LocalPlayerData.Instance.OnWithdrewItem(uid);
                 Destroy(placedObject);
             }
             
             ShopInventoryDisplay.OnPlacedItem(id, wasPlacedSuccessfully, LocalPlayerData.Instance.IsItemPlaceable(id));
         }
 
-        private void OnPlaceObject(string itemId, int uid)
+        private void OnPlaceObject(string itemId, Guid uid)
         {
             if(!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
-            var go = ItemCreator.CreateItem(itemId, LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemId));
+            var go = ItemCreator.CreateItem(itemId, LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId));
             SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
         }
     }

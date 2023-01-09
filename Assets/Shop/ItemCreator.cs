@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Shop
@@ -7,7 +8,7 @@ namespace Shop
     {
         [SerializeField] private ShopInventory _inventory;
         
-        public GameObject CreateItem(string id, int uid)
+        public GameObject CreateItem(string id, Guid uid)
         {
             GameObject prefab = _inventory.ShopItems.First(i => i.ItemID == id).Prefab;
             var go = Instantiate(prefab);

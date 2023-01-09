@@ -1,3 +1,4 @@
+using System.Collections;
 using ServerConnection;
 using TMPro;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Shop
             starCountText = GetComponent<TextMeshProUGUI>();
             UpdateStarCount.AddListener(OnUpdateStarCount);
         }
-
+        
         private void OnUpdateStarCount(string count)
         {
             starCountText.text = count;

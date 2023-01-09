@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Interactables;
 using Shop;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +13,8 @@ namespace ServerConnection
 {
     public class SaveGame : MonoBehaviour
     {
+        [SerializeField] private Game.ServerConnection ServerConnection;
+        
         [SerializeField] private ItemCreator itemCreator;
         [SerializeField] private GameObject SocketItem;
         [SerializeField] private ShopInventory shopInventory;
@@ -22,45 +25,68 @@ namespace ServerConnection
         
         private void Awake()
         {
-            // TODO Load Data from Server
             _localPlayerData = gameObject.AddComponent<LocalPlayerData>();
         }
 
-        private void Start()
+        async void Start()
         {
+            await ServerConnection.GetStudentData();
             StartCoroutine(LoadGameData());
         }
 
-        private void SaveGameData()
-        {
-            string json = _localPlayerData.GetJsonData();
-            
-            File.WriteAllText(Application.persistentDataPath + "/gamedata.json", json);
-        }
+        // private void SaveGameData()
+        // {
+        //     string json = _localPlayerData.GetJsonData();
+        //     
+        //     File.WriteAllText(Application.persistentDataPath + "/gamedata.json", json);
+        // }
 
         private IEnumerator LoadGameData()
         {
-            if (!File.Exists(Application.persistentDataPath + "/gamedata.json"))
-            {
-                SaveGameData();
-            }
+            yield return new WaitUntil(()=> Game.ServerConnection.Loaded);
             
-            _localPlayerData.Initialize(
-                JsonUtility.FromJson<PlayerDataContainer>(
-                    File.ReadAllText(Application.persistentDataPath + "/gamedata.json")));
+            // if (!File.Exists(Application.persistentDataPath + "/gamedata.json"))
+            // {
+            //     SaveGameData();
+            // }
+            
+            // _localPlayerData.Initialize(
+            //     JsonUtility.FromJson<PlayerDataContainer>(
+            //         File.ReadAllText(Application.persistentDataPath + "/gamedata.json")));
+            
+            Debug.Log("Purchased ItemData: " + Game.ServerConnection.purchasedItems.Count);
+
+            _localPlayerData._ownedItems = Game.ServerConnection.purchasedItems;
+            _localPlayerData.Initialize();
 
             var itemDatas = _localPlayerData.GetPlacedItems().ToList();
 
-            List<GameObject> gos = new List<GameObject>();
-            List<int> uids = new List<int>();
+            var gos = CreateGameObjects(itemDatas, ref _localPlayerData._ownedItems);
 
-            var itemswithsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length > 0);
-            var itemswithoutsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length == 0).ToList();
-            Debug.Log(itemswithoutsockets.Count);
+            BuildingSystem.BuildingSystem.Current.OnLoadedGame(gos.ToArray());
             
+            StarCountUI.UpdateStarCount.Invoke(Game.ServerConnection.StudentData.Stars.ToString());
+            LocalPlayerData.Instance.SetStarCount(Game.ServerConnection.StudentData.Stars);
+            
+            Debug.Log("Tables: " + LocalPlayerData.Instance._ownedItems.Count);
+
+            yield return null;
+            LoadedPlayerData.Invoke();
+        }
+
+        private List<GameObject> CreateGameObjects(List<ItemData> placedItems, ref List<ItemData> allObjects)
+        {
+            List<GameObject> gos = new List<GameObject>();
+            List<Guid> uids = new List<Guid>();
+
+            var itemswithsockets = placedItems.Where(i => i.itemsPlacedOnSockets != null);
+            Debug.Log("SocketedItems: " + itemswithsockets.ToList().Count);
+            var itemswithoutsockets = placedItems.Where(i => i.itemsPlacedOnSockets == null);
+            Debug.Log("UnsocketedItems: " + itemswithoutsockets.ToList().Count);
+
             foreach (var item in itemswithsockets)
             {
-                if(uids.Contains(item.uid)) continue;
+                if (uids.Contains(item.uid)) continue;
                 var go = itemCreator.CreateItem(item.id, item.uid);
                 go.transform.position = new Vector3(item.x, 0, item.z);
                 gos.Add(go);
@@ -70,11 +96,13 @@ namespace ServerConnection
 
                 for (int i = 0; i < sockets.Length; i++)
                 {
-                    Debug.Log(item.itemsPlacedOnSockets[i]);
-                    if (item.itemsPlacedOnSockets[i] != 0)
+                    Debug.Log("Item on Socket: " + item.itemsPlacedOnSockets[i]);
+                    if (item.itemsPlacedOnSockets[i] != Guid.Empty)
                     {
                         sockets[i].Place(item.itemsPlacedOnSockets[i]);
-                        var data = itemDatas.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i]);
+                        var data = allObjects.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i]);
+                        allObjects.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i])!.isPlacedOnSocket =
+                            true;
                         CreateSocketItem(data.id, item.itemsPlacedOnSockets[i], sockets[i]);
                         uids.Add(item.itemsPlacedOnSockets[i]);
                     }
@@ -83,20 +111,17 @@ namespace ServerConnection
 
             foreach (var item in itemswithoutsockets)
             {
-                if(uids.Contains(item.uid)) continue;
+                if (uids.Contains(item.uid)) continue;
                 var go = itemCreator.CreateItem(item.id, item.uid);
                 go.transform.position = new Vector3(item.x, 0, item.z);
                 gos.Add(go);
                 uids.Add(item.uid);
             }
-            
-            BuildingSystem.BuildingSystem.Current.OnLoadedGame(gos.ToArray());
-            
-            yield return null;
-            LoadedPlayerData.Invoke();
+
+            return gos;
         }
-        
-        private GameObject CreateSocketItem(string itemId, int uid, Socket currentSocket)
+
+        private GameObject CreateSocketItem(string itemId, Guid uid, Socket currentSocket)
         {
             var socketItem = Instantiate(SocketItem, currentSocket.gameObject.transform, false);
 
@@ -111,9 +136,9 @@ namespace ServerConnection
             return socketItem;
         }
 
-        private void OnApplicationQuit()
-        {
-            SaveGameData();
-        }
+        // private void OnApplicationQuit()
+        // {
+        //     SaveGameData();
+        // }
     }
 }

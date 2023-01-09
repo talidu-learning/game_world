@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 8bc20814a9216174aba27ed2f144dfca, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 99b4dc152061c3a40b4d6bd80977c0a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 4883471184429529534}
   - component: {fileID: 3985199299028485562}
   m_Layer: 3
-  m_Name: InteractableExample 2
+  m_Name: Doggo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,8 +155,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8942716, y: 1.61831, z: 0.82091343}
-  m_Center: {x: -0.035081387, y: -0.07084584, z: -0.010389373}
+  m_Size: {x: 0.8942716, y: 1.34495, z: 0.82091343}
+  m_Center: {x: -0.035081387, y: -0.20752585, z: -0.010389388}
 --- !u!114 &4883471184429529523
 MonoBehaviour:
   m_ObjectHideFlags: 0
