@@ -178,6 +178,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Input And Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 5160054078421374691, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: ZoomSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160054078421374691, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: zoom.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160054078421374691, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: rotation.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160054078421374691, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: zoom.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160054078421374691, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: zoom.m_Curve.Array.data[0].value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160054078421374691, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: zoom.m_Curve.Array.data[1].value
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160054078421374691, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: zoom.m_Curve.Array.data[1].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160054078421374691, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: rotation.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160054078421374691, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: zoom.m_Curve.Array.data[1].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160054078421374691, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: rotation.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160054078421374691, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
+      propertyPath: rotation.m_Curve.Array.data[1].value
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 5160054078421374694, guid: e50df29be2d41414ca6eb8bbb8af3ff0, type: 3}
       propertyPath: _camera
       value: 
