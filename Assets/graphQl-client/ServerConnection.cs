@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GraphQlClient.Core;
-using Newtonsoft.Json;
 using ServerConnection;
 using UnityEngine;
 using UnityEngine.Events;
@@ -30,7 +28,7 @@ namespace Game
             
             // WebGLPluginJS.SetUpTestToken();
             // var token = WebGLPluginJS.GetTokenFromLocalStorage();
-            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzI5OTkzOTgsImV4cCI6MTY3MzA4NTc5OCwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.IhS9GMnCn7-iPDmHhQmtJYT-FPrD5pF7KgMjEXaE4ds";
+            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzMyNjg0OTMsImV4cCI6MTY3MzM1NDg5MywiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.6uKd6Wmc_PQwCvxUZ8zNDLJ3tp_IzWZWwbB30sizrFQ";
             
             taliduGraphApi.SetAuthToken(token);
             id = new Guid(await GetStudentID());

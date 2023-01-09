@@ -75,7 +75,6 @@ namespace Interactables
             }
             else
             {
-                Debug.Log("SelectionManager");
                 selectedObject = null;
                 BuildingSystem.BuildingSystem.Current.DeleteSelectedObject();   
             }

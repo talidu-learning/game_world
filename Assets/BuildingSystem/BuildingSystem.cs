@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using ServerConnection;
 using Shop;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -91,6 +92,7 @@ namespace BuildingSystem
                 RemoveArea(placeableObject.PlacedPosition, placeableObject.Size);
             }
             ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
+            LocalPlayerData.Instance.OnDeletedItem(placeableObject.GetComponent<ItemID>().uid);
             placeableObject = null;
             visibleMapRenderer.enabled = false;
         }
