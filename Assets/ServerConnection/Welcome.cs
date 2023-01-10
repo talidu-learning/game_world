@@ -15,7 +15,7 @@ namespace ServerConnection
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
-    public partial class AllPurchasedItemsDataContainer
+    public partial class Welcome
     {
         [JsonProperty("data")]
         public Data Data { get; set; }
@@ -35,8 +35,11 @@ namespace ServerConnection
 
     public partial class Node
     {
+        [JsonProperty("nodeId")]
+        public string NodeId { get; set; }
+        
         [JsonProperty("sockets")]
-        public string[] Sockets { get; set; }
+        public object Sockets { get; set; }
 
         [JsonProperty("z")]
         public object Z { get; set; }
@@ -54,14 +57,14 @@ namespace ServerConnection
         public Guid Owner { get; set; }
     }
 
-    public partial class AllPurchasedItemsDataContainer
+    public partial class Welcome
     {
-        public static AllPurchasedItemsDataContainer FromJson(string json) => JsonConvert.DeserializeObject<AllPurchasedItemsDataContainer>(json, ServerConnection.Converter.Settings);
+        public static Welcome FromJson(string json) => JsonConvert.DeserializeObject<Welcome>(json, ServerConnection.Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this AllPurchasedItemsDataContainer self) => JsonConvert.SerializeObject(self, ServerConnection.Converter.Settings);
+        public static string ToJson(this Welcome self) => JsonConvert.SerializeObject(self, ServerConnection.Converter.Settings);
     }
 
     internal static class Converter

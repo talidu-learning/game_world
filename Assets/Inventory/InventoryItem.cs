@@ -28,13 +28,11 @@ namespace Inventory
         private void Start()
         {
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(StartAsyncUpdate);
-            SelectionManager.DELETE_OBJECT_EVENT.AddListener(StartAsyncUpdate);
+            SelectionManager.WITHDRAW_OBJECT_EVENT.AddListener(StartAsyncUpdate);
             
             SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);
             SelectionManager.DESELECT_SOCKET_EVENT.AddListener(OnDeselectedSocket);
-            SelectionManager.DELETE_SOCKET_EVENT.AddListener(OnDeselectedSocket);
-            SelectionManager.DisableDecoration.AddListener(OnDeselectedSocket);
-            SelectionManager.EnableDecoration.AddListener(OnSelectedSocket);
+            SelectionManager.WITHDRAW_SOCKET_EVENT.AddListener(OnDeselectedSocket);
         }
 
         private void OnDeselectedSocket(Socket socket)
@@ -42,18 +40,8 @@ namespace Inventory
             GetComponent<Button>().onClick.RemoveAllListeners();
             GetComponent<Button>().onClick.AddListener(PlaceItem);
         }
-        private void OnDeselectedSocket()
-        {
-            GetComponent<Button>().onClick.RemoveAllListeners();
-            GetComponent<Button>().onClick.AddListener(PlaceItem);
-        }
 
         private void OnSelectedSocket(Socket socket)
-        {
-            GetComponent<Button>().onClick.RemoveAllListeners();
-            GetComponent<Button>().onClick.AddListener(PlaceOnSocket);
-        }
-        private void OnSelectedSocket()
         {
             GetComponent<Button>().onClick.RemoveAllListeners();
             GetComponent<Button>().onClick.AddListener(PlaceOnSocket);
@@ -73,7 +61,7 @@ namespace Inventory
 
         private void PlaceItem()
         {
-            var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemID);
+            var uitemID = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemID);
             ShopManager.InitilizePlaceObjectEvent.Invoke(itemID, uitemID);
             ToggleInventoryButton.CloseInventoryUnityEvent.Invoke();
         }
