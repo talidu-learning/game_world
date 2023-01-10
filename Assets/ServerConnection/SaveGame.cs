@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Interactables;
 using Shop;
 using UnityEngine;
@@ -24,21 +25,21 @@ namespace ServerConnection
         
         private void Awake()
         {
-            ServerConnection.GetStudentData();
             _localPlayerData = gameObject.AddComponent<LocalPlayerData>();
         }
 
-        private void Start()
+        async void Start()
         {
+            await ServerConnection.GetStudentData();
             StartCoroutine(LoadGameData());
         }
 
-        private void SaveGameData()
-        {
-            string json = _localPlayerData.GetJsonData();
-            
-            File.WriteAllText(Application.persistentDataPath + "/gamedata.json", json);
-        }
+        // private void SaveGameData()
+        // {
+        //     string json = _localPlayerData.GetJsonData();
+        //     
+        //     File.WriteAllText(Application.persistentDataPath + "/gamedata.json", json);
+        // }
 
         private IEnumerator LoadGameData()
         {
@@ -54,34 +55,34 @@ namespace ServerConnection
             //         File.ReadAllText(Application.persistentDataPath + "/gamedata.json")));
             
             Debug.Log("Purchased ItemData: " + Game.ServerConnection.purchasedItems.Count);
-            
-            _localPlayerData.Initialize(new PlayerDataContainer
-            {
-                _ownedItems = Game.ServerConnection.purchasedItems
-            });
-            
+
+            _localPlayerData._ownedItems = Game.ServerConnection.purchasedItems;
+            _localPlayerData.Initialize();
+
             var itemDatas = _localPlayerData.GetPlacedItems().ToList();
 
-            var gos = CreateGameObjects(itemDatas);
+            var gos = CreateGameObjects(itemDatas, ref _localPlayerData._ownedItems);
 
             BuildingSystem.BuildingSystem.Current.OnLoadedGame(gos.ToArray());
             
             StarCountUI.UpdateStarCount.Invoke(Game.ServerConnection.StudentData.Stars.ToString());
             LocalPlayerData.Instance.SetStarCount(Game.ServerConnection.StudentData.Stars);
             
-            Debug.Log("Tables: " + LocalPlayerData.Instance.GetCountOfOwnedItems("Table"));
-            
+            Debug.Log("Tables: " + LocalPlayerData.Instance._ownedItems.Count);
+
             yield return null;
             LoadedPlayerData.Invoke();
         }
 
-        private List<GameObject> CreateGameObjects(List<ItemData> itemDatas)
+        private List<GameObject> CreateGameObjects(List<ItemData> placedItems, ref List<ItemData> allObjects)
         {
             List<GameObject> gos = new List<GameObject>();
             List<Guid> uids = new List<Guid>();
 
-            var itemswithsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length > 0);
-            var itemswithoutsockets = itemDatas.Where(i => i.itemsPlacedOnSockets.Length == 0).ToList();
+            var itemswithsockets = placedItems.Where(i => i.itemsPlacedOnSockets != null);
+            Debug.Log("SocketedItems: " + itemswithsockets.ToList().Count);
+            var itemswithoutsockets = placedItems.Where(i => i.itemsPlacedOnSockets == null);
+            Debug.Log("UnsocketedItems: " + itemswithoutsockets.ToList().Count);
 
             foreach (var item in itemswithsockets)
             {
@@ -95,11 +96,13 @@ namespace ServerConnection
 
                 for (int i = 0; i < sockets.Length; i++)
                 {
-                    Debug.Log(item.itemsPlacedOnSockets[i]);
+                    Debug.Log("Item on Socket: " + item.itemsPlacedOnSockets[i]);
                     if (item.itemsPlacedOnSockets[i] != Guid.Empty)
                     {
                         sockets[i].Place(item.itemsPlacedOnSockets[i]);
-                        var data = itemDatas.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i]);
+                        var data = allObjects.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i]);
+                        allObjects.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i])!.isPlacedOnSocket =
+                            true;
                         CreateSocketItem(data.id, item.itemsPlacedOnSockets[i], sockets[i]);
                         uids.Add(item.itemsPlacedOnSockets[i]);
                     }

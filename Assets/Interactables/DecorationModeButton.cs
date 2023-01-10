@@ -26,7 +26,7 @@ namespace Interactables
             
             SelectionManager.SELECT_OBJECT_EVENT.AddListener(OnSelectedObject);
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(OnDeselectedObject);
-            SelectionManager.WITHDRAW_OBJECT_EVENT.AddListener(OnDeselectedObject);
+            SelectionManager.DELETE_OBJECT_EVENT.AddListener(OnDeselectedObject);
         }
 
         private void OnDeselectedObject()
