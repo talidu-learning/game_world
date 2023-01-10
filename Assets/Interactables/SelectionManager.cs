@@ -1,6 +1,6 @@
-﻿using BuildingSystem;
+﻿using System;
+using BuildingSystem;
 using Inventory;
-using ServerConnection;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,7 +13,7 @@ namespace Interactables
     {
         public static readonly InteractableUnityEvent SELECT_OBJECT_EVENT = new InteractableUnityEvent();
         public static readonly UnityEvent DESELECT_OBJECT_EVENT = new UnityEvent();
-        public static readonly UnityEvent WITHDRAW_OBJECT_EVENT = new UnityEvent();
+        public static readonly UnityEvent DELETE_OBJECT_EVENT = new UnityEvent();
 
         private Interactable selectedObject;
 
@@ -22,22 +22,30 @@ namespace Interactables
         
         public static readonly SocketUnityEvent SELECT_SOCKET_EVENT = new SocketUnityEvent();
         public static readonly SocketUnityEvent DESELECT_SOCKET_EVENT = new SocketUnityEvent();
-        public static readonly SocketUnityEvent WITHDRAW_SOCKET_EVENT = new SocketUnityEvent();
+        public static readonly SocketUnityEvent DELETE_SOCKET_EVENT = new SocketUnityEvent();
         
         private Socket selectedSocket;
+
+        private Action serverCallback;
 
         private void Awake()
         {
             SELECT_OBJECT_EVENT.AddListener(SelectObject);
             DESELECT_OBJECT_EVENT.AddListener(DeselectObject);
-            WITHDRAW_OBJECT_EVENT.AddListener(WithdrawObject);
+            DELETE_OBJECT_EVENT.AddListener(DeleteObject);
             
             SELECT_SOCKET_EVENT.AddListener(SelectSocket);
             DESELECT_SOCKET_EVENT.AddListener(DeselectSocket);
-            WITHDRAW_SOCKET_EVENT.AddListener(WithdrawSocket);
+            DELETE_SOCKET_EVENT.AddListener(DeleteSocket);
+            DisableDecoration.AddListener(OnDisableDecoMode);
         }
 
-        private void WithdrawSocket(Socket socket)
+        private void OnDisableDecoMode()
+        {
+            DeselectSocket(selectedSocket);
+        }
+
+        private void DeleteSocket(Socket socket)
         {
            socket.Deselect(); 
            selectedSocket = null;
@@ -46,6 +54,7 @@ namespace Interactables
         private void DeselectSocket(Socket socket)
         {
             if(selectedSocket == null) return;
+            Debug.Log("DeselectSocket");
             selectedSocket.Deselect();
             selectedSocket = null;
         }
@@ -58,22 +67,22 @@ namespace Interactables
             
         }
 
-        private void WithdrawObject()
+        private void DeleteObject()
         {
             if (selectedSocket != null)
             {
-                SocketPlacement.WithdrawItemOnSocket.Invoke();
+                SocketPlacement.DeleteItemOnSocket.Invoke();
             }
             else
             {
                 selectedObject = null;
-                BuildingSystem.BuildingSystem.Current.WithdrawSelectedObject();   
+                BuildingSystem.BuildingSystem.Current.DeleteSelectedObject();   
             }
         }
 
         private void DeselectObject()
         {
-            // can happen when withdraw button is pressed. Interference with OnTap from Interactable?
+            // can happen when delete button is pressed. Interference with OnTap from Interactable?
             if (!selectedObject) return;
             selectedObject.DisableDragging();
             selectedObject = null;

@@ -6,7 +6,7 @@
         InvalidPlacemnet,
         Buy,
         PlaceSocket,
-        Withdraw,
+        Delete,
         OpenInventory,
         OpenShop,
         CloseInventory,

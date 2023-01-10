@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Shop;
 using UnityEngine;
 
@@ -7,11 +9,13 @@ namespace ServerConnection
 {
     public class LocalPlayerData : MonoBehaviour
     {
+        private Game.ServerConnection ServerConnection;
+        
         public static StringUnityEvent ChangedItemDataEvent = new StringUnityEvent();
         
         private int _stars = 500;
         
-        private PlayerDataContainer _playerDataConatiner = new PlayerDataContainer();
+        public List<ItemData> _ownedItems = new List<ItemData>();
 
         private static LocalPlayerData _instance;
 
@@ -23,9 +27,10 @@ namespace ServerConnection
 
         private void Awake()
         {
+            ServerConnection = FindObjectOfType<Game.ServerConnection>();
             if (_instance != null && _instance != this)
             {
-                Destroy(this.gameObject);
+                Destroy(this);
             }
             else
             {
@@ -33,25 +38,24 @@ namespace ServerConnection
             }
         }
 
-        public string GetJsonData()
-        {
-            return JsonUtility.ToJson(_playerDataConatiner);
-        }
+        // public string GetJsonData()
+        // {
+        //     return JsonUtility.ToJson(_playerDataConatiner);
+        // }
 
-        public void Initialize(PlayerDataContainer playerDataContainer)
+        public void Initialize()
         {
-            _playerDataConatiner = playerDataContainer;
             StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
         }
 
         public ItemData[] GetOwnedItems()
         {
-            return _playerDataConatiner._ownedItems.ToArray();
+            return _ownedItems.ToArray();
         }
         
         public ItemData[] GetPlacedItems()
         {
-            return _playerDataConatiner._ownedItems.Where(o=> o.x != 0 && o.z != 0).ToArray();
+            return _ownedItems.Where(o=> o.x != 0 && o.z != 0 || o.isPlacedOnSocket == true).ToArray();
         }
 
         public int GetStarCount()
@@ -64,22 +68,22 @@ namespace ServerConnection
             _stars = stars;
         }
 
-        public bool TryBuyItem(string id, int itemValue)
+        public async Task<bool> TryBuyItem(string id, int itemValue)
         {
+            
             if (_stars - itemValue >= 0)
             {
-                _stars -= itemValue;
-                StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
-                _playerDataConatiner._ownedItems.Add(new ItemData
+                var updateStarCount = await ServerConnection.UpdateStarCount(_stars - itemValue);
+                var newItem = await ServerConnection.CreateNewItemForCurrentPlayer(id);
+                if (updateStarCount && newItem != null)
                 {
-                    id = id,
-                    // UID is given by the server
-                });
+                    _stars -= itemValue;
+                    StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
+                    _ownedItems.Add(newItem);
                 
-                Game.ServerConnection.UpdateStarsEvent.Invoke(_stars);
-                
-                ChangedItemDataEvent.Invoke(id);
-                return true;
+                    ChangedItemDataEvent.Invoke(id);
+                    return true;   
+                }
             }
 
             return false;
@@ -87,69 +91,76 @@ namespace ServerConnection
 
         public void OnPlacedItem(Guid uid, float x, float z)
         {
-            var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
+            var item = _ownedItems.First(i => i.uid == uid);
+            
             item.x = x;
             item.z = z;
+            item.isPlacedOnSocket = false;
             
             ChangedItemDataEvent.Invoke(item.id);
         }
         
         public void OnPlacedItem(Guid uid, float x, float z, Guid socketcolectionuid, int socketcount, int socketindex)
         {
-            var item = _playerDataConatiner._ownedItems.First(i => i.uid == uid);
-            item.x = x;
-            item.z = z;
+            var item = _ownedItems.First(i => i.uid == uid);
+
+            var socketItem = _ownedItems.First(i => i.uid == socketcolectionuid);
             
-            var socketItem = _playerDataConatiner._ownedItems.First(i => i.uid == socketcolectionuid);
+            
             if(socketItem.itemsPlacedOnSockets == null) socketItem.itemsPlacedOnSockets = new Guid[socketcount];
             socketItem.itemsPlacedOnSockets[socketindex] = uid;
+
+            item.x = x;
+            item.z = z;
+            item.isPlacedOnSocket = true;
             
             ChangedItemDataEvent.Invoke(item.id);
         }
 
-        public void OnWithdrewItem(Guid uid)
+        public void OnDeletedItem(Guid uid)
         {
-            var item = _playerDataConatiner._ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
-            if (item == null) return;
+            var item = _ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
+
             item.x = 0;
             item.z = 0;
             
             ChangedItemDataEvent.Invoke(item.id);
+
         }
         
-        public void OnWithdrewItem(Guid uid, Guid socketcollectionuid, int socketindex)
+        public void OnDeletedItem(Guid uid, Guid socketcollectionuid, int socketindex)
         {
-            var item = _playerDataConatiner._ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
-            if (item == null) return;
-            item.x = 0;
-            item.z = 0;
-
-            var socketcollection = _playerDataConatiner._ownedItems.First(o => o.uid == socketcollectionuid)
+            var item = _ownedItems.FirstOrDefault(o => o.uid == uid);
+            
+            var socketcollection = _ownedItems.First(o => o.uid == socketcollectionuid)
                 .itemsPlacedOnSockets;
             
             socketcollection[socketindex] = Guid.Empty;
+            item.x = 0;
+            item.z = 0;
+            item.isPlacedOnSocket = false;
             
             ChangedItemDataEvent.Invoke(item.id);
         }
 
         public bool IsItemPlaceable(string itemId)
         {
-            return _playerDataConatiner._ownedItems.Any(o => o.id == itemId && o.x == 0 && o.z == 0);
+            return _ownedItems.Any(o => o.id == itemId && o.x == 0 && o.z == 0);
         }
         
         public int GetCountOfOwnedItems(string itemId)
         {
-            return _playerDataConatiner._ownedItems.Count(i => i.id == itemId);
+            return _ownedItems.Count(i => i.id == itemId);
         }
 
         public int GetCountOfUnplacedItems(string itemId)
         {
-            return _playerDataConatiner._ownedItems.Count(i => i.id == itemId && i.x == 0 && i.z == 0);
+            return _ownedItems.Count(i => i.id == itemId && i.x == 0 && i.z == 0 && i.isPlacedOnSocket == false);
         }
 
-        public Guid GetUIDOfUnplacedItem(string itemID)
+        public Guid GetUidOfUnplacedItem(string itemID)
         {
-            return _playerDataConatiner._ownedItems.First(i=> i.id == itemID && i.x == 0 && i.z == 0).uid;
+            return _ownedItems.First(i=> i.id == itemID && i.x == 0 && i.z == 0 && i.isPlacedOnSocket == false).uid;
         }
     }
 }
