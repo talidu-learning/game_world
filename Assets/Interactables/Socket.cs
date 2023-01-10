@@ -38,7 +38,7 @@ namespace Interactables
             GetComponent<SpriteRenderer>().color = Color.red;
         }
 
-        public void Delete()
+        public void Withdraw()
         {
             Destroy(transform.GetChild(0).gameObject);
             IsUsed = false;

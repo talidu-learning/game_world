@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Enumerations;
 using Interactables;
 using ServerConnection;
@@ -14,7 +13,6 @@ namespace Shop
     {
         [SerializeField] private ItemCreator ItemCreator;
         [SerializeField] private ShopInventoryDisplay ShopInventoryDisplay;
-        [SerializeField] private Game.ServerConnection serverConnection;
 
         public static StringGuidUnityEvent InitilizePlaceObjectEvent = new StringGuidUnityEvent();
 
@@ -34,7 +32,6 @@ namespace Shop
             if (wasPlacedSuccessfully)
             {
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Place);
-                // var updatedItem = await serverConnection.UpdateItemPosition(uid, id,placedObject.transform.position.x, placedObject.transform.position.z);
                 LocalPlayerData.Instance.OnPlacedItem(uid, placedObject.transform.position.x, placedObject.transform.position.z);
             }
             else
@@ -46,14 +43,13 @@ namespace Shop
 
                     foreach (var socket in sockets)
                     {
-                        // var updatedItem = await ServerConnection.UpdateItemPosition(uid, 0, 0);
-                        LocalPlayerData.Instance.OnDeletedItem(socket.Uid, uid, socket.transform.GetSiblingIndex());
-                        socket.Delete();
+                        LocalPlayerData.Instance.OnWithdrewItem(socket.Uid, uid, socket.transform.GetSiblingIndex());
+                        socket.Withdraw();
                     }
                     
                 }
-                // var updatedItem = await ServerConnection.UpdateItemPosition(uid, 0, 0);
-                // var onWithdrewItem2 = await LocalPlayerData.Instance.OnWithdrewItem(uid);
+
+                LocalPlayerData.Instance.OnWithdrewItem(uid);
                 Destroy(placedObject);
             }
             
@@ -63,7 +59,7 @@ namespace Shop
         private void OnPlaceObject(string itemId, Guid uid)
         {
             if(!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
-            var go = ItemCreator.CreateItem(itemId, LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId));
+            var go = ItemCreator.CreateItem(itemId, LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemId));
             SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
         }
     }

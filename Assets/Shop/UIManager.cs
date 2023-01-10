@@ -17,43 +17,43 @@ namespace Shop
         
         [SerializeField]private Animation LoadingAnimation;
 
-        [SerializeField] private GameObject DeleteButton;
+        [SerializeField] private GameObject WithdrawButton;
     
         void Start()
         {
             SaveGame.LoadedPlayerData.AddListener(()=> StartCoroutine(OnLoadedGame()));
 
-            SelectionManager.SELECT_OBJECT_EVENT.AddListener(EnableDelete);
+            SelectionManager.SELECT_OBJECT_EVENT.AddListener(EnableWithdraw);
             SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);
             SelectionManager.DESELECT_SOCKET_EVENT.AddListener(OnDeselectedSocket);
-            SelectionManager.DESELECT_OBJECT_EVENT.AddListener(DisableDelete);
-            SelectionManager.DELETE_OBJECT_EVENT.AddListener(DisableDelete);
-            SelectionManager.DELETE_SOCKET_EVENT.AddListener(OnDeleteSocketItem);
+            SelectionManager.DESELECT_OBJECT_EVENT.AddListener(DisableWithdraw);
+            SelectionManager.WITHDRAW_OBJECT_EVENT.AddListener(DisableWithdraw);
+            SelectionManager.WITHDRAW_SOCKET_EVENT.AddListener(OnWithdrawSocketItem);
         }
 
-        private void OnDeleteSocketItem(Socket arg0)
+        private void OnWithdrawSocketItem(Socket arg0)
         {
-            DisableDelete();
+            DisableWithdraw();
         }
 
         private void OnDeselectedSocket(Socket arg0)
         {
-            DisableDelete();
+            DisableWithdraw();
         }
 
         private void OnSelectedSocket(Socket socket)
         {
-            if(socket.IsUsed) EnableDelete(null);
+            if(socket.IsUsed) EnableWithdraw(null);
         }
 
-        private void EnableDelete(Interactable interactable)
+        private void EnableWithdraw(Interactable interactable)
         {
-            DeleteButton.SetActive(true);
+            WithdrawButton.SetActive(true);
         }
         
-        private void DisableDelete()
+        private void DisableWithdraw()
         {
-            DeleteButton.SetActive(false);
+            WithdrawButton.SetActive(false);
         }
 
         private IEnumerator OnLoadedGame()
