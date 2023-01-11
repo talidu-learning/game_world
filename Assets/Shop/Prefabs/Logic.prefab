@@ -107,6 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopInventory: {fileID: 11400000, guid: 2e3881a7dd09dd54d97dd33e6736f7ba, type: 2}
   SocketItem: {fileID: 353450886295271579, guid: 16bc2bdadfc5dda4c86950fb305c4833, type: 3}
+  ServerConnection: {fileID: 1277939598}
 --- !u!1 &5557176907917157821
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,6 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemCreator: {fileID: 599489674}
   ShopInventoryDisplay: {fileID: 5557176907690520787}
+  serverConnection: {fileID: 1277939598}
 --- !u!1 &5557176908100838816
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,9 +218,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ServerConnection: {fileID: 1277939598}
-  itemCreator: {fileID: 599489674}
+  ItemCreator: {fileID: 0}
   SocketItem: {fileID: 353450886295271579, guid: 16bc2bdadfc5dda4c86950fb305c4833, type: 3}
-  shopInventory: {fileID: 11400000, guid: 2e3881a7dd09dd54d97dd33e6736f7ba, type: 2}
+  ShopInventory: {fileID: 0}
+  UseServerConnection: 0
 --- !u!114 &1277939598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,3 +235,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taliduGraphApi: {fileID: 11400000, guid: fae804bf8854c514bb57f0b4b8765e4b, type: 2}
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzM0Mjc1NzUsImV4cCI6MTY3MzUxMzk3NSwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.oV8z0pPLBqTvNphZG-Ad8XXU2-MpHLiZNLbXzpd9tV8

@@ -7,6 +7,7 @@ using ServerConnection;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
+using Plugins.WebGL;
 
 namespace Game
 {
@@ -15,6 +16,7 @@ namespace Game
     {
         
         [SerializeField] private GraphApi taliduGraphApi;
+        [SerializeField] private string token;
 
         public static StudentData StudentData;
 
@@ -24,12 +26,12 @@ namespace Game
 
         public static List<ItemData> purchasedItems = new List<ItemData>();
 
-        public async Task GetStudentData(){
-            
+        public async Task GetStudentData()
+        {
             // WebGLPluginJS.SetUpTestToken();
-            // var token = WebGLPluginJS.GetTokenFromLocalStorage();
-            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzMyNjg0OTMsImV4cCI6MTY3MzM1NDg5MywiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.6uKd6Wmc_PQwCvxUZ8zNDLJ3tp_IzWZWwbB30sizrFQ";
-            
+            #if DEVELOPMENT_BUILD          
+                token = WebGLPluginJS.GetTokenFromLocalStorage();
+            #endif
             taliduGraphApi.SetAuthToken(token);
             id = new Guid(await GetStudentID());
 
@@ -56,12 +58,6 @@ namespace Game
             }
 
             purchasedItems = items;
-
-            // await UpdateItem(purchasedItems[0].uid, 7, -5);
-            
-            // await CreateItem(id, "Table");
-            
-            // await GetAllItems(id);
 
             Loaded = true;
 
