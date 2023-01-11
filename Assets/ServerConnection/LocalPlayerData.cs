@@ -38,10 +38,10 @@ namespace ServerConnection
             }
         }
 
-        // public string GetJsonData()
-        // {
-        //     return JsonUtility.ToJson(_playerDataConatiner);
-        // }
+        public string GetJsonData()
+        {
+            return JsonUtility.ToJson(_ownedItems);
+        }
 
         public void Initialize()
         {

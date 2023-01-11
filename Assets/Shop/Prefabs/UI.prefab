@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadingAnimation: {fileID: 1579080642}
-  WithdrawButton: {fileID: 7593015384699310989}
+  DeleteButton: {fileID: 7593015385582642325}
 --- !u!1 &5464269138078823961
 GameObject:
   m_ObjectHideFlags: 0
@@ -2626,8 +2626,8 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3112095658501856547, guid: 3f6ae5923a2107240be6eaa42370d48e, type: 3}
   m_PrefabInstance: {fileID: 7593015383502553212}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7593015384699310989 stripped
+--- !u!1 &7593015385582642325 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1219171313, guid: 3f6ae5923a2107240be6eaa42370d48e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2080744681, guid: 3f6ae5923a2107240be6eaa42370d48e, type: 3}
   m_PrefabInstance: {fileID: 7593015383502553212}
   m_PrefabAsset: {fileID: 0}
