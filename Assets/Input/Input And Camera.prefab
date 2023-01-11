@@ -292,7 +292,7 @@ MonoBehaviour:
   buy: {fileID: 8300000, guid: cdd75a8ccf34c1c4bb86eb27f6b9b1c1, type: 3}
   place: {fileID: 8300000, guid: 972df39e5e274124bbb04ade68c04b0e, type: 3}
   placeSocket: {fileID: 8300000, guid: 0d5c0e402364b764a9fc80f8f011f919, type: 3}
-  withdraw: {fileID: 8300000, guid: b846609b0f47fbc42a2e138b6925ece3, type: 3}
+  delete: {fileID: 8300000, guid: b846609b0f47fbc42a2e138b6925ece3, type: 3}
   select: {fileID: 8300000, guid: d5020a8e6bc2205428b15994b578b1d0, type: 3}
   selectSocket: {fileID: 8300000, guid: 0d5c0e402364b764a9fc80f8f011f919, type: 3}
   OpenShop: {fileID: 8300000, guid: a530db788fb8b5746bfed0e8fcf7fecb, type: 3}
@@ -739,9 +739,58 @@ MonoBehaviour:
   TwoFingerMoveGesture: {fileID: 5160054078421374692}
   ManipulationGesture: {fileID: 5160054078421374693}
   PanSpeed: 0.04
-  ZoomSpeed: 10
   pivot: {fileID: 5160054078741841718}
   TouchManagerGameObject: {fileID: 5160054077438873696}
+  zoom:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 45
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  rotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 90
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ZoomSpeed: 1
+  currentZoom: 0
 --- !u!1 &5160054078741841719
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Enumerations;
 using Interactables;
 using Inventory;
@@ -31,7 +32,7 @@ namespace Shop
         private void Start()
         {
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(StartAsyncUpdate);
-            SelectionManager.WITHDRAW_OBJECT_EVENT.AddListener(StartAsyncUpdate);
+            SelectionManager.DELETE_OBJECT_EVENT.AddListener(StartAsyncUpdate);
         }
 
         private void StartAsyncUpdate()
@@ -45,13 +46,14 @@ namespace Shop
             UpdateUI();
         }
 
-        private void OnBuyItemButtonClick()
+        private async void OnBuyItemButtonClick()
         {
-            if (BuyItem())
+            var boughtItem = await BuyItem();
+            if (boughtItem)
             {
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Buy);
                 UpdateUI();
-                var uitemID = LocalPlayerData.Instance.GetUIDOfUnplacedItem(itemID);
+                var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemID);
                 ShopManager.InitilizePlaceObjectEvent.Invoke(itemID, uitemID);
                 ItemInventoryUI.OnBoughtItemEvent.Invoke(itemID);
             }
@@ -81,9 +83,10 @@ namespace Shop
             UpdateUI();
         }
 
-        private bool BuyItem()
+        private async Task<bool> BuyItem()
         {
-            if (LocalPlayerData.Instance.TryBuyItem(itemID, itemValue))
+            var tryBuyItem = await LocalPlayerData.Instance.TryBuyItem(itemID, itemValue);
+            if (tryBuyItem)
             {
                 return true;
             }
