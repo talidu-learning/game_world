@@ -18933,6 +18933,7 @@ MonoBehaviour:
   VisibleTilemap: {fileID: 3684780545555855794}
   ValidPlacingTilemap: {fileID: 3684780546772594640}
   TileBase: {fileID: 11400000, guid: 1daf3bf8999d80044ada875d1af1df60, type: 2}
+  ServerConnection: {fileID: 0}
 --- !u!1 &3684780546054948027
 GameObject:
   m_ObjectHideFlags: 0

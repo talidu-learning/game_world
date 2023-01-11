@@ -13,7 +13,6 @@ namespace TouchScript.Examples.CameraControl
         public ScreenTransformGesture TwoFingerMoveGesture;
         public ScreenTransformGesture ManipulationGesture;
         public float PanSpeed = 200f;
-        public float ZoomSpeed = 10f;
 
         [SerializeField]private Transform pivot;
 
@@ -21,11 +20,17 @@ namespace TouchScript.Examples.CameraControl
         private Transform cam;
 
         private IList<Pointer> twoFingerPointers = new List<Pointer>();
+        
+        [SerializeField] private AnimationCurve zoom;
+        [SerializeField] private AnimationCurve rotation;
+        public float ZoomSpeed = 10f;
+        public float currentZoom;
 
         private void Awake()
         {
             cam = Camera.main.transform;
-            
+            currentZoom = 0.5f;
+            CalculateZoom();
             ManipulationGesture.OnTransformComplete.AddListener(OnComplete);
         }
 
@@ -45,10 +50,28 @@ namespace TouchScript.Examples.CameraControl
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
-                Vector3 newZoom = cam.transform.localPosition + Vector3.up * Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
-                newZoom.y = Mathf.Clamp(newZoom.y, 5.0f, 40.5f);
-                cam.transform.localPosition = newZoom;
+                // Vector3 newZoom = cam.transform.localPosition + Vector3.up * Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
+                // newZoom.y = Mathf.Clamp(newZoom.y, 5.0f, 40.5f);
+                // cam.transform.localPosition = newZoom;
+                currentZoom += Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
+                currentZoom = Mathf.Clamp01(currentZoom);
+                Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+                CalculateZoom();
             }
+        }
+
+        private void CalculateZoom()
+        {
+            var getZoomValue = zoom.Evaluate(currentZoom);
+            var localPosition = cam.transform.localPosition;
+            localPosition.y = getZoomValue;
+            cam.transform.localPosition = localPosition;
+
+            var rotationX = rotation.Evaluate(currentZoom);
+            var rotationY = cam.rotation.eulerAngles.y;
+            Quaternion targetRot = Quaternion.Euler(rotationX, rotationY, 0.0f);
+            
+            cam.transform.rotation = targetRot;
         }
 
         private void OnEnable()
@@ -65,9 +88,13 @@ namespace TouchScript.Examples.CameraControl
 
         private void ManipulationTransformedHandler(object sender, System.EventArgs e)
         {
-            Vector3 newZoom = cam.transform.localPosition + Vector3.up * (ManipulationGesture.DeltaScale - 1f) * ZoomSpeed;
-            newZoom.y = Mathf.Clamp(newZoom.y, 5.0f, 40.5f);
-            cam.transform.localPosition = newZoom;
+            // var zoomFactor = Vector3.up * (ManipulationGesture.DeltaScale - 1f) * ZoomSpeed;
+            // Vector3 localPosition = cam.transform.localPosition + zoomFactor;
+            // localPosition.y = Mathf.Clamp(localPosition.y, 5.0f, 40.5f);
+            // cam.transform.localPosition = localPosition;
+
+            currentZoom += ManipulationGesture.DeltaScale - 1f;
+            CalculateZoom();
         }
 
         private void TwoFingerTransformHandler(object sender, System.EventArgs e)
