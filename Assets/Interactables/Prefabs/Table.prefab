@@ -49,7 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Neighbour: {fileID: 0}
   IsUsed: 0
-  Uid: 0
 --- !u!212 &5962241302424503965
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -196,7 +195,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Neighbour: {fileID: 4067496457131650314}
   IsUsed: 0
-  Uid: 0
 --- !u!212 &2782433213929315987
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -321,7 +319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4622052709938419124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: -0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -422,6 +420,7 @@ GameObject:
   - component: {fileID: 3985199299028485562}
   - component: {fileID: -3581174433241796115}
   - component: {fileID: -4508532429606414971}
+  - component: {fileID: 7823593894771470314}
   m_Layer: 3
   m_Name: Table
   m_TagString: Untagged
@@ -456,8 +455,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.9899654, y: 2.6690598, z: 3.1060934}
-  m_Center: {x: -0.018523693, y: 0.8345299, z: -0.04896307}
+  m_Size: {x: 5.9899654, y: 2.102892, z: 1.5591102}
+  m_Center: {x: -0.018523693, y: 0.55144596, z: 0.18115807}
 --- !u!114 &4883471184429529523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -626,6 +625,18 @@ MonoBehaviour:
   - {fileID: 9011654220502392459}
   - {fileID: 6579452844992228434}
   - {fileID: 2521484579370403437}
+--- !u!114 &7823593894771470314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4883471184429529526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d44d2dd54316c4b96a11c5804b815b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8090857342382996020
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +686,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Neighbour: {fileID: 0}
   IsUsed: 0
-  Uid: 0
 --- !u!212 &6647069183735351112
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -822,7 +832,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Neighbour: {fileID: 9011654220502392459}
   IsUsed: 0
-  Uid: 0
 --- !u!212 &9011754346172536873
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -969,7 +978,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Neighbour: {fileID: 0}
   IsUsed: 0
-  Uid: 0
 --- !u!212 &7035539865228002696
 SpriteRenderer:
   m_ObjectHideFlags: 0

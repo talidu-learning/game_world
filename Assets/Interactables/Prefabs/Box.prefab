@@ -26,9 +26,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4622052709938419124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.25665337, y: 0.49471614, z: 0.25665337}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4883471184429529522}
   m_RootOrder: 0
@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 4883471184429529532}
   - component: {fileID: 4883471184429529534}
   - component: {fileID: 3985199299028485562}
+  - component: {fileID: -7858023314436376072}
   m_Layer: 3
   m_Name: Box
   m_TagString: Untagged
@@ -129,7 +130,7 @@ Transform:
   m_GameObject: {fileID: 4883471184429529526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3914875104001107283}
@@ -155,8 +156,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8942716, y: 1.61831, z: 0.82091343}
-  m_Center: {x: -0.035081387, y: -0.07084584, z: -0.010389373}
+  m_Size: {x: 1.627137, y: 1.787933, z: 0.8254473}
+  m_Center: {x: -0.003739804, y: 0.652698, z: 0.10308498}
 --- !u!114 &4883471184429529523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,5 +290,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2940843babae437eb71b03a74c48c362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7858023314436376072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4883471184429529526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d44d2dd54316c4b96a11c5804b815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
