@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Interactables;
 using Shop;
 using UnityEngine;
@@ -15,55 +14,76 @@ namespace ServerConnection
     {
         [SerializeField] private Game.ServerConnection ServerConnection;
         
-        [SerializeField] private ItemCreator itemCreator;
+        [SerializeField] private ItemCreator ItemCreator;
         [SerializeField] private GameObject SocketItem;
-        [SerializeField] private ShopInventory shopInventory;
-        
-        public static UnityEvent LoadedPlayerData = new UnityEvent();
+        [SerializeField] private ShopInventory ShopInventory;
+        [SerializeField] private bool UseServerConnection;
+        public static readonly UnityEvent LoadedPlayerData = new UnityEvent();
 
         private LocalPlayerData _localPlayerData;
         
         private void Awake()
         {
+            #if DEVELOPMENT_BUILD
+                UseServerConnection = true;
+            #endif
             _localPlayerData = gameObject.AddComponent<LocalPlayerData>();
         }
 
         async void Start()
         {
-            await ServerConnection.GetStudentData();
-            StartCoroutine(LoadGameData());
+            if (UseServerConnection)
+            {
+                await ServerConnection.GetStudentData();
+                StartCoroutine(LoadGameDataFromServer());  
+            }
+            else
+            {
+                StartCoroutine(LoadGameDataFromLocalFile());   
+            }
         }
 
-        // private void SaveGameData()
-        // {
-        //     string json = _localPlayerData.GetJsonData();
-        //     
-        //     File.WriteAllText(Application.persistentDataPath + "/gamedata.json", json);
-        // }
-
-        private IEnumerator LoadGameData()
+        private void SaveGameData()
         {
-            yield return new WaitUntil(()=> Game.ServerConnection.Loaded);
+            string json = _localPlayerData.GetJsonData();
             
-            // if (!File.Exists(Application.persistentDataPath + "/gamedata.json"))
-            // {
-            //     SaveGameData();
-            // }
-            
-            // _localPlayerData.Initialize(
-            //     JsonUtility.FromJson<PlayerDataContainer>(
-            //         File.ReadAllText(Application.persistentDataPath + "/gamedata.json")));
-            
-            Debug.Log("Purchased ItemData: " + Game.ServerConnection.purchasedItems.Count);
+            File.WriteAllText(Application.persistentDataPath + "/gamedata.json", json);
+        }
 
-            _localPlayerData._ownedItems = Game.ServerConnection.purchasedItems;
-            _localPlayerData.Initialize();
+        private IEnumerator LoadGameDataFromLocalFile()
+        {
+            if (!File.Exists(Application.persistentDataPath + "/gamedata.json"))
+            {
+                SaveGameData();
+            }
+            
+            LoadGameStatus();
+            
+            StarCountUI.UpdateStarCount.Invoke(LocalPlayerData.Instance.GetStarCount().ToString());
 
+            yield return null;
+            LoadedPlayerData.Invoke();
+        }
+
+        private void LoadGameStatus()
+        {
             var itemDatas = _localPlayerData.GetPlacedItems().ToList();
 
             var gos = CreateGameObjects(itemDatas, ref _localPlayerData._ownedItems);
 
             BuildingSystem.BuildingSystem.Current.OnLoadedGame(gos.ToArray());
+        }
+
+        private IEnumerator LoadGameDataFromServer()
+        {
+            yield return new WaitUntil(()=> Game.ServerConnection.Loaded);
+
+            Debug.Log("Purchased ItemData: " + Game.ServerConnection.purchasedItems.Count);
+
+            _localPlayerData._ownedItems = Game.ServerConnection.purchasedItems;
+            _localPlayerData.Initialize();
+            
+            LoadGameStatus();
             
             StarCountUI.UpdateStarCount.Invoke(Game.ServerConnection.StudentData.Stars.ToString());
             LocalPlayerData.Instance.SetStarCount(Game.ServerConnection.StudentData.Stars);
@@ -87,7 +107,7 @@ namespace ServerConnection
             foreach (var item in itemswithsockets)
             {
                 if (uids.Contains(item.uid)) continue;
-                var go = itemCreator.CreateItem(item.id, item.uid);
+                var go = ItemCreator.CreateItem(item.id, item.uid);
                 go.transform.position = new Vector3(item.x, 0, item.z);
                 gos.Add(go);
                 uids.Add(item.uid);
@@ -112,7 +132,7 @@ namespace ServerConnection
             foreach (var item in itemswithoutsockets)
             {
                 if (uids.Contains(item.uid)) continue;
-                var go = itemCreator.CreateItem(item.id, item.uid);
+                var go = ItemCreator.CreateItem(item.id, item.uid);
                 go.transform.position = new Vector3(item.x, 0, item.z);
                 gos.Add(go);
                 uids.Add(item.uid);
@@ -128,17 +148,20 @@ namespace ServerConnection
             var component = socketItem.AddComponent<ItemID>();
             component.id = itemId;
             component.uid = uid;
-            component.ItemAttributes = shopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.Attributes;
+            component.ItemAttributes = ShopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.Attributes;
 
             var spriteRenderer = socketItem.GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = shopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.ItemSprite;
+            spriteRenderer.sprite = ShopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.ItemSprite;
 
             return socketItem;
         }
 
-        // private void OnApplicationQuit()
-        // {
-        //     SaveGameData();
-        // }
+        private void OnApplicationQuit()
+        {
+            #if !DEVELOPMENT_BUILD
+                if(!UseServerConnection)
+                    SaveGameData();
+            #endif
+        }
     }
 }
