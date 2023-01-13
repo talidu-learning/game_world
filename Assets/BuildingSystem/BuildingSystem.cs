@@ -208,7 +208,15 @@ namespace BuildingSystem
 
             objectToPlace.transform.SetPositionAndRotation(position, Quaternion.identity);
 
-            objectToPlace.AddComponent<PlaceableObject>();
+            // Not really tested. Decided to automatically zoom out when placing stuff
+            // var placeable = objectToPlace.AddComponent<PlaceableObject>();
+            //
+            // while (!CanBePlaced(placeable))
+            // {
+            //     objectToPlace.transform.position += new Vector3(0, 0, -1);
+            // }
+            //
+            // objectToPlace.transform.position = SnapCoordinateToGrid(objectToPlace.transform.position);
 
             return objectToPlace;
         }
