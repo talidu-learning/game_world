@@ -87,6 +87,11 @@ namespace Inventory
         {
             var go = CreateSocketItem(itemId, uid);
 
+            var localScale = shopInventory.ShopItems.First(i => i.ItemID == itemId).Prefab.transform
+                .GetChild(0).localScale;
+            
+            ScaleGameObjectForSocket(localScale, go);
+
             currentSocket.Place(uid);
 
             LocalPlayerData.Instance.OnPlacedItem(uid, go.transform.position.x, go.transform.position.z,
@@ -95,6 +100,13 @@ namespace Inventory
 
             SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
             currentSocket = null;
+        }
+
+        public static void ScaleGameObjectForSocket(Vector3 localScale, GameObject go)
+        {
+            go.transform.localScale = localScale;
+
+            go.transform.position += new Vector3(0, Mathf.Abs(localScale.y), 0);
         }
 
         private void OnFailedPlacement()

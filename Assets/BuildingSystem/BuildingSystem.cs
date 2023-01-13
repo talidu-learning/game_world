@@ -207,9 +207,11 @@ namespace BuildingSystem
             Vector3 position = SnapCoordinateToGrid(middleofScreen);
 
             objectToPlace.transform.SetPositionAndRotation(position, Quaternion.identity);
-
+            
+            objectToPlace.AddComponent<PlaceableObject>();
+            
             // Not really tested. Decided to automatically zoom out when placing stuff
-            // var placeable = objectToPlace.AddComponent<PlaceableObject>();
+            // var placeable = objectToPlace.GetComponent<PlaceableObject>();
             //
             // while (!CanBePlaced(placeable))
             // {
@@ -239,6 +241,7 @@ namespace BuildingSystem
         private bool CanBePlaced(PlaceableObject objectToPlace)
         {
             BoundsInt area = new BoundsInt();
+            Debug.Log("ObjectToPlace:" + objectToPlace);
             area.position = GridLayout.WorldToCell(objectToPlace.GetStartPosition());
 
             area.size = new Vector3Int(objectToPlace.Size.x + 1, objectToPlace.Size.y + 1, 1);

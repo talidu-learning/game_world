@@ -1,9 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Interactables;
+using Shop;
 using TouchScript.Gestures;
 using UnityEngine;
 using TouchScript.Gestures.TransformGestures;
 using TouchScript.InputSources;
 using TouchScript.Pointers;
+using UnityEngine.Events;
 
 namespace TouchScript.Examples.CameraControl
 {
@@ -26,12 +31,39 @@ namespace TouchScript.Examples.CameraControl
         public float ZoomSpeed = 10f;
         public float currentZoom;
 
+        private bool isZoomEnabled = true;
+
         private void Awake()
         {
             cam = Camera.main.transform;
             currentZoom = 0.5f;
             CalculateZoom();
             ManipulationGesture.OnTransformComplete.AddListener(OnComplete);
+        }
+
+        private void Start()
+        {
+            SelectionManager.SELECT_OBJECT_EVENT.AddListener(OnSelectedObject);
+            SelectionManager.DESELECT_OBJECT_EVENT.AddListener(OnDeselectedObject);
+            SelectionManager.DELETE_OBJECT_EVENT.AddListener(OnDeselectedObject);
+            
+        }
+
+        private void OnDeselectedObject()
+        {
+            isZoomEnabled = true;
+        }
+
+        private void OnSelectedObject(Interactable arg0)
+        {
+            ZoomOut();
+            isZoomEnabled = false;
+        }
+
+        private void ZoomOut()
+        {
+            currentZoom = 1;
+            CalculateZoom();
         }
 
         private void OnComplete(Gesture arg0)
@@ -55,13 +87,13 @@ namespace TouchScript.Examples.CameraControl
                 // cam.transform.localPosition = newZoom;
                 currentZoom += Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
                 currentZoom = Mathf.Clamp01(currentZoom);
-                Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
                 CalculateZoom();
             }
         }
 
         private void CalculateZoom()
         {
+            if(!isZoomEnabled) return;
             var getZoomValue = zoom.Evaluate(currentZoom);
             var localPosition = cam.transform.localPosition;
             localPosition.y = getZoomValue;

@@ -47,7 +47,7 @@ MonoBehaviour:
     ItemSprite: {fileID: 21300000, guid: 9286366d1bc9947469fa09324692eae2, type: 3}
     Value: 5
     Prefab: {fileID: 4883471184429529526, guid: cd1f4f4b00941df4fad05e544ab3bba4, type: 3}
-    Attributes: 0400000000000000
+    Attributes: 00000000
   - ItemID: PileOfCrates
     ItemSprite: {fileID: 21300000, guid: c5d1b630caa41264c946439caf9d8f71, type: 3}
     Value: 40
