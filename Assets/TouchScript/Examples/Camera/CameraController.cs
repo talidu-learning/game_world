@@ -85,7 +85,7 @@ namespace TouchScript.Examples.CameraControl
                 // Vector3 newZoom = cam.transform.localPosition + Vector3.up * Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
                 // newZoom.y = Mathf.Clamp(newZoom.y, 5.0f, 40.5f);
                 // cam.transform.localPosition = newZoom;
-                currentZoom += Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
+                currentZoom += -Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
                 currentZoom = Mathf.Clamp01(currentZoom);
                 CalculateZoom();
             }
