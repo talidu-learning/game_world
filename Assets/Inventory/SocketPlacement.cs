@@ -34,8 +34,12 @@ namespace Inventory
 
         private void OnDeleteItem()
         {
+            Transform parent;
+            if (currentSocket.transform.parent.parent.parent)
+                parent = currentSocket.transform.parent.parent.parent; // table has graphics pivot
+            else parent = currentSocket.transform.parent.parent;
             ServerConnection.OnDeletedItemOnSocket(currentSocket.Uid, currentSocket.transform.GetSiblingIndex(),
-                currentSocket.transform.parent.parent.GetComponent<ItemID>().uid, serverCallbackDelete);
+                parent.GetComponent<ItemID>().uid, serverCallbackDelete);
         }
 
         private void Start()
@@ -132,6 +136,7 @@ namespace Inventory
 
         private void OnSelectedSocket(Socket socket)
         {
+            Debug.Log("Selected: " + socket);
             currentSocket = socket;
         }
     }

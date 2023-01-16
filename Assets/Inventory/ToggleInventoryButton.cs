@@ -1,4 +1,3 @@
-using System;
 using Enumerations;
 using Interactables;
 using UnityEngine;
@@ -14,7 +13,6 @@ namespace Inventory
         public static UnityEvent OpenedInventoryEvent = new UnityEvent();
     
         [SerializeField] private GameObject InventoryUI;
-        private Vector2 initialInventoryPosition = Vector2.zero;
 
         private void Awake()
         {
@@ -25,7 +23,6 @@ namespace Inventory
         private void Start()
         {
             DecorationModeButton.ToggledDecoModeButtonEvent.AddListener(OnToggledDecoMode);
-            initialInventoryPosition = InventoryUI.transform.position;
         }
 
         private void OnToggledDecoMode()
