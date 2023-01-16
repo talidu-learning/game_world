@@ -58,6 +58,7 @@ namespace BuildingSystem
 
         public void PlaceLastObjectOnGrid()
         {
+            if (placeableObject == null) return;
             if (CanBePlaced(placeableObject))
             {
                 ServerConnection.UpdateItemPosition(placeableObject.gameObject.GetComponent<ItemID>().uid, placeableObject.gameObject.GetComponent<ItemID>().id,
