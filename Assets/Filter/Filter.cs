@@ -16,12 +16,12 @@ namespace Filter
 
         private bool isActivated = false;
 
-        private void Awake()
+        private void Start()
         {
             GetComponent<Button>().onClick.AddListener(ToggleFilter);
         }
 
-        private void ToggleFilter()
+        public void ToggleFilter()
         {
             GameAudio.PlaySoundEvent.Invoke(SoundType.Filter);
             isActivated = !isActivated;
