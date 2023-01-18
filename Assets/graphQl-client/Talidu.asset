@@ -579,8 +579,7 @@ MonoBehaviour:
   mutations:
   - name: UpdateStars
     type: 1
-    query: "mutation UpdateStars{\n    updateStudentById(  input :{ studentPatch
-      :{ stars :496}, id :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\"} ){\n        student{\n           
+    query: "mutation UpdateStars{\n    updateStudentById{\n        student{\n           
       stars\n        }\n    }\n}"
     queryString: updateStudentById
     returnType: UpdateStudentPayload

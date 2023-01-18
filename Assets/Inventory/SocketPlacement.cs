@@ -34,12 +34,18 @@ namespace Inventory
 
         private void OnDeleteItem()
         {
+            Transform parent = GetParentWithIDComponent();
+            ServerConnection.OnDeletedItemOnSocket(currentSocket.Uid, currentSocket.transform.GetSiblingIndex(),
+                parent.GetComponent<ItemID>().uid, serverCallbackDelete);
+        }
+
+        private Transform GetParentWithIDComponent()
+        {
             Transform parent;
             if (currentSocket.transform.parent.parent.parent)
                 parent = currentSocket.transform.parent.parent.parent; // table has graphics pivot
             else parent = currentSocket.transform.parent.parent;
-            ServerConnection.OnDeletedItemOnSocket(currentSocket.Uid, currentSocket.transform.GetSiblingIndex(),
-                parent.GetComponent<ItemID>().uid, serverCallbackDelete);
+            return parent;
         }
 
         private void Start()
@@ -54,9 +60,11 @@ namespace Inventory
             if (!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
             Guid uid = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId);
 
+            Transform parent = GetParentWithIDComponent();
+            
             ServerConnection.OnPlacedItemOnSocket(uid, currentSocket.transform.parent.childCount,
                 currentSocket.transform.GetSiblingIndex(),
-                currentSocket.transform.parent.parent.GetComponent<ItemID>().uid, itemId, serverCallbackPlacing);
+                parent.GetComponent<ItemID>().uid, itemId, serverCallbackPlacing);
         }
 
         private void ServerCallbackOnTriedDeleting(bool sucessfullyConnected, Guid socketItemUid,
@@ -97,9 +105,11 @@ namespace Inventory
             ScaleGameObjectForSocket(localScale, go);
 
             currentSocket.Place(uid);
+            
+            Transform parentWithIdComponent = GetParentWithIDComponent();
 
             LocalPlayerData.Instance.OnPlacedItem(uid, go.transform.position.x, go.transform.position.z,
-                currentSocket.transform.parent.parent.GetComponent<ItemID>().uid,
+                parentWithIdComponent.GetComponent<ItemID>().uid,
                 currentSocket.transform.parent.childCount, currentSocket.transform.GetSiblingIndex());
 
             SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
