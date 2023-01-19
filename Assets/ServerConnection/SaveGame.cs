@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Interactables;
+using Inventory;
 using Shop;
 using UnityEngine;
 using UnityEngine.Events;
@@ -145,6 +146,11 @@ namespace ServerConnection
         {
             var socketItem = Instantiate(SocketItem, currentSocket.gameObject.transform, false);
 
+            var localScale = ShopInventory.ShopItems.First(i => i.ItemID == itemId).Prefab.transform
+                .GetChild(0).localScale;
+            
+            SocketPlacement.ScaleGameObjectForSocket(localScale, socketItem);
+            
             var component = socketItem.AddComponent<ItemID>();
             component.id = itemId;
             component.uid = uid;

@@ -1,4 +1,3 @@
-using System;
 using Enumerations;
 using Interactables;
 using UnityEngine;
@@ -51,7 +50,7 @@ namespace Inventory
 
         private void Close()
         {
-            LeanTween.moveLocalY(InventoryUI, -1079.0f, 1.0f).setEase(LeanTweenType.easeOutElastic);
+            LeanTween.move(InventoryUI, new Vector2(Screen.width/2,-Screen.height - 10f), 0.8f).setEase(LeanTweenType.easeOutElastic);
             ClosedInventoryUnityEvent.Invoke();
         }
     }

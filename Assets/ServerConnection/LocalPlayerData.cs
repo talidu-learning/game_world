@@ -120,7 +120,7 @@ namespace ServerConnection
         public void OnDeletedItem(Guid uid)
         {
             var item = _ownedItems.FirstOrDefault(o => o.uid == uid && o.x != 0 && o.z!=0);
-
+            if(item == null)return;
             item.x = 0;
             item.z = 0;
             

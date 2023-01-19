@@ -34,8 +34,18 @@ namespace Inventory
 
         private void OnDeleteItem()
         {
+            Transform parent = GetParentWithIDComponent();
             ServerConnection.OnDeletedItemOnSocket(currentSocket.Uid, currentSocket.transform.GetSiblingIndex(),
-                currentSocket.transform.parent.parent.GetComponent<ItemID>().uid, serverCallbackDelete);
+                parent.GetComponent<ItemID>().uid, serverCallbackDelete);
+        }
+
+        private Transform GetParentWithIDComponent()
+        {
+            Transform parent;
+            if (currentSocket.transform.parent.parent.parent)
+                parent = currentSocket.transform.parent.parent.parent; // table has graphics pivot
+            else parent = currentSocket.transform.parent.parent;
+            return parent;
         }
 
         private void Start()
@@ -50,9 +60,11 @@ namespace Inventory
             if (!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
             Guid uid = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId);
 
+            Transform parent = GetParentWithIDComponent();
+            
             ServerConnection.OnPlacedItemOnSocket(uid, currentSocket.transform.parent.childCount,
                 currentSocket.transform.GetSiblingIndex(),
-                currentSocket.transform.parent.parent.GetComponent<ItemID>().uid, itemId, serverCallbackPlacing);
+                parent.GetComponent<ItemID>().uid, itemId, serverCallbackPlacing);
         }
 
         private void ServerCallbackOnTriedDeleting(bool sucessfullyConnected, Guid socketItemUid,
@@ -87,14 +99,28 @@ namespace Inventory
         {
             var go = CreateSocketItem(itemId, uid);
 
+            var localScale = shopInventory.ShopItems.First(i => i.ItemID == itemId).Prefab.transform
+                .GetChild(0).localScale;
+            
+            ScaleGameObjectForSocket(localScale, go);
+
             currentSocket.Place(uid);
+            
+            Transform parentWithIdComponent = GetParentWithIDComponent();
 
             LocalPlayerData.Instance.OnPlacedItem(uid, go.transform.position.x, go.transform.position.z,
-                currentSocket.transform.parent.parent.GetComponent<ItemID>().uid,
+                parentWithIdComponent.GetComponent<ItemID>().uid,
                 currentSocket.transform.parent.childCount, currentSocket.transform.GetSiblingIndex());
 
             SelectionManager.DESELECT_SOCKET_EVENT.Invoke(currentSocket);
             currentSocket = null;
+        }
+
+        public static void ScaleGameObjectForSocket(Vector3 localScale, GameObject go)
+        {
+            go.transform.localScale = localScale;
+
+            go.transform.position += new Vector3(0, Mathf.Abs(localScale.y), 0);
         }
 
         private void OnFailedPlacement()
@@ -120,6 +146,7 @@ namespace Inventory
 
         private void OnSelectedSocket(Socket socket)
         {
+            Debug.Log("Selected: " + socket);
             currentSocket = socket;
         }
     }

@@ -58,6 +58,7 @@ namespace BuildingSystem
 
         public void PlaceLastObjectOnGrid()
         {
+            if (placeableObject == null) return;
             if (CanBePlaced(placeableObject))
             {
                 ServerConnection.UpdateItemPosition(placeableObject.gameObject.GetComponent<ItemID>().uid, placeableObject.gameObject.GetComponent<ItemID>().id,
@@ -207,8 +208,18 @@ namespace BuildingSystem
             Vector3 position = SnapCoordinateToGrid(middleofScreen);
 
             objectToPlace.transform.SetPositionAndRotation(position, Quaternion.identity);
-
+            
             objectToPlace.AddComponent<PlaceableObject>();
+            
+            // Not really tested. Decided to automatically zoom out when placing stuff
+            // var placeable = objectToPlace.GetComponent<PlaceableObject>();
+            //
+            // while (!CanBePlaced(placeable))
+            // {
+            //     objectToPlace.transform.position += new Vector3(0, 0, -1);
+            // }
+            //
+            // objectToPlace.transform.position = SnapCoordinateToGrid(objectToPlace.transform.position);
 
             return objectToPlace;
         }
@@ -231,6 +242,7 @@ namespace BuildingSystem
         private bool CanBePlaced(PlaceableObject objectToPlace)
         {
             BoundsInt area = new BoundsInt();
+            Debug.Log("ObjectToPlace:" + objectToPlace);
             area.position = GridLayout.WorldToCell(objectToPlace.GetStartPosition());
 
             area.size = new Vector3Int(objectToPlace.Size.x + 1, objectToPlace.Size.y + 1, 1);

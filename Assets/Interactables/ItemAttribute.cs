@@ -7,6 +7,7 @@
         Wide,
         VeryHuge,
         WaterOnly,
-        SoilOnly
+        SoilOnly,
+        Bought
     }
 }

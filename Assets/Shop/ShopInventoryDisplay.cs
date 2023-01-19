@@ -50,6 +50,18 @@ namespace Shop
         {
             if(uiType == UIType.Inventory) return;
 
+            if (attributes.Contains(ItemAttribute.Bought))
+            {
+                foreach (var item in _shopItems)
+                {
+                    if(LocalPlayerData.Instance.GetCountOfOwnedItems(item.Key) == 0)
+                        item.Value.gameObject.SetActive(!isActive);
+                }
+                
+                return;
+            }
+            
+            
             foreach (var attribute in attributes)
             {
                 foreach (var item in _shopItems)

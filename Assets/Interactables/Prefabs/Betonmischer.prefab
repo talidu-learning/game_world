@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4622052709938419124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.3, z: 0}
+  m_LocalPosition: {x: 0, y: 3.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0.25665337}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 4883471184429529532}
   - component: {fileID: 4883471184429529534}
   - component: {fileID: 3985199299028485562}
+  - component: {fileID: 6831336688413719592}
   m_Layer: 3
   m_Name: Betonmischer
   m_TagString: Untagged
@@ -155,8 +156,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 14.825484, y: 5.690443, z: 2.8947213}
-  m_Center: {x: -0.009823322, y: 1.3406196, z: 0.41226017}
+  m_Size: {x: 14.825484, y: 8.484615, z: 4.037112}
+  m_Center: {x: -0.009823322, y: 2.7377062, z: 1.938314}
 --- !u!114 &4883471184429529523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,5 +290,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2940843babae437eb71b03a74c48c362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6831336688413719592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4883471184429529526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d44d2dd54316c4b96a11c5804b815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -1,5 +1,6 @@
 using Enumerations;
 using Interactables;
+using Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,19 @@ namespace Shop
             button.onClick.AddListener(OnButtonClick);
             
             DecorationModeButton.ToggledDecoModeButtonEvent.AddListener(OnToggledDecoMode);
+            
+            ToggleInventoryButton.OpenedInventoryEvent.AddListener(OnOpenedInventory);
+        }
+
+        private void OnOpenedInventory()
+        {
+            if (!isOpen) return;
+            
+            ShopPanel.Toggle();
+
+            isOpen = false;
+            
+            GetComponent<Image>().sprite = ClosedPanel;
         }
 
         private void OnToggledDecoMode()

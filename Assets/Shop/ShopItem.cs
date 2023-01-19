@@ -15,7 +15,7 @@ namespace Shop
     {
         [SerializeField] private TextMeshProUGUI PriceTag;
         [SerializeField] private TextMeshProUGUI Owned;
-        [SerializeField] private TextMeshProUGUI Placed;
+       // [SerializeField] private TextMeshProUGUI Placed;
         [SerializeField] private Image ItemImage;
         [SerializeField] private Button button;
         public string itemID { private set; get; }
@@ -64,7 +64,7 @@ namespace Shop
             int owned = LocalPlayerData.Instance.GetCountOfOwnedItems(itemID);
             int unplaced = LocalPlayerData.Instance.GetCountOfUnplacedItems(itemID);
             Owned.text = owned.ToString();
-            Placed.text = unplaced.ToString();
+          //  Placed.text = unplaced.ToString();
         }
         
         public void Initialize(ShopItemData shopItemData)
