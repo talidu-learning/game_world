@@ -1571,7 +1571,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5557176908100838818, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+      propertyPath: socketItem
+      value: 
+      objectReference: {fileID: 353450886295271579, guid: 16bc2bdadfc5dda4c86950fb305c4833, type: 3}
+    - target: {fileID: 5557176908100838818, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
       propertyPath: ItemCreator
+      value: 
+      objectReference: {fileID: 1317330396}
+    - target: {fileID: 5557176908100838818, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+      propertyPath: itemCreator
       value: 
       objectReference: {fileID: 1317330396}
     - target: {fileID: 5557176908100838818, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
@@ -1579,7 +1587,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 2e3881a7dd09dd54d97dd33e6736f7ba, type: 2}
     - target: {fileID: 5557176908100838818, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+      propertyPath: shopInventory
+      value: 
+      objectReference: {fileID: 11400000, guid: 2e3881a7dd09dd54d97dd33e6736f7ba, type: 2}
+    - target: {fileID: 5557176908100838818, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+      propertyPath: serverConnection
+      value: 
+      objectReference: {fileID: 1303059408}
+    - target: {fileID: 5557176908100838818, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
       propertyPath: UseServerConnection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5557176908100838818, guid: 34f3f2a0688e5f14baa43e6dbf588c1d, type: 3}
+      propertyPath: useServerConnection
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Interactables
 {
-    
     public class SocketCollection : MonoBehaviour
     {
         public List<Socket> Sockets = new List<Socket>();
@@ -20,7 +19,8 @@ namespace Interactables
             SelectionManager.DisableDecoration.AddListener(DeactivateSockets);
         }
 
-        public void ActivateSockets(){
+        public void ActivateSockets()
+        {
             foreach (var socket in Sockets)
             {
                 socket.GetComponent<PressGesture>().enabled = true;
@@ -28,15 +28,14 @@ namespace Interactables
                 if (socket.IsUsed) socket.GetComponent<SpriteRenderer>().color = Color.red;
             }
         }
-        
-        public void DeactivateSockets(){
+
+        public void DeactivateSockets()
+        {
             foreach (var socket in Sockets)
             {
                 socket.GetComponent<PressGesture>().enabled = false;
                 socket.GetComponent<SpriteRenderer>().enabled = false;
             }
         }
-        
     }
-    
 }

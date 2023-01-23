@@ -19,7 +19,7 @@ namespace Shop
         {
             if (_shopItems.TryGetValue(id, out ShopItem item))
             {
-                if(wasValidPlacement && !isOneCopyLeft) item.PlaceItem(false);
+                if (wasValidPlacement && !isOneCopyLeft) item.PlaceItem(false);
                 else item.WasInvalidPlacement();
             }
         }
@@ -31,7 +31,7 @@ namespace Shop
 
         private void Start()
         {
-            SaveGame.LoadedPlayerData.AddListener(UpdateItemStates);
+            SaveGame.TEXT_LOADED_PLAYER_DATA.AddListener(UpdateItemStates);
             UIManager.FILTER_EVENT.AddListener(OnFilterToggled);
 
             LocalPlayerData.ChangedItemDataEvent.AddListener(UpdateItemState);
@@ -41,47 +41,46 @@ namespace Shop
         {
             var go = _shopItems.FirstOrDefault(o => o.Key == id).Value;
             var shopItem = go.GetComponent<ShopItem>();
-            var itemdata = ShopInventory.ShopItems.FirstOrDefault(i=> i.ItemID == id);
+            var itemdata = ShopInventory.ShopItems.FirstOrDefault(i => i.ItemID == id);
             shopItem.Initialize(itemdata);
-
         }
 
         private void OnFilterToggled(UIType uiType, List<ItemAttribute> attributes, bool isActive)
         {
-            if(uiType == UIType.Inventory) return;
+            if (uiType == UIType.Inventory) return;
 
             if (attributes.Contains(ItemAttribute.Bought))
             {
                 foreach (var item in _shopItems)
                 {
-                    if(LocalPlayerData.Instance.GetCountOfOwnedItems(item.Key) == 0)
+                    if (LocalPlayerData.Instance.GetCountOfOwnedItems(item.Key) == 0)
                         item.Value.gameObject.SetActive(!isActive);
                 }
-                
+
                 return;
             }
-            
-            
+
+
             foreach (var attribute in attributes)
             {
                 foreach (var item in _shopItems)
                 {
-                    if(item.Value.GetComponent<ShopItem>().attributes.Contains(attribute))
+                    if (item.Value.GetComponent<ShopItem>().attributes.Contains(attribute))
                         item.Value.gameObject.SetActive(!isActive);
                 }
             }
         }
-        
+
         private void UpdateItemStates()
         {
             var ownedItems = LocalPlayerData.Instance.GetOwnedItems();
-            
+
             foreach (var item in _shopItems)
             {
-                    if (ownedItems.Count(i=> i.id == item.Key) > 0 || !LocalPlayerData.Instance.IsItemPlaceable(item.Key))
-                    {
-                        item.Value.PlaceItem(false);
-                    }
+                if (ownedItems.Count(i => i.id == item.Key) > 0 || !LocalPlayerData.Instance.IsItemPlaceable(item.Key))
+                {
+                    item.Value.PlaceItem(false);
+                }
             }
         }
 

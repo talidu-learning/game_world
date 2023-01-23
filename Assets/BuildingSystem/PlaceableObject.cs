@@ -7,9 +7,9 @@ namespace BuildingSystem
         public bool WasPlacedBefore { get; private set; }
         public Vector3Int Size { get; private set; }
         private Vector3[] vertices;
-        public Vector3Int PlacedPosition{ get; private set; }
+        public Vector3Int PlacedPosition { get; private set; }
 
-        public Vector3 PlacePosition{ get; private set; }
+        public Vector3 PlacePosition { get; private set; }
 
         private void Awake()
         {
@@ -23,9 +23,9 @@ namespace BuildingSystem
             BoxCollider b = gameObject.GetComponent<BoxCollider>();
             vertices = new Vector3[4];
             vertices[0] = b.center + new Vector3(-b.size.x, -b.size.y, -b.size.z) * 0.5f;
-            vertices[1]= b.center + new Vector3(b.size.x, -b.size.y, -b.size.z) * 0.5f;
-            vertices[2]= b.center + new Vector3(b.size.x, -b.size.y, b.size.z) * 0.5f;
-            vertices[3]= b.center + new Vector3(-b.size.x, -b.size.y, b.size.z) * 0.5f;
+            vertices[1] = b.center + new Vector3(b.size.x, -b.size.y, -b.size.z) * 0.5f;
+            vertices[2] = b.center + new Vector3(b.size.x, -b.size.y, b.size.z) * 0.5f;
+            vertices[3] = b.center + new Vector3(-b.size.x, -b.size.y, b.size.z) * 0.5f;
         }
 
         private void CalculateSizeInCells()
@@ -38,7 +38,8 @@ namespace BuildingSystem
                 vector3Ints[i] = BuildingSystem.Current.GridLayout.WorldToCell(worldPos);
             }
 
-            Size = new Vector3Int(Mathf.Abs((vector3Ints[0] - vector3Ints[1]).x), Mathf.Abs((vector3Ints[0] - vector3Ints[3]).y), 1);
+            Size = new Vector3Int(Mathf.Abs((vector3Ints[0] - vector3Ints[1]).x),
+                Mathf.Abs((vector3Ints[0] - vector3Ints[3]).y), 1);
         }
 
         public Vector3 GetStartPosition()
@@ -50,7 +51,7 @@ namespace BuildingSystem
         public void Place(Vector3Int position)
         {
             PlacePosition = transform.position;
-        
+
             PlacedPosition = position;
             WasPlacedBefore = true;
 

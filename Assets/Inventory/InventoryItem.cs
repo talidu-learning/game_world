@@ -16,8 +16,8 @@ namespace Inventory
         [SerializeField] private TextMeshProUGUI Unplaced;
         [SerializeField] private Image ItemImage;
 
-        public List<ItemAttribute> attributes{ private set; get; }
-        
+        public List<ItemAttribute> attributes { private set; get; }
+
         public string itemID { private set; get; }
 
         public void Awake()
@@ -29,7 +29,7 @@ namespace Inventory
         {
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(StartAsyncUpdate);
             SelectionManager.DELETE_OBJECT_EVENT.AddListener(StartAsyncUpdate);
-            
+
             SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);
             SelectionManager.DESELECT_SOCKET_EVENT.AddListener(OnDeselectedSocket);
             SelectionManager.DELETE_SOCKET_EVENT.AddListener(OnDeselectedSocket);
@@ -42,6 +42,7 @@ namespace Inventory
             GetComponent<Button>().onClick.RemoveAllListeners();
             GetComponent<Button>().onClick.AddListener(PlaceItem);
         }
+
         private void OnDeselectedSocket()
         {
             GetComponent<Button>().onClick.RemoveAllListeners();
@@ -53,6 +54,7 @@ namespace Inventory
             GetComponent<Button>().onClick.RemoveAllListeners();
             GetComponent<Button>().onClick.AddListener(PlaceOnSocket);
         }
+
         private void OnSelectedSocket()
         {
             GetComponent<Button>().onClick.RemoveAllListeners();
@@ -64,7 +66,7 @@ namespace Inventory
             gameObject.SetActive(true);
             StartCoroutine(AsyncUpdate());
         }
-        
+
         private IEnumerator AsyncUpdate()
         {
             yield return null;
@@ -83,7 +85,7 @@ namespace Inventory
             ToggleInventoryButton.CloseInventoryUnityEvent.Invoke();
             SocketPlacement.PlaceItemOnSocket.Invoke(itemID);
         }
-        
+
         public void Initialize(ShopItemData shopItemData)
         {
             itemID = shopItemData.ItemID;
@@ -91,14 +93,14 @@ namespace Inventory
             attributes = shopItemData.Attributes;
             UpdateUI();
         }
-        
+
         public void UpdateUI()
         {
             int unplaced = LocalPlayerData.Instance.GetCountOfUnplacedItems(itemID);
 
             Unplaced.text = unplaced.ToString();
-            
-            if(unplaced != 0) gameObject.SetActive(true);
+
+            if (unplaced != 0) gameObject.SetActive(true);
             else
             {
                 gameObject.SetActive(false);

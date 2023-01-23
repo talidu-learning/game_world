@@ -16,17 +16,17 @@ public class Interactable : MonoBehaviour
     {
         TransformGesture = GetComponent<TransformGesture>();
         TransformGesture.enabled = false;
-        
+
         LongPressGesture = GetComponent<LongPressGesture>();
-        
+
         LongPressGesture.StateChanged += LongPressedHandler;
 
         PressGesture = GetComponent<PressGesture>();
-        
+
         PressGesture.Pressed += PressGestureOnPressed;
-        
+
         DeselectOnTap.OnTapOnBackground.AddListener(OnTap);
-        
+
         SelectionManager.EnableDecoration.AddListener(OnEnablingDecoration);
         SelectionManager.DisableDecoration.AddListener(OnDisablingDecoration);
     }
@@ -54,7 +54,6 @@ public class Interactable : MonoBehaviour
 
     private void LongPressedHandler(object sender, GestureStateChangeEventArgs e)
     {
-
         if (e.State == Gesture.GestureState.Recognized)
         {
             EnableDragging();
@@ -92,5 +91,4 @@ public class Interactable : MonoBehaviour
         PressGesture.enabled = true;
         TransformGesture.enabled = false;
     }
-    
 }

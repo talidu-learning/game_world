@@ -9,14 +9,16 @@ namespace GraphQlClient.Core
     {
         public static string schemaIntrospectionQuery =
             "query IntrospectionQuery {\n  __schema {\n    queryType {\n      name\n    }\n    mutationType {\n      name\n    }\n    subscriptionType {\n      name\n    }\n    types {\n      ...FullType\n    }\n    directives {\n      name\n      description\n      locations\n      args {\n        ...InputValue\n      }\n    }\n  }\n}\n\nfragment FullType on __Type {\n  kind\n  name\n  description\n  fields(includeDeprecated: true) {\n    name\n    description\n    args {\n      ...InputValue\n    }\n    type {\n      ...TypeRef\n    }\n    isDeprecated\n    deprecationReason\n  }\n  inputFields {\n    ...InputValue\n  }\n  interfaces {\n    ...TypeRef\n  }\n  enumValues(includeDeprecated: true) {\n    name\n    description\n    isDeprecated\n    deprecationReason\n  }\n  possibleTypes {\n    ...TypeRef\n  }\n}\n\nfragment InputValue on __InputValue {\n  name\n  description\n  type {\n    ...TypeRef\n  }\n  defaultValue\n}\n\nfragment TypeRef on __Type {\n  kind\n  name\n  ofType {\n    kind\n    name\n    ofType {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}";
-        
-        [Serializable]        
+
+        [Serializable]
         public class SchemaClass
         {
             public Data data;
+
             public class Data
             {
                 public Schema __schema;
+
                 public class Schema
                 {
                     public List<Type> types;
@@ -55,6 +57,7 @@ namespace GraphQlClient.Core
                             INPUT_FIELD_DEFINITION
                         }
                     }
+
                     public class Type
                     {
                         public TypeKind kind;
@@ -66,7 +69,7 @@ namespace GraphQlClient.Core
                         public List<EnumValue> enumValues;
                         public List<InputValue> inputFields;
                         public Type ofType;
-                        
+
                         public class Field
                         {
                             public string name;
@@ -87,9 +90,17 @@ namespace GraphQlClient.Core
 
                         public enum TypeKind
                         {
-                            SCALAR, OBJECT, INTERFACE, UNION, ENUM, INPUT_OBJECT, LIST, NON_NULL
+                            SCALAR,
+                            OBJECT,
+                            INTERFACE,
+                            UNION,
+                            ENUM,
+                            INPUT_OBJECT,
+                            LIST,
+                            NON_NULL
                         }
                     }
+
                     public class InputValue
                     {
                         public string name;
@@ -99,8 +110,6 @@ namespace GraphQlClient.Core
                     }
                 }
             }
-            
         }
     }
 }
-

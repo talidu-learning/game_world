@@ -9,12 +9,15 @@ using UnityEngine.Events;
 
 namespace Shop
 {
-    public class BoolGameObjectUnityEvent : UnityEvent<bool, GameObject>{}
+    public class BoolGameObjectUnityEvent : UnityEvent<bool, GameObject>
+    {
+    }
+
     public class ShopManager : MonoBehaviour
     {
         [SerializeField] private ItemCreator ItemCreator;
         [SerializeField] private ShopInventoryDisplay ShopInventoryDisplay;
-        [SerializeField] private Game.ServerConnection serverConnection;
+        [SerializeField] private ServerConnection.graphQl_client.ServerConnection serverConnection;
 
         public static StringGuidUnityEvent InitilizePlaceObjectEvent = new StringGuidUnityEvent();
 
@@ -35,7 +38,8 @@ namespace Shop
             {
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Place);
                 // var updatedItem = await serverConnection.UpdateItemPosition(uid, id,placedObject.transform.position.x, placedObject.transform.position.z);
-                LocalPlayerData.Instance.OnPlacedItem(uid, placedObject.transform.position.x, placedObject.transform.position.z);
+                LocalPlayerData.Instance.OnPlacedItem(uid, placedObject.transform.position.x,
+                    placedObject.transform.position.z);
             }
             else
             {
@@ -50,19 +54,19 @@ namespace Shop
                         LocalPlayerData.Instance.OnDeletedItem(socket.Uid, uid, socket.transform.GetSiblingIndex());
                         socket.Delete();
                     }
-                    
                 }
+
                 // var updatedItem = await ServerConnection.UpdateItemPosition(uid, 0, 0);
                 // var onWithdrewItem2 = await LocalPlayerData.Instance.OnWithdrewItem(uid);
                 Destroy(placedObject);
             }
-            
+
             ShopInventoryDisplay.OnPlacedItem(id, wasPlacedSuccessfully, LocalPlayerData.Instance.IsItemPlaceable(id));
         }
 
         private void OnPlaceObject(string itemId, Guid uid)
         {
-            if(!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
+            if (!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
             var go = ItemCreator.CreateItem(itemId, LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId));
             SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
         }

@@ -11,7 +11,7 @@ namespace Inventory
         public static UnityEvent CloseInventoryUnityEvent = new UnityEvent();
         public static UnityEvent ClosedInventoryUnityEvent = new UnityEvent();
         public static UnityEvent OpenedInventoryEvent = new UnityEvent();
-    
+
         [SerializeField] private GameObject InventoryUI;
 
         private void Awake()
@@ -42,7 +42,7 @@ namespace Inventory
             Open();
             OpenedInventoryEvent.Invoke();
         }
-        
+
         private void Open()
         {
             LeanTween.moveLocalY(InventoryUI, 0, 0.8f).setEase(LeanTweenType.easeOutElastic);
@@ -50,7 +50,8 @@ namespace Inventory
 
         private void Close()
         {
-            LeanTween.move(InventoryUI, new Vector2(Screen.width/2,-Screen.height - 10f), 0.8f).setEase(LeanTweenType.easeOutElastic);
+            LeanTween.move(InventoryUI, new Vector2(Screen.width / 2, -Screen.height - 10f), 0.8f)
+                .setEase(LeanTweenType.easeOutElastic);
             ClosedInventoryUnityEvent.Invoke();
         }
     }

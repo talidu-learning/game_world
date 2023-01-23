@@ -6,9 +6,9 @@ public class SortTouchLayer : MonoBehaviour
 {
     public FullscreenLayer FullscreenLayer;
     public StandardLayer Interactables;
-    
+
     private ILayerManager layerManager;
-    
+
     void Awake()
     {
         layerManager = LayerManager.Instance;

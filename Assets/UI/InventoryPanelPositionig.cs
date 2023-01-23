@@ -10,7 +10,7 @@ public class InventoryPanelPositionig : MonoBehaviour
 
     private void OnValidate()
     {
-        GetComponent<RectTransform>().position = new Vector2(transform.position.x, - Screen.height );
+        GetComponent<RectTransform>().position = new Vector2(transform.position.x, -Screen.height);
     }
 
     private void Awake()

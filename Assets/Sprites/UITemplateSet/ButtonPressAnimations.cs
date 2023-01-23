@@ -17,7 +17,7 @@ public class ButtonPressAnimations : MonoBehaviour, IPointerDownHandler, IPointe
 
     private void Start()
     {
-        oldButtonWorldPos = new Vector2(ButtonGraphic.anchoredPosition.x , ButtonGraphic.anchoredPosition.y);
+        oldButtonWorldPos = new Vector2(ButtonGraphic.anchoredPosition.x, ButtonGraphic.anchoredPosition.y);
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -54,11 +54,17 @@ public class ButtonPressAnimations : MonoBehaviour, IPointerDownHandler, IPointe
 
         while (time < downPressTime)
         {
-            ButtonGraphic.anchoredPosition = Vector2.Lerp(oldButtonWorldPos, ButtonGraphic.parent.InverseTransformPoint(new Vector3(TargetPosition.localToWorldMatrix.m03, TargetPosition.localToWorldMatrix.m13, TargetPosition.localToWorldMatrix.m23)), time / downPressTime);
+            ButtonGraphic.anchoredPosition = Vector2.Lerp(oldButtonWorldPos,
+                ButtonGraphic.parent.InverseTransformPoint(new Vector3(TargetPosition.localToWorldMatrix.m03,
+                    TargetPosition.localToWorldMatrix.m13, TargetPosition.localToWorldMatrix.m23)),
+                time / downPressTime);
             time += Time.deltaTime;
             yield return null;
         }
-        ButtonGraphic.anchoredPosition = ButtonGraphic.parent.InverseTransformPoint(new Vector3( TargetPosition.localToWorldMatrix.m03, TargetPosition.localToWorldMatrix.m13, TargetPosition.localToWorldMatrix.m23));
+
+        ButtonGraphic.anchoredPosition = ButtonGraphic.parent.InverseTransformPoint(
+            new Vector3(TargetPosition.localToWorldMatrix.m03, TargetPosition.localToWorldMatrix.m13,
+                TargetPosition.localToWorldMatrix.m23));
     }
 
     IEnumerator PressUpAnimation()
@@ -68,10 +74,14 @@ public class ButtonPressAnimations : MonoBehaviour, IPointerDownHandler, IPointe
 
         while (time < downPressTime)
         {
-            ButtonGraphic.anchoredPosition = Vector2.Lerp(ButtonGraphic.parent.InverseTransformPoint(new Vector3(TargetPosition.localToWorldMatrix.m03, TargetPosition.localToWorldMatrix.m13, TargetPosition.localToWorldMatrix.m23)), oldButtonWorldPos, time / downPressTime);
+            ButtonGraphic.anchoredPosition = Vector2.Lerp(
+                ButtonGraphic.parent.InverseTransformPoint(new Vector3(TargetPosition.localToWorldMatrix.m03,
+                    TargetPosition.localToWorldMatrix.m13, TargetPosition.localToWorldMatrix.m23)), oldButtonWorldPos,
+                time / downPressTime);
             time += Time.deltaTime;
             yield return null;
         }
+
         ButtonGraphic.anchoredPosition = oldButtonWorldPos;
     }
 }

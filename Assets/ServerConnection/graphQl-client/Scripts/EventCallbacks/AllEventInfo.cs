@@ -6,8 +6,8 @@ namespace GraphQlClient.EventCallbacks
 
     public class OnRequestBegin : Event<OnRequestBegin>
     {
-        public OnRequestBegin(){
-            
+        public OnRequestBegin()
+        {
         }
     }
 
@@ -16,12 +16,15 @@ namespace GraphQlClient.EventCallbacks
         public string data;
         public bool success;
         public Exception exception;
-        public OnRequestEnded(string data){
+
+        public OnRequestEnded(string data)
+        {
             this.data = data;
             success = true;
         }
 
-        public OnRequestEnded(Exception exception){
+        public OnRequestEnded(Exception exception)
+        {
             this.exception = exception;
             success = false;
         }
@@ -29,9 +32,8 @@ namespace GraphQlClient.EventCallbacks
 
     public class OnSubscriptionHandshakeComplete : Event<OnSubscriptionHandshakeComplete>
     {
-
-        public OnSubscriptionHandshakeComplete(){
-            
+        public OnSubscriptionHandshakeComplete()
+        {
         }
     }
 
@@ -39,15 +41,16 @@ namespace GraphQlClient.EventCallbacks
     {
         public string data;
 
-        public OnSubscriptionDataReceived(string data){
+        public OnSubscriptionDataReceived(string data)
+        {
             this.data = data;
         }
     }
 
     public class OnSubscriptionCanceled : Event<OnSubscriptionCanceled>
     {
-        public OnSubscriptionCanceled(){
-            
+        public OnSubscriptionCanceled()
+        {
         }
     }
 

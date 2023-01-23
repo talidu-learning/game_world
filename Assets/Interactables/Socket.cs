@@ -13,7 +13,7 @@ namespace Interactables
 
         private void Awake()
         {
-            GetComponent<PressGesture>().Pressed+=OnTap;
+            GetComponent<PressGesture>().Pressed += OnTap;
         }
 
         private void OnTap(object sender, EventArgs e)
@@ -28,7 +28,7 @@ namespace Interactables
 
         public void Deselect()
         {
-            GetComponent<SpriteRenderer>().color = IsUsed? Color.red : Color.white;
+            GetComponent<SpriteRenderer>().color = IsUsed ? Color.red : Color.white;
         }
 
         public void Place(Guid uid)
@@ -43,6 +43,5 @@ namespace Interactables
             Destroy(transform.GetChild(0).gameObject);
             IsUsed = false;
         }
-        
     }
 }

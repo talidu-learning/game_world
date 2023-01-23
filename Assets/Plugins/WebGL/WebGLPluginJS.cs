@@ -10,10 +10,10 @@ namespace Plugins.WebGL
     {
         [DllImport("__Internal")]
         public static extern void PassTextParam(string text);
-        
+
         [DllImport("__Internal")]
         public static extern void SetTestToken();
-        
+
         [DllImport("__Internal")]
         public static extern string GetToken();
 
@@ -32,6 +32,5 @@ namespace Plugins.WebGL
         {
             return GetToken();
         }
-
     }
 }
