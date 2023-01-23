@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using Enumerations;
+using GameModes;
 using Interactables;
 using ServerConnection;
 using Shop;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Inventory
@@ -18,7 +18,7 @@ namespace Inventory
 
         public List<ItemAttribute> attributes { private set; get; }
 
-        public string itemID { private set; get; }
+        public string ItemID { private set; get; }
 
         public void Awake()
         {
@@ -33,8 +33,23 @@ namespace Inventory
             SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);
             SelectionManager.DESELECT_SOCKET_EVENT.AddListener(OnDeselectedSocket);
             SelectionManager.DELETE_SOCKET_EVENT.AddListener(OnDeselectedSocket);
-            SelectionManager.DisableDecoration.AddListener(OnDeselectedSocket);
-            SelectionManager.EnableDecoration.AddListener(OnSelectedSocket);
+            
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameModes);
+        }
+
+        private void OnSwitchedGameModes(GameMode gameMode)
+        {
+            switch (gameMode)
+            {
+                case GameMode.Deco:
+                    OnSelectedSocket();
+                    break;
+                case GameMode.Terrain:
+                    break;
+                default:
+                    OnDeselectedSocket();
+                    break;
+            }
         }
 
         private void OnDeselectedSocket(Socket socket)
@@ -75,20 +90,20 @@ namespace Inventory
 
         private void PlaceItem()
         {
-            var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemID);
-            ShopManager.InitilizePlaceObjectEvent.Invoke(itemID, uitemID);
+            var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(ItemID);
+            ShopManager.InitilizePlaceObjectEvent.Invoke(ItemID, uitemID);
             ToggleInventoryButton.CloseInventoryUnityEvent.Invoke();
         }
 
         private void PlaceOnSocket()
         {
             ToggleInventoryButton.CloseInventoryUnityEvent.Invoke();
-            SocketPlacement.PlaceItemOnSocket.Invoke(itemID);
+            SocketPlacement.PlaceItemOnSocket.Invoke(ItemID);
         }
 
         public void Initialize(ShopItemData shopItemData)
         {
-            itemID = shopItemData.ItemID;
+            ItemID = shopItemData.ItemID;
             ItemImage.sprite = shopItemData.ItemSprite;
             attributes = shopItemData.Attributes;
             UpdateUI();
@@ -96,7 +111,7 @@ namespace Inventory
 
         public void UpdateUI()
         {
-            int unplaced = LocalPlayerData.Instance.GetCountOfUnplacedItems(itemID);
+            int unplaced = LocalPlayerData.Instance.GetCountOfUnplacedItems(ItemID);
 
             Unplaced.text = unplaced.ToString();
 

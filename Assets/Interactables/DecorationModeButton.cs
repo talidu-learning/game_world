@@ -1,4 +1,6 @@
-﻿using Inventory;
+﻿using Enumerations;
+using GameModes;
+using Inventory;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -39,17 +41,17 @@ namespace Interactables
             gameObject.SetActive(false);
         }
 
-        public void ToggleDecoMode()
+        private void ToggleDecoMode()
         {
             if (isModeEnabled)
             {
                 GetComponent<Image>().sprite = DecoModeOff;
-                SelectionManager.DisableDecoration.Invoke();
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.DefaultPlacing);
             }
             else
             {
                 GetComponent<Image>().sprite = DecoModeOn;
-                SelectionManager.EnableDecoration.Invoke();
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Deco);
             }
 
             isModeEnabled = !isModeEnabled;

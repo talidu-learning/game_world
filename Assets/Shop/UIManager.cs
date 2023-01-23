@@ -8,13 +8,11 @@ using UnityEngine.Events;
 
 namespace Shop
 {
-    public class FilterEvent : UnityEvent<UIType, List<ItemAttribute>, bool>
-    {
-    }
+    public class FilterEvent : UnityEvent<UIType, List<ItemAttribute>, bool> { }
 
     public class UIManager : MonoBehaviour
     {
-        public readonly static FilterEvent FILTER_EVENT = new FilterEvent();
+        public static readonly FilterEvent FILTER_EVENT = new FilterEvent();
 
 
         [SerializeField] private Animation LoadingAnimation;

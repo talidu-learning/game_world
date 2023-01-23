@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Interactables;
 using ServerConnection;
 using Shop;
 using UnityEngine;

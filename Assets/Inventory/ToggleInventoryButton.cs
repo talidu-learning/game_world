@@ -1,5 +1,5 @@
 using Enumerations;
-using Interactables;
+using GameModes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -22,12 +22,12 @@ namespace Inventory
 
         private void Start()
         {
-            DecorationModeButton.ToggledDecoModeButtonEvent.AddListener(OnToggledDecoMode);
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameModes);
         }
 
-        private void OnToggledDecoMode()
+        private void OnSwitchedGameModes(GameMode mode)
         {
-            gameObject.SetActive(!gameObject.activeSelf);
+            gameObject.SetActive(mode is not (GameMode.Deco or GameMode.Terrain));
         }
 
         public void CloseInventory()

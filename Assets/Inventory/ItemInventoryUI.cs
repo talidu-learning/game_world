@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Enumerations;
+using GameModes;
 using Interactables;
 using ServerConnection;
 using Shop;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Inventory
 {
@@ -33,9 +33,26 @@ namespace Inventory
             UIManager.FILTER_EVENT.AddListener(OnFilterToggled);
 
             SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);
-            SelectionManager.DESELECT_SOCKET_EVENT.AddListener(OnDeselectedSocket);
+
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameMode);
 
             LocalPlayerData.ChangedItemDataEvent.AddListener(UpdateItemState);
+        }
+
+        private void OnSwitchedGameMode(GameMode gameMode)
+        {
+            if (gameMode == GameMode.Deco)
+            {
+                FilterPanel.SetActive(false);
+                OnFilterToggled(UIType.Inventory, new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
+                    true);
+            }
+            else
+            {
+                FilterPanel.SetActive(true);
+                OnFilterToggled(UIType.Inventory, new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
+                    false);
+            }
         }
 
         private void UpdateItemState(string id)
@@ -49,20 +66,10 @@ namespace Inventory
             if (LocalPlayerData.Instance.GetCountOfUnplacedItems(id) == 0) item.Value.SetActive(false);
         }
 
-        private void OnDeselectedSocket(Socket arg0)
-        {
-            FilterPanel.SetActive(true);
-            OnFilterToggled(UIType.Inventory, new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
-                false);
-        }
-
         private void OnSelectedSocket(Socket socket)
         {
             if (socket.IsUsed) return;
             ToggleButton.OpenInventory();
-            FilterPanel.SetActive(false);
-            OnFilterToggled(UIType.Inventory, new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
-                true);
         }
 
         private void OnFilterToggled(UIType uiType, List<ItemAttribute> attributes, bool isActive)

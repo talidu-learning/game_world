@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Enumerations;
+using GameModes;
 using TouchScript.Gestures;
 using UnityEngine;
 
@@ -15,11 +17,26 @@ namespace Interactables
 
         private void Start()
         {
-            SelectionManager.EnableDecoration.AddListener(ActivateSockets);
-            SelectionManager.DisableDecoration.AddListener(DeactivateSockets);
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameModes);
         }
 
-        public void ActivateSockets()
+        private void OnSwitchedGameModes(GameMode gameMode)
+        {
+            Debug.Log(gameMode);
+            switch (gameMode)
+            {
+                case GameMode.Deco:
+                    ActivateSockets();
+                    break;
+                case GameMode.Terrain:
+                    break;
+                default:
+                    DeactivateSockets();
+                    break;
+            }
+        }
+
+        private void ActivateSockets()
         {
             foreach (var socket in Sockets)
             {
@@ -29,7 +46,7 @@ namespace Interactables
             }
         }
 
-        public void DeactivateSockets()
+        private void DeactivateSockets()
         {
             foreach (var socket in Sockets)
             {

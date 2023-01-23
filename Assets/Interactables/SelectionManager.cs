@@ -1,5 +1,7 @@
 ﻿using System;
 using BuildingSystem;
+using Enumerations;
+using GameModes;
 using Inventory;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,9 +24,6 @@ namespace Interactables
 
         private Interactable selectedObject;
 
-        public static readonly UnityEvent EnableDecoration = new UnityEvent();
-        public static readonly UnityEvent DisableDecoration = new UnityEvent();
-
         public static readonly SocketUnityEvent SELECT_SOCKET_EVENT = new SocketUnityEvent();
         public static readonly SocketUnityEvent DESELECT_SOCKET_EVENT = new SocketUnityEvent();
         public static readonly SocketUnityEvent DELETE_SOCKET_EVENT = new SocketUnityEvent();
@@ -32,6 +31,7 @@ namespace Interactables
         private Socket selectedSocket;
 
         private Action serverCallback;
+        private GameMode currentMode = GameMode.DefaultPlacing;
 
         private void Awake()
         {
@@ -42,7 +42,28 @@ namespace Interactables
             SELECT_SOCKET_EVENT.AddListener(SelectSocket);
             DESELECT_SOCKET_EVENT.AddListener(DeselectSocket);
             DELETE_SOCKET_EVENT.AddListener(DeleteSocket);
-            DisableDecoration.AddListener(OnDisableDecoMode);
+        }
+
+        private void Start()
+        {
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameModes);
+        }
+
+        private void OnSwitchedGameModes(GameMode gameMode)
+        {
+            switch (gameMode)
+            {
+                case GameMode.Deco:
+                    currentMode = gameMode;
+                    break;
+                case GameMode.Terrain:
+                    currentMode = gameMode;
+                    break;
+                default:
+                    if(currentMode == GameMode.Deco) OnDisableDecoMode();
+                    currentMode = GameMode.DefaultPlacing;
+                    break;
+            }
         }
 
         private void OnDisableDecoMode()
@@ -73,7 +94,7 @@ namespace Interactables
 
         private void DeleteObject()
         {
-            if (selectedSocket != null)
+            if (currentMode == GameMode.Deco)
             {
                 SocketPlacement.DeleteItemOnSocket.Invoke();
             }
