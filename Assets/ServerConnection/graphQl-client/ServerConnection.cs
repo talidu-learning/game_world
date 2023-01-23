@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GraphQlClient.Core;
+using ServerConnection.graphQl_client;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace ServerConnection.graphQl_client
+namespace ServerConnection
 {
     public class ServerConnection : MonoBehaviour
     {
@@ -52,6 +53,7 @@ namespace ServerConnection.graphQl_client
 
         public async Task<ItemData> CreateNewItemForCurrentPlayer(string itemId)
         {
+            Debug.Log("item");
             return await CreateItem(id, itemId);
         }
 
@@ -75,7 +77,7 @@ namespace ServerConnection.graphQl_client
                 uid = new Guid(uid)
             };
             purchasedItems.Add(newItem);
-
+            
             return newItem;
         }
 
@@ -272,7 +274,7 @@ namespace ServerConnection.graphQl_client
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateStars", GraphApi.Query.Type.Mutation);
             query.SetArgs(new { input = new { studentPatch = new { stars = starCount }, id = guid } });
             var response = await SendRequest(query);
-            return string.IsNullOrEmpty(response);
+            return !string.IsNullOrEmpty(response);
         }
 
         private async Task<string> GetStudentID()

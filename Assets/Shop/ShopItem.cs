@@ -53,6 +53,7 @@ namespace Shop
             var boughtItem = await BuyItem();
             if (boughtItem)
             {
+                Debug.Log(boughtItem);
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Buy);
                 UpdateUI();
                 var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemID);

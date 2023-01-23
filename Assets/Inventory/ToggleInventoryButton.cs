@@ -1,5 +1,6 @@
 using Enumerations;
 using GameModes;
+using Interactables;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -39,6 +40,7 @@ namespace Inventory
         public void OpenInventory()
         {
             GameAudio.PlaySoundEvent.Invoke(SoundType.OpenInventory);
+            SelectionManager.DESELECT_OBJECT_EVENT.Invoke();
             Open();
             OpenedInventoryEvent.Invoke();
         }

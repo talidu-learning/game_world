@@ -13,7 +13,7 @@ namespace ServerConnection
 {
     public class SaveGame : MonoBehaviour
     {
-        [SerializeField] private graphQl_client.ServerConnection serverConnection;
+        [SerializeField] private ServerConnection serverConnection;
 
         [SerializeField] private ItemCreator itemCreator;
         [SerializeField] private GameObject socketItem;
@@ -77,17 +77,17 @@ namespace ServerConnection
 
         private IEnumerator LoadGameDataFromServer()
         {
-            yield return new WaitUntil(() => graphQl_client.ServerConnection.Loaded);
+            yield return new WaitUntil(() => ServerConnection.Loaded);
 
-            Debug.Log("Purchased ItemData: " + graphQl_client.ServerConnection.purchasedItems.Count);
+            Debug.Log("Purchased ItemData: " + ServerConnection.purchasedItems.Count);
 
-            localPlayerData._ownedItems = graphQl_client.ServerConnection.purchasedItems;
+            localPlayerData._ownedItems = ServerConnection.purchasedItems;
             localPlayerData.Initialize();
 
             LoadGameStatus();
 
-            StarCountUI.UpdateStarCount.Invoke(graphQl_client.ServerConnection.StudentData.Stars.ToString());
-            LocalPlayerData.Instance.SetStarCount(graphQl_client.ServerConnection.StudentData.Stars);
+            StarCountUI.UpdateStarCount.Invoke(ServerConnection.StudentData.Stars.ToString());
+            LocalPlayerData.Instance.SetStarCount(ServerConnection.StudentData.Stars);
 
             Debug.Log("Tables: " + LocalPlayerData.Instance._ownedItems.Count);
 

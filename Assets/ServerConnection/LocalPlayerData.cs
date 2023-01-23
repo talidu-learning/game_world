@@ -9,7 +9,7 @@ namespace ServerConnection
 {
     public class LocalPlayerData : MonoBehaviour
     {
-        private graphQl_client.ServerConnection ServerConnection;
+        private ServerConnection ServerConnection;
 
         public static StringUnityEvent ChangedItemDataEvent = new StringUnityEvent();
 
@@ -27,7 +27,7 @@ namespace ServerConnection
 
         private void Awake()
         {
-            ServerConnection = FindObjectOfType<graphQl_client.ServerConnection>();
+            ServerConnection = FindObjectOfType<ServerConnection>();
             if (_instance != null && _instance != this)
             {
                 Destroy(this);
@@ -74,17 +74,20 @@ namespace ServerConnection
             {
                 var updateStarCount = await ServerConnection.UpdateStarCount(_stars - itemValue);
                 var newItem = await ServerConnection.CreateNewItemForCurrentPlayer(id);
-                if (updateStarCount && newItem != null)
+                Debug.Log(updateStarCount);
+                if (updateStarCount && newItem.id == id)
                 {
                     _stars -= itemValue;
                     StarCountUI.UpdateStarCount.Invoke(_stars.ToString());
                     _ownedItems.Add(newItem);
 
                     ChangedItemDataEvent.Invoke(id);
+                    Debug.Log("BOUGHT");
                     return true;
                 }
-            }
 
+                if (updateStarCount) ServerConnection.UpdateStarCount(_stars);
+            }
             return false;
         }
 

@@ -17,7 +17,7 @@ namespace Shop
     {
         [SerializeField] private ItemCreator ItemCreator;
         [SerializeField] private ShopInventoryDisplay ShopInventoryDisplay;
-        [SerializeField] private ServerConnection.graphQl_client.ServerConnection serverConnection;
+        [SerializeField] private ServerConnection.ServerConnection serverConnection;
 
         public static StringGuidUnityEvent InitilizePlaceObjectEvent = new StringGuidUnityEvent();
 
@@ -67,6 +67,7 @@ namespace Shop
         private void OnPlaceObject(string itemId, Guid uid)
         {
             if (!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
+            Debug.Log(itemId);
             var go = ItemCreator.CreateItem(itemId, LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId));
             SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
         }

@@ -20,7 +20,7 @@ namespace Inventory
 
         private Socket currentSocket;
 
-        [SerializeField] private ServerConnection.graphQl_client.ServerConnection ServerConnection;
+        [SerializeField] private ServerConnection.ServerConnection ServerConnection;
         private Action<bool, string, Guid> serverCallbackPlacing;
         private Action<bool, Guid, Guid, int> serverCallbackDelete;
 

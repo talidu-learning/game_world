@@ -56,12 +56,12 @@ namespace ServerConnection
 
     public partial class AllPurchasedItemsDataContainer
     {
-        public static AllPurchasedItemsDataContainer FromJson(string json) => JsonConvert.DeserializeObject<AllPurchasedItemsDataContainer>(json, ServerConnection.Converter.Settings);
+        public static AllPurchasedItemsDataContainer FromJson(string json) => JsonConvert.DeserializeObject<AllPurchasedItemsDataContainer>(json, Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this AllPurchasedItemsDataContainer self) => JsonConvert.SerializeObject(self, ServerConnection.Converter.Settings);
+        public static string ToJson(this AllPurchasedItemsDataContainer self) => JsonConvert.SerializeObject(self, Converter.Settings);
     }
 
     internal static class Converter

@@ -24,7 +24,7 @@ namespace BuildingSystem
 
         [SerializeField] private TileBase TileBase;
 
-        [SerializeField] private ServerConnection.graphQl_client.ServerConnection ServerConnection;
+        [SerializeField] private ServerConnection.ServerConnection ServerConnection;
 
         private Grid grid;
         private PlaceableObject placeableObject;
