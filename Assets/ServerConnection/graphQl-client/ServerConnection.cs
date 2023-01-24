@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GraphQlClient.Core;
+using Plugins.WebGL;
 using ServerConnection.graphQl_client;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -25,9 +26,8 @@ namespace ServerConnection
         public async Task GetStudentData()
         {
             // WebGLPluginJS.SetUpTestToken();
-#if DEVELOPMENT_BUILD
-                token = WebGLPluginJS.GetTokenFromLocalStorage();
-#endif
+            //#if DEVELOPMENT_BUILD
+            token = WebGLPluginJS.GetTokenFromLocalStorage();
             taliduGraphApi.SetAuthToken(token);
             id = new Guid(await GetStudentID());
 
@@ -60,7 +60,7 @@ namespace ServerConnection
         private async Task<ItemData> CreateItem(Guid guid, string itemId)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("CreateItem", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new { input = new { purchasedItem = new { owner = guid, id = itemId } } });
+            query.SetArgs(new {input = new {purchasedItem = new {owner = guid, id = itemId}}});
             var response = await SendRequest(query);
 
             if (string.IsNullOrEmpty(response))
@@ -77,7 +77,7 @@ namespace ServerConnection
                 uid = new Guid(uid)
             };
             purchasedItems.Add(newItem);
-            
+
             return newItem;
         }
 
@@ -85,7 +85,7 @@ namespace ServerConnection
             Action<bool, string, Guid> callBack = null)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new { input = new { purchasedItemPatch = new { x = xCoord, z = zCoord }, uid = itemGuid } });
+            query.SetArgs(new {input = new {purchasedItemPatch = new {x = xCoord, z = zCoord}, uid = itemGuid}});
             var response = await SendRequest(query);
 
             if (string.IsNullOrEmpty(response))
@@ -114,12 +114,12 @@ namespace ServerConnection
                 Guid[] newSockets = new Guid[itemWithSocket.itemsPlacedOnSockets.Length];
                 query.SetArgs(new
                 {
-                    input = new { purchasedItemPatch = new { sockets = newSockets, x = 0, z = 0 }, uid = itemGuid }
+                    input = new {purchasedItemPatch = new {sockets = newSockets, x = 0, z = 0}, uid = itemGuid}
                 });
             }
             else
             {
-                query.SetArgs(new { input = new { purchasedItemPatch = new { x = 0, z = 0 }, uid = itemGuid } });
+                query.SetArgs(new {input = new {purchasedItemPatch = new {x = 0, z = 0}, uid = itemGuid}});
             }
 
 
@@ -155,7 +155,7 @@ namespace ServerConnection
             {
                 input = new
                 {
-                    purchasedItemPatch = new { sockets = itemWithSocket.itemsPlacedOnSockets },
+                    purchasedItemPatch = new {sockets = itemWithSocket.itemsPlacedOnSockets},
                     uid = itemWithSocketsGuid
                 }
             });
@@ -188,7 +188,7 @@ namespace ServerConnection
             {
                 input = new
                 {
-                    purchasedItemPatch = new { sockets = itemWithSocket.itemsPlacedOnSockets },
+                    purchasedItemPatch = new {sockets = itemWithSocket.itemsPlacedOnSockets},
                     uid = itemWithSocketsGuid
                 }
             });
@@ -206,7 +206,7 @@ namespace ServerConnection
         public async Task<bool> UpdateItemSockets(Guid itemGuid, Guid[] socketGuids, Action<bool> callBack = null)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new { input = new { purchasedItemPatch = new { sockets = socketGuids }, uid = itemGuid } });
+            query.SetArgs(new {input = new {purchasedItemPatch = new {sockets = socketGuids}, uid = itemGuid}});
             var response = await SendRequest(query);
 
             if (string.IsNullOrEmpty(response))
@@ -222,7 +222,7 @@ namespace ServerConnection
         private async Task<List<ItemData>> GetAllItems(Guid guid)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("GetAllItems", GraphApi.Query.Type.Query);
-            query.SetArgs(new { condition = new { owner = guid } });
+            query.SetArgs(new {condition = new {owner = guid}});
 
             var result = await SendRequest(query);
             if (string.IsNullOrEmpty(result)) return null;
@@ -272,7 +272,7 @@ namespace ServerConnection
         private async Task<bool> UpdateStars(Guid guid, int starCount)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateStars", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new { input = new { studentPatch = new { stars = starCount }, id = guid } });
+            query.SetArgs(new {input = new {studentPatch = new {stars = starCount}, id = guid}});
             var response = await SendRequest(query);
             return !string.IsNullOrEmpty(response);
         }
@@ -287,7 +287,7 @@ namespace ServerConnection
         private async Task<bool> GetStudentData(Guid guid)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("Student", GraphApi.Query.Type.Query);
-            query.SetArgs(new { id = guid });
+            query.SetArgs(new {id = guid});
             var responseText = await SendRequest(query);
 
             var dataString = responseText.Replace("{\"data\":{\"studentById\":{", "")
