@@ -25,10 +25,9 @@ namespace ServerConnection
 
         private void Awake()
         {
-#if DEVELOPMENT_BUILD
-                UseServerConnection = true;
-#endif
-            localPlayerData = gameObject.AddComponent<LocalPlayerData>();
+            useServerConnection = true;
+
+            localPlayerData = gameObject.GetComponent<LocalPlayerData>();
         }
 
         async void Start()
@@ -68,8 +67,6 @@ namespace ServerConnection
         {
             yield return new WaitUntil(() => ServerConnection.Loaded);
 
-            Debug.Log("Purchased ItemData: " + ServerConnection.purchasedItems.Count);
-
             localPlayerData._ownedItems = ServerConnection.purchasedItems;
             localPlayerData.Initialize();
 
@@ -78,7 +75,6 @@ namespace ServerConnection
             StarCountUI.UpdateStarCount.Invoke(ServerConnection.StudentData.Stars.ToString());
             LocalPlayerData.Instance.SetStarCount(ServerConnection.StudentData.Stars);
 
-            Debug.Log("Tables: " + LocalPlayerData.Instance._ownedItems.Count);
 
             yield return null;
             TEXT_LOADED_PLAYER_DATA.Invoke();
@@ -104,7 +100,6 @@ namespace ServerConnection
 
                 for (int i = 0; i < sockets.Length; i++)
                 {
-                    Debug.Log("Item on Socket: " + item.itemsPlacedOnSockets[i]);
                     if (item.itemsPlacedOnSockets[i] != Guid.Empty)
                     {
                         sockets[i].Place(item.itemsPlacedOnSockets[i]);

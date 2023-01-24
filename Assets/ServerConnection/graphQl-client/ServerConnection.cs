@@ -60,7 +60,6 @@ namespace ServerConnection
 
         public async Task<ItemData> CreateNewItemForCurrentPlayer(string itemId)
         {
-            Debug.Log("item");
             return await CreateItem(id, itemId);
         }
 
@@ -291,7 +290,6 @@ namespace ServerConnection
                 }
             }
 
-            Debug.Log("Purchased Items: " + items.Count);
             return items;
         }
 

@@ -44,7 +44,6 @@ namespace BuildingSystem
 
         public Vector3 GetStartPosition()
         {
-            Debug.Log(transform);
             return transform.TransformPoint(vertices[0]);
         }
 
