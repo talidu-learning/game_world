@@ -14,15 +14,17 @@ namespace Shop
     public class ShopItem : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI PriceTag;
+
         [SerializeField] private TextMeshProUGUI Owned;
-       // [SerializeField] private TextMeshProUGUI Placed;
+
+        // [SerializeField] private TextMeshProUGUI Placed;
         [SerializeField] private Image ItemImage;
         [SerializeField] private Button button;
         public string itemID { private set; get; }
 
         private int itemValue;
-        
-        public List<ItemAttribute> attributes{ private set; get; }
+
+        public List<ItemAttribute> attributes { private set; get; }
 
         private void Awake()
         {
@@ -39,7 +41,7 @@ namespace Shop
         {
             StartCoroutine(AsyncUpdate());
         }
-        
+
         private IEnumerator AsyncUpdate()
         {
             yield return null;
@@ -51,6 +53,7 @@ namespace Shop
             var boughtItem = await BuyItem();
             if (boughtItem)
             {
+                Debug.Log(boughtItem);
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Buy);
                 UpdateUI();
                 var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemID);
@@ -64,9 +67,9 @@ namespace Shop
             int owned = LocalPlayerData.Instance.GetCountOfOwnedItems(itemID);
             int unplaced = LocalPlayerData.Instance.GetCountOfUnplacedItems(itemID);
             Owned.text = owned.ToString();
-          //  Placed.text = unplaced.ToString();
+            //  Placed.text = unplaced.ToString();
         }
-        
+
         public void Initialize(ShopItemData shopItemData)
         {
             itemID = shopItemData.ItemID;
@@ -74,7 +77,7 @@ namespace Shop
             PriceTag.text = shopItemData.Value.ToString();
             itemValue = shopItemData.Value;
             attributes = shopItemData.Attributes;
-            
+
             UpdateUI();
         }
 
@@ -96,7 +99,7 @@ namespace Shop
 
         public void PlaceItem(bool isCopyLeft)
         {
-            if(isCopyLeft) return;
+            if (isCopyLeft) return;
             // placeItem.gameObject.SetActive(false);
             StartAsyncUpdate();
         }

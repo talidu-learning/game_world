@@ -6,7 +6,7 @@ namespace BuildingSystem
     public class TestBuildingSystem : MonoBehaviour
     {
         public GameObject Prefab;
-        
+
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.A))

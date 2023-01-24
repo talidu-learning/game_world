@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Enumerations;
+using GameModes;
 using TouchScript.Gestures;
 using UnityEngine;
 
 namespace Interactables
 {
-    
     public class SocketCollection : MonoBehaviour
     {
         public List<Socket> Sockets = new List<Socket>();
@@ -16,11 +17,27 @@ namespace Interactables
 
         private void Start()
         {
-            SelectionManager.EnableDecoration.AddListener(ActivateSockets);
-            SelectionManager.DisableDecoration.AddListener(DeactivateSockets);
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameModes);
         }
 
-        public void ActivateSockets(){
+        private void OnSwitchedGameModes(GameMode gameMode)
+        {
+            Debug.Log(gameMode);
+            switch (gameMode)
+            {
+                case GameMode.Deco:
+                    ActivateSockets();
+                    break;
+                case GameMode.Terrain:
+                    break;
+                default:
+                    DeactivateSockets();
+                    break;
+            }
+        }
+
+        private void ActivateSockets()
+        {
             foreach (var socket in Sockets)
             {
                 socket.GetComponent<PressGesture>().enabled = true;
@@ -28,15 +45,14 @@ namespace Interactables
                 if (socket.IsUsed) socket.GetComponent<SpriteRenderer>().color = Color.red;
             }
         }
-        
-        public void DeactivateSockets(){
+
+        private void DeactivateSockets()
+        {
             foreach (var socket in Sockets)
             {
                 socket.GetComponent<PressGesture>().enabled = false;
                 socket.GetComponent<SpriteRenderer>().enabled = false;
             }
         }
-        
     }
-    
 }

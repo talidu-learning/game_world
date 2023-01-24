@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Interactables;
 using ServerConnection;
 using Shop;
 using UnityEngine;
@@ -20,10 +21,10 @@ namespace BuildingSystem
         [SerializeField] private Tilemap PlacingTilemap;
         [SerializeField] private Tilemap VisibleTilemap;
         [SerializeField] private Tilemap ValidPlacingTilemap;
-        
+
         [SerializeField] private TileBase TileBase;
 
-        [SerializeField] private Game.ServerConnection ServerConnection;
+        [SerializeField] private ServerConnection.ServerConnection ServerConnection;
 
         private Grid grid;
         private PlaceableObject placeableObject;
@@ -61,7 +62,8 @@ namespace BuildingSystem
             if (placeableObject == null) return;
             if (CanBePlaced(placeableObject))
             {
-                ServerConnection.UpdateItemPosition(placeableObject.gameObject.GetComponent<ItemID>().uid, placeableObject.gameObject.GetComponent<ItemID>().id,
+                ServerConnection.UpdateItemPosition(placeableObject.gameObject.GetComponent<ItemID>().uid,
+                    placeableObject.gameObject.GetComponent<ItemID>().id,
                     placeableObject.gameObject.transform.position.x, placeableObject.gameObject.transform.position.z,
                     serverCallbackPlacing);
             }
@@ -69,12 +71,11 @@ namespace BuildingSystem
             {
                 OnFailedPlacement();
             }
-
         }
-        
+
         private void ServerCallbackOnTriedDeleting(bool sucessfullyConnected, string itemID, Guid uid)
         {
-            if(sucessfullyConnected)
+            if (sucessfullyConnected)
                 OnSuccessfulDelete();
             else OnFailedDeleting();
         }
@@ -92,6 +93,7 @@ namespace BuildingSystem
             {
                 RemoveArea(placeableObject.PlacedPosition, placeableObject.Size);
             }
+
             ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
             LocalPlayerData.Instance.OnDeletedItem(placeableObject.GetComponent<ItemID>().uid);
             placeableObject = null;
@@ -100,7 +102,7 @@ namespace BuildingSystem
 
         private void ServerCallbackOnTriedPlacing(bool sucessfullyConnected, string itemID, Guid uid)
         {
-            if(sucessfullyConnected)
+            if (sucessfullyConnected)
                 OnSuccessfulPlacement();
             else OnFailedPlacement();
         }
@@ -112,7 +114,7 @@ namespace BuildingSystem
             visibleMapRenderer.enabled = false;
             placeableObject = null;
         }
-        
+
         private void OnFailedPlacement()
         {
             if (placeableObject.WasPlacedBefore)
@@ -122,12 +124,12 @@ namespace BuildingSystem
                 TakeArea(placeableObject.PlacedPosition, placeableObject.Size, TileBase);
                 return;
             }
-                
+
             ShopManager.OnTriedPlacingGameObjectEvent.Invoke(false, placeableObject.gameObject);
             visibleMapRenderer.enabled = false;
             placeableObject = null;
         }
-        
+
         public void PlaceObjectOnGrid(PlaceableObject placeableObject)
         {
             PlacePlaceable(placeableObject);
@@ -173,13 +175,13 @@ namespace BuildingSystem
             }
 
             yield return null;
-            
+
             foreach (var go in placedObjects)
             {
                 PlacePlaceable(go.GetComponent<PlaceableObject>());
             }
         }
-        
+
         private static TileBase[] GetTilesBlock(BoundsInt area, Tilemap tilemap)
         {
             TileBase[] array = new TileBase[area.size.x * area.size.y * area.size.z];
@@ -208,9 +210,9 @@ namespace BuildingSystem
             Vector3 position = SnapCoordinateToGrid(middleofScreen);
 
             objectToPlace.transform.SetPositionAndRotation(position, Quaternion.identity);
-            
+
             objectToPlace.AddComponent<PlaceableObject>();
-            
+
             // Not really tested. Decided to automatically zoom out when placing stuff
             // var placeable = objectToPlace.GetComponent<PlaceableObject>();
             //
@@ -229,7 +231,7 @@ namespace BuildingSystem
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
             Plane plane = new Plane(Vector3.up, Vector3.zero);
-            
+
             Vector3 middleOfScreen = Vector3.zero;
             if (plane.Raycast(ray, out float distance))
             {
@@ -248,12 +250,12 @@ namespace BuildingSystem
             area.size = new Vector3Int(objectToPlace.Size.x + 1, objectToPlace.Size.y + 1, 1);
 
             TileBase[] baseArray = GetTilesBlock(area, PlacingTilemap);
-            
+
             if (baseArray.Any(tileBase => tileBase == TileBase))
             {
                 return false;
             }
-            
+
             baseArray = GetTilesBlock(area, ValidPlacingTilemap);
 
             return baseArray.All(tileBase => tileBase == TileBase);

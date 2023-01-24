@@ -27,11 +27,9 @@ namespace Filter
             isActivated = !isActivated;
 
             gameObject.GetComponent<Image>().color = isActivated ? Color.grey : Color.white;
-            FilterImage.color = isActivated ? new Color(1,1,1,0.2f) : Color.white;
-            
+            FilterImage.color = isActivated ? new Color(1, 1, 1, 0.2f) : Color.white;
+
             UIManager.FILTER_EVENT.Invoke(UIType, SelectedItemAttributes, isActivated);
         }
-
-
     }
 }

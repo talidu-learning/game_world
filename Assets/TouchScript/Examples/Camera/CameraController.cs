@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Interactables;
 using Shop;
 using TouchScript.Gestures;
@@ -8,7 +6,6 @@ using UnityEngine;
 using TouchScript.Gestures.TransformGestures;
 using TouchScript.InputSources;
 using TouchScript.Pointers;
-using UnityEngine.Events;
 
 namespace TouchScript.Examples.CameraControl
 {

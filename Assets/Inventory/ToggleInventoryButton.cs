@@ -1,4 +1,5 @@
 using Enumerations;
+using GameModes;
 using Interactables;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,7 +12,7 @@ namespace Inventory
         public static UnityEvent CloseInventoryUnityEvent = new UnityEvent();
         public static UnityEvent ClosedInventoryUnityEvent = new UnityEvent();
         public static UnityEvent OpenedInventoryEvent = new UnityEvent();
-    
+
         [SerializeField] private GameObject InventoryUI;
 
         private void Awake()
@@ -22,12 +23,12 @@ namespace Inventory
 
         private void Start()
         {
-            DecorationModeButton.ToggledDecoModeButtonEvent.AddListener(OnToggledDecoMode);
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameModes);
         }
 
-        private void OnToggledDecoMode()
+        private void OnSwitchedGameModes(GameMode mode)
         {
-            gameObject.SetActive(!gameObject.activeSelf);
+            gameObject.SetActive(mode is not (GameMode.Deco or GameMode.Terrain));
         }
 
         public void CloseInventory()
@@ -39,10 +40,11 @@ namespace Inventory
         public void OpenInventory()
         {
             GameAudio.PlaySoundEvent.Invoke(SoundType.OpenInventory);
+            SelectionManager.DESELECT_OBJECT_EVENT.Invoke();
             Open();
             OpenedInventoryEvent.Invoke();
         }
-        
+
         private void Open()
         {
             LeanTween.moveLocalY(InventoryUI, 0, 0.8f).setEase(LeanTweenType.easeOutElastic);
@@ -50,7 +52,8 @@ namespace Inventory
 
         private void Close()
         {
-            LeanTween.move(InventoryUI, new Vector2(Screen.width/2,-Screen.height - 10f), 0.8f).setEase(LeanTweenType.easeOutElastic);
+            LeanTween.move(InventoryUI, new Vector2(Screen.width / 2, -Screen.height - 10f), 0.8f)
+                .setEase(LeanTweenType.easeOutElastic);
             ClosedInventoryUnityEvent.Invoke();
         }
     }

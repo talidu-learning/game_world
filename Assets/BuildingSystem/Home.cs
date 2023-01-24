@@ -6,7 +6,7 @@ namespace BuildingSystem
     public class Home : MonoBehaviour
     {
         [SerializeField] private GameObject HomePrefab;
-        
+
         private void Start()
         {
             PlaceHomeOnGrid();

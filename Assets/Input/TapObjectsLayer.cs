@@ -8,7 +8,6 @@ using TouchScript.Layers.UI;
 using TouchScript.Pointers;
 using TouchScript.Utils.Attributes;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -156,7 +155,7 @@ public class TapObjectsLayer : TouchLayer
     public override HitResult Hit(IPointer pointer, out HitData hit)
     {
         if (base.Hit(pointer, out hit) != HitResult.Hit) return HitResult.Miss;
-        
+
         if (TouchManager.Instance.Pointers.Count > 1)
         {
             return HitResult.Miss;
@@ -224,7 +223,6 @@ public class TapObjectsLayer : TouchLayer
     /// <inheritdoc />
     protected override void Awake()
     {
-        
         updateCamera();
         updateVariants();
         base.Awake();

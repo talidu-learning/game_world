@@ -20,7 +20,7 @@ namespace Inventory
 
         private Socket currentSocket;
 
-        [SerializeField] private Game.ServerConnection ServerConnection;
+        [SerializeField] private ServerConnection.ServerConnection ServerConnection;
         private Action<bool, string, Guid> serverCallbackPlacing;
         private Action<bool, Guid, Guid, int> serverCallbackDelete;
 
@@ -61,7 +61,7 @@ namespace Inventory
             Guid uid = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId);
 
             Transform parent = GetParentWithIDComponent();
-            
+
             ServerConnection.OnPlacedItemOnSocket(uid, currentSocket.transform.parent.childCount,
                 currentSocket.transform.GetSiblingIndex(),
                 parent.GetComponent<ItemID>().uid, itemId, serverCallbackPlacing);
@@ -101,11 +101,11 @@ namespace Inventory
 
             var localScale = shopInventory.ShopItems.First(i => i.ItemID == itemId).Prefab.transform
                 .GetChild(0).localScale;
-            
+
             ScaleGameObjectForSocket(localScale, go);
 
             currentSocket.Place(uid);
-            
+
             Transform parentWithIdComponent = GetParentWithIDComponent();
 
             LocalPlayerData.Instance.OnPlacedItem(uid, go.transform.position.x, go.transform.position.z,

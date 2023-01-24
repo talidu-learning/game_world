@@ -1,4 +1,6 @@
-﻿using Inventory;
+﻿using Enumerations;
+using GameModes;
+using Inventory;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,9 +11,9 @@ namespace Interactables
     {
         [SerializeField] private Sprite DecoModeOn;
         [SerializeField] private Sprite DecoModeOff;
-    
+
         public static UnityEvent ToggledDecoModeButtonEvent = new UnityEvent();
-        
+
         private bool isModeEnabled = false;
 
         private void Awake()
@@ -21,9 +23,9 @@ namespace Interactables
 
         private void Start()
         {
-            ToggleInventoryButton.OpenedInventoryEvent.AddListener(()=> gameObject.SetActive(false));
-            ToggleInventoryButton.ClosedInventoryUnityEvent.AddListener(()=> gameObject.SetActive(true));
-            
+            ToggleInventoryButton.OpenedInventoryEvent.AddListener(() => gameObject.SetActive(false));
+            ToggleInventoryButton.ClosedInventoryUnityEvent.AddListener(() => gameObject.SetActive(true));
+
             SelectionManager.SELECT_OBJECT_EVENT.AddListener(OnSelectedObject);
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(OnDeselectedObject);
             SelectionManager.DELETE_OBJECT_EVENT.AddListener(OnDeselectedObject);
@@ -39,21 +41,21 @@ namespace Interactables
             gameObject.SetActive(false);
         }
 
-        public void ToggleDecoMode()
+        private void ToggleDecoMode()
         {
             if (isModeEnabled)
             {
                 GetComponent<Image>().sprite = DecoModeOff;
-                SelectionManager.DisableDecoration.Invoke();
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.DefaultPlacing);
             }
             else
             {
                 GetComponent<Image>().sprite = DecoModeOn;
-                SelectionManager.EnableDecoration.Invoke();
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Deco);
             }
 
             isModeEnabled = !isModeEnabled;
-            
+
             ToggledDecoModeButtonEvent.Invoke();
         }
     }
