@@ -40,24 +40,13 @@ namespace ServerConnection
             }
             else
             {
+                serverConnection.DeactivateServerConnection();
                 StartCoroutine(LoadGameDataFromLocalFile());
             }
         }
 
-        private void SaveGameData()
-        {
-            string json = localPlayerData.GetJsonData();
-
-            File.WriteAllText(Application.persistentDataPath + "/gamedata.json", json);
-        }
-
         private IEnumerator LoadGameDataFromLocalFile()
         {
-            if (!File.Exists(Application.persistentDataPath + "/gamedata.json"))
-            {
-                SaveGameData();
-            }
-
             LoadGameStatus();
 
             StarCountUI.UpdateStarCount.Invoke(LocalPlayerData.Instance.GetStarCount().ToString());
@@ -158,13 +147,6 @@ namespace ServerConnection
             var spriteRenderer = socketItemGo.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = shopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.ItemSprite;
         }
-
-        private void OnApplicationQuit()
-        {
-#if !DEVELOPMENT_BUILD
-            if (!useServerConnection)
-                SaveGameData();
-#endif
-        }
+        
     }
 }
