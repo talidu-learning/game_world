@@ -25,10 +25,9 @@ namespace ServerConnection
 
         private void Awake()
         {
-#if DEVELOPMENT_BUILD
-                UseServerConnection = true;
-#endif
-            localPlayerData = gameObject.AddComponent<LocalPlayerData>();
+            useServerConnection = true;
+
+            localPlayerData = gameObject.GetComponent<LocalPlayerData>();
         }
 
         async void Start()
@@ -40,24 +39,13 @@ namespace ServerConnection
             }
             else
             {
+                serverConnection.DeactivateServerConnection();
                 StartCoroutine(LoadGameDataFromLocalFile());
             }
         }
 
-        private void SaveGameData()
-        {
-            string json = localPlayerData.GetJsonData();
-
-            File.WriteAllText(Application.persistentDataPath + "/gamedata.json", json);
-        }
-
         private IEnumerator LoadGameDataFromLocalFile()
         {
-            if (!File.Exists(Application.persistentDataPath + "/gamedata.json"))
-            {
-                SaveGameData();
-            }
-
             LoadGameStatus();
 
             StarCountUI.UpdateStarCount.Invoke(LocalPlayerData.Instance.GetStarCount().ToString());
@@ -79,8 +67,6 @@ namespace ServerConnection
         {
             yield return new WaitUntil(() => ServerConnection.Loaded);
 
-            Debug.Log("Purchased ItemData: " + ServerConnection.purchasedItems.Count);
-
             localPlayerData._ownedItems = ServerConnection.purchasedItems;
             localPlayerData.Initialize();
 
@@ -89,7 +75,6 @@ namespace ServerConnection
             StarCountUI.UpdateStarCount.Invoke(ServerConnection.StudentData.Stars.ToString());
             LocalPlayerData.Instance.SetStarCount(ServerConnection.StudentData.Stars);
 
-            Debug.Log("Tables: " + LocalPlayerData.Instance._ownedItems.Count);
 
             yield return null;
             TEXT_LOADED_PLAYER_DATA.Invoke();
@@ -115,7 +100,6 @@ namespace ServerConnection
 
                 for (int i = 0; i < sockets.Length; i++)
                 {
-                    Debug.Log("Item on Socket: " + item.itemsPlacedOnSockets[i]);
                     if (item.itemsPlacedOnSockets[i] != Guid.Empty)
                     {
                         sockets[i].Place(item.itemsPlacedOnSockets[i]);
@@ -158,13 +142,6 @@ namespace ServerConnection
             var spriteRenderer = socketItemGo.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = shopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.ItemSprite;
         }
-
-        private void OnApplicationQuit()
-        {
-#if !DEVELOPMENT_BUILD
-            if (!useServerConnection)
-                SaveGameData();
-#endif
-        }
+        
     }
 }

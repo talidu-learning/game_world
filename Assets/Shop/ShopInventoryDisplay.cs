@@ -26,6 +26,7 @@ namespace Shop
 
         private void Awake()
         {
+            Debug.Log("BuildShop");
             BuildShopInventory();
         }
 
@@ -86,6 +87,7 @@ namespace Shop
 
         private void BuildShopInventory()
         {
+            Debug.Log("ShopItems: " + ShopInventory.ShopItems.Count);
             foreach (var item in ShopInventory.ShopItems)
             {
                 var newItem = Instantiate(ShopItemPrefab, ContentViewport.transform);

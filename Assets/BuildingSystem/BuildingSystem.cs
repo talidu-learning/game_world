@@ -53,7 +53,6 @@ namespace BuildingSystem
         {
             if (!placeableObject) return;
             var itemId = placeableObject.gameObject.GetComponent<ItemID>();
-            Debug.Log("Delete!");
             ServerConnection.DeleteItem(itemId.uid, itemId.id, serverCallbackDelete);
         }
 
@@ -88,7 +87,6 @@ namespace BuildingSystem
 
         private void OnSuccessfulDelete()
         {
-            Debug.Log("Successful to delete");
             if (placeableObject.WasPlacedBefore)
             {
                 RemoveArea(placeableObject.PlacedPosition, placeableObject.Size);
@@ -244,7 +242,6 @@ namespace BuildingSystem
         private bool CanBePlaced(PlaceableObject objectToPlace)
         {
             BoundsInt area = new BoundsInt();
-            Debug.Log("ObjectToPlace:" + objectToPlace);
             area.position = GridLayout.WorldToCell(objectToPlace.GetStartPosition());
 
             area.size = new Vector3Int(objectToPlace.Size.x + 1, objectToPlace.Size.y + 1, 1);

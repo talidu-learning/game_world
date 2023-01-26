@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GraphQlClient.Core;
+using Plugins.WebGL;
 using ServerConnection.graphQl_client;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -22,12 +23,18 @@ namespace ServerConnection
 
         public static List<ItemData> purchasedItems = new List<ItemData>();
 
+        private bool deactivatedServerConnection = false;
+
+        public void DeactivateServerConnection()
+        {
+            deactivatedServerConnection = true;
+        }
+        
         public async Task GetStudentData()
         {
             // WebGLPluginJS.SetUpTestToken();
-#if DEVELOPMENT_BUILD
-                token = WebGLPluginJS.GetTokenFromLocalStorage();
-#endif
+            //#if DEVELOPMENT_BUILD
+            token = WebGLPluginJS.GetTokenFromLocalStorage();
             taliduGraphApi.SetAuthToken(token);
             id = new Guid(await GetStudentID());
 
@@ -53,14 +60,24 @@ namespace ServerConnection
 
         public async Task<ItemData> CreateNewItemForCurrentPlayer(string itemId)
         {
-            Debug.Log("item");
             return await CreateItem(id, itemId);
         }
 
         private async Task<ItemData> CreateItem(Guid guid, string itemId)
         {
+            if (deactivatedServerConnection)
+            {
+                var item = new ItemData
+                {
+                    id = itemId,
+                    uid = new Guid()
+                };
+                purchasedItems.Add(item);
+                return item;
+            }
+            
             GraphApi.Query query = taliduGraphApi.GetQueryByName("CreateItem", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new { input = new { purchasedItem = new { owner = guid, id = itemId } } });
+            query.SetArgs(new {input = new {purchasedItem = new {owner = guid, id = itemId}}});
             var response = await SendRequest(query);
 
             if (string.IsNullOrEmpty(response))
@@ -77,15 +94,21 @@ namespace ServerConnection
                 uid = new Guid(uid)
             };
             purchasedItems.Add(newItem);
-            
+
             return newItem;
         }
 
         public async void UpdateItemPosition(Guid itemGuid, string itemID, float xCoord, float zCoord,
             Action<bool, string, Guid> callBack = null)
         {
+            if (deactivatedServerConnection)
+            {
+                callBack?.Invoke(true, itemID, itemGuid);
+                return;
+            }
+            
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new { input = new { purchasedItemPatch = new { x = xCoord, z = zCoord }, uid = itemGuid } });
+            query.SetArgs(new {input = new {purchasedItemPatch = new {x = xCoord, z = zCoord}, uid = itemGuid}});
             var response = await SendRequest(query);
 
             if (string.IsNullOrEmpty(response))
@@ -99,6 +122,12 @@ namespace ServerConnection
 
         public async void DeleteItem(Guid itemGuid, string itemID, Action<bool, string, Guid> callBack = null)
         {
+            if (deactivatedServerConnection)
+            {
+                callBack?.Invoke(true, itemID, itemGuid);
+                return;
+            }
+            
             var itemWithSocket = purchasedItems.FirstOrDefault(i => i.uid == itemGuid);
 
             if (itemWithSocket == null)
@@ -114,12 +143,12 @@ namespace ServerConnection
                 Guid[] newSockets = new Guid[itemWithSocket.itemsPlacedOnSockets.Length];
                 query.SetArgs(new
                 {
-                    input = new { purchasedItemPatch = new { sockets = newSockets, x = 0, z = 0 }, uid = itemGuid }
+                    input = new {purchasedItemPatch = new {sockets = newSockets, x = 0, z = 0}, uid = itemGuid}
                 });
             }
             else
             {
-                query.SetArgs(new { input = new { purchasedItemPatch = new { x = 0, z = 0 }, uid = itemGuid } });
+                query.SetArgs(new {input = new {purchasedItemPatch = new {x = 0, z = 0}, uid = itemGuid}});
             }
 
 
@@ -137,6 +166,12 @@ namespace ServerConnection
         public async void OnPlacedItemOnSocket(Guid onSocketPlacedItemGuid, int socketCount, int socketIndex,
             Guid itemWithSocketsGuid, string itemId, Action<bool, string, Guid> callBack)
         {
+            if (deactivatedServerConnection)
+            {
+                callBack.Invoke(true, itemId, onSocketPlacedItemGuid);
+                return;
+            }
+            
             var itemWithSocket = purchasedItems.FirstOrDefault(i => i.uid == itemWithSocketsGuid);
 
             if (itemWithSocket == null)
@@ -155,7 +190,7 @@ namespace ServerConnection
             {
                 input = new
                 {
-                    purchasedItemPatch = new { sockets = itemWithSocket.itemsPlacedOnSockets },
+                    purchasedItemPatch = new {sockets = itemWithSocket.itemsPlacedOnSockets},
                     uid = itemWithSocketsGuid
                 }
             });
@@ -173,6 +208,12 @@ namespace ServerConnection
         public async void OnDeletedItemOnSocket(Guid onSocketPlacedItemGuid, int socketIndex, Guid itemWithSocketsGuid,
             Action<bool, Guid, Guid, int> callBack)
         {
+            if (deactivatedServerConnection)
+            {
+                callBack.Invoke(true, onSocketPlacedItemGuid, itemWithSocketsGuid, socketIndex);
+                return;
+            }
+            
             var itemWithSocket = purchasedItems.FirstOrDefault(i => i.uid == itemWithSocketsGuid);
 
             if (itemWithSocket == null)
@@ -188,7 +229,7 @@ namespace ServerConnection
             {
                 input = new
                 {
-                    purchasedItemPatch = new { sockets = itemWithSocket.itemsPlacedOnSockets },
+                    purchasedItemPatch = new {sockets = itemWithSocket.itemsPlacedOnSockets},
                     uid = itemWithSocketsGuid
                 }
             });
@@ -203,26 +244,10 @@ namespace ServerConnection
             callBack.Invoke(true, onSocketPlacedItemGuid, itemWithSocketsGuid, socketIndex);
         }
 
-        public async Task<bool> UpdateItemSockets(Guid itemGuid, Guid[] socketGuids, Action<bool> callBack = null)
-        {
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new { input = new { purchasedItemPatch = new { sockets = socketGuids }, uid = itemGuid } });
-            var response = await SendRequest(query);
-
-            if (string.IsNullOrEmpty(response))
-            {
-                callBack?.Invoke(false);
-                return false;
-            }
-
-            callBack?.Invoke(true);
-            return true;
-        }
-
         private async Task<List<ItemData>> GetAllItems(Guid guid)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("GetAllItems", GraphApi.Query.Type.Query);
-            query.SetArgs(new { condition = new { owner = guid } });
+            query.SetArgs(new {condition = new {owner = guid}});
 
             var result = await SendRequest(query);
             if (string.IsNullOrEmpty(result)) return null;
@@ -265,14 +290,14 @@ namespace ServerConnection
                 }
             }
 
-            Debug.Log("Purchased Items: " + items.Count);
             return items;
         }
 
         private async Task<bool> UpdateStars(Guid guid, int starCount)
         {
+            if (deactivatedServerConnection) return true;
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateStars", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new { input = new { studentPatch = new { stars = starCount }, id = guid } });
+            query.SetArgs(new {input = new {studentPatch = new {stars = starCount}, id = guid}});
             var response = await SendRequest(query);
             return !string.IsNullOrEmpty(response);
         }
@@ -287,7 +312,7 @@ namespace ServerConnection
         private async Task<bool> GetStudentData(Guid guid)
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("Student", GraphApi.Query.Type.Query);
-            query.SetArgs(new { id = guid });
+            query.SetArgs(new {id = guid});
             var responseText = await SendRequest(query);
 
             var dataString = responseText.Replace("{\"data\":{\"studentById\":{", "")
