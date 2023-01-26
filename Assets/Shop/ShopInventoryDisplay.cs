@@ -26,7 +26,6 @@ namespace Shop
 
         private void Awake()
         {
-            Debug.Log("BuildShop");
             BuildShopInventory();
         }
 
@@ -36,6 +35,8 @@ namespace Shop
             UIManager.FILTER_EVENT.AddListener(OnFilterToggled);
 
             LocalPlayerData.ChangedItemDataEvent.AddListener(UpdateItemState);
+            
+            InitializeItems();
         }
 
         private void UpdateItemState(string id)
@@ -87,12 +88,19 @@ namespace Shop
 
         private void BuildShopInventory()
         {
-            Debug.Log("ShopItems: " + ShopInventory.ShopItems.Count);
             foreach (var item in ShopInventory.ShopItems)
             {
                 var newItem = Instantiate(ShopItemPrefab, ContentViewport.transform);
-                newItem.GetComponent<ShopItem>().Initialize(item);
                 _shopItems.Add(item.ItemID, newItem.GetComponent<ShopItem>());
+            }
+        }
+
+        private void InitializeItems()
+        {
+            foreach (var item in ShopInventory.ShopItems)
+            {
+                _shopItems.TryGetValue(item.ItemID, out ShopItem shopItem);
+                if (shopItem != null) shopItem.Initialize(item);
             }
         }
     }

@@ -53,7 +53,6 @@ namespace Shop
             var boughtItem = await BuyItem();
             if (boughtItem)
             {
-                Debug.Log(boughtItem);
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Buy);
                 UpdateUI();
                 var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemID);
@@ -65,9 +64,7 @@ namespace Shop
         private void UpdateUI()
         {
             int owned = LocalPlayerData.Instance.GetCountOfOwnedItems(itemID);
-            int unplaced = LocalPlayerData.Instance.GetCountOfUnplacedItems(itemID);
             Owned.text = owned.ToString();
-            //  Placed.text = unplaced.ToString();
         }
 
         public void Initialize(ShopItemData shopItemData)

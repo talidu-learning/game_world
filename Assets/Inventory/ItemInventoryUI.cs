@@ -43,15 +43,17 @@ namespace Inventory
         {
             if (gameMode == GameMode.Deco)
             {
-                FilterPanel.SetActive(false);
-                OnFilterToggled(UIType.Inventory, new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
+                OnFilterToggled(UIType.Inventory,
+                    new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
                     true);
+                FilterPanel.SetActive(false);
             }
-            else
+            else if(gameMode == GameMode.DefaultPlacing)
             {
                 FilterPanel.SetActive(true);
-                OnFilterToggled(UIType.Inventory, new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
-                    false);
+                OnFilterToggled(UIType.Inventory,
+                    new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
+                    true);
             }
         }
 
@@ -76,13 +78,13 @@ namespace Inventory
         {
             if (uiType == UIType.Shop) return;
 
-            foreach (var attribute in attributes)
+            foreach (var item in inventoryItems)
             {
-                foreach (var item in inventoryItems)
+                Debug.Log("Item : " + item.Key + " intersects: " + item.Value.GetComponent<InventoryItem>().attributes.Intersect(attributes).Any());
+                if (item.Value.GetComponent<InventoryItem>().attributes.Intersect(attributes).Any()
+                    && LocalPlayerData.Instance.GetCountOfUnplacedItems(item.Key) > 0)
                 {
-                    if (item.Value.GetComponent<InventoryItem>().attributes.Contains(attribute) &&
-                        LocalPlayerData.Instance.GetCountOfUnplacedItems(item.Key) > 0)
-                        item.Value.SetActive(!isActive);
+                    item.Value.SetActive(!isActive);
                 }
             }
         }

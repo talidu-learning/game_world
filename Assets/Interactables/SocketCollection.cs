@@ -22,7 +22,6 @@ namespace Interactables
 
         private void OnSwitchedGameModes(GameMode gameMode)
         {
-            Debug.Log(gameMode);
             switch (gameMode)
             {
                 case GameMode.Deco:

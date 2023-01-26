@@ -1,5 +1,5 @@
 using Enumerations;
-using Interactables;
+using GameModes;
 using Inventory;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,9 +20,23 @@ namespace Shop
 
             button.onClick.AddListener(OnButtonClick);
 
-            DecorationModeButton.ToggledDecoModeButtonEvent.AddListener(OnToggledDecoMode);
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameMode);
 
             ToggleInventoryButton.OpenedInventoryEvent.AddListener(OnOpenedInventory);
+        }
+
+        private void OnSwitchedGameMode(GameMode gameMode)
+        {
+            switch (gameMode)
+            {
+                case GameMode.Deco: 
+                    gameObject.SetActive(false);
+                    break;
+                case GameMode.Terrain: break;
+                default: 
+                    gameObject.SetActive(true);
+                    break;
+            }
         }
 
         private void OnOpenedInventory()
@@ -34,11 +48,6 @@ namespace Shop
             isOpen = false;
 
             GetComponent<Image>().sprite = ClosedPanel;
-        }
-
-        private void OnToggledDecoMode()
-        {
-            gameObject.SetActive(!gameObject.activeSelf);
         }
 
         private void OnButtonClick()
