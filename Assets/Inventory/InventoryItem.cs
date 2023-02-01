@@ -115,11 +115,8 @@ namespace Inventory
 
             Unplaced.text = unplaced.ToString();
 
-            if (unplaced != 0) gameObject.SetActive(true);
-            else
-            {
-                gameObject.SetActive(false);
-            }
+            if (unplaced == 0) gameObject.SetActive(false);
+            
         }
     }
 }

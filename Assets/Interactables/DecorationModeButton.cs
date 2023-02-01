@@ -12,8 +12,6 @@ namespace Interactables
         [SerializeField] private Sprite DecoModeOn;
         [SerializeField] private Sprite DecoModeOff;
 
-        public static UnityEvent ToggledDecoModeButtonEvent = new UnityEvent();
-
         private bool isModeEnabled = false;
 
         private void Awake()
@@ -55,8 +53,6 @@ namespace Interactables
             }
 
             isModeEnabled = !isModeEnabled;
-
-            ToggledDecoModeButtonEvent.Invoke();
         }
     }
 }

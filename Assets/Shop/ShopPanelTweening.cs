@@ -16,7 +16,6 @@ namespace Shop
         private void Close()
         {
             // mach das hier fenstergrößenabhänging
-            Debug.Log("width is: " + -ShopPanel.transform.GetComponent<RectTransform>().sizeDelta.x);
             LeanTween.moveX(gameObject,
                     -ShopPanel.transform.GetComponent<RectTransform>().sizeDelta.x * Canvas.scaleFactor, 0.1f)
                 .setEase(LeanTweenType.easeInCirc);

@@ -40,7 +40,8 @@ namespace Inventory
         public void OpenInventory()
         {
             GameAudio.PlaySoundEvent.Invoke(SoundType.OpenInventory);
-            SelectionManager.DESELECT_OBJECT_EVENT.Invoke();
+            if(GameModeSwitcher.currentGameMode == GameMode.DefaultPlacing)
+                SelectionManager.DESELECT_OBJECT_EVENT.Invoke();
             Open();
             OpenedInventoryEvent.Invoke();
         }

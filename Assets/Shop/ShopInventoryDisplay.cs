@@ -26,7 +26,6 @@ namespace Shop
 
         private void Awake()
         {
-            Debug.Log("BuildShop");
             BuildShopInventory();
         }
 
@@ -36,14 +35,15 @@ namespace Shop
             UIManager.FILTER_EVENT.AddListener(OnFilterToggled);
 
             LocalPlayerData.ChangedItemDataEvent.AddListener(UpdateItemState);
+            
+            InitializeItems();
         }
 
         private void UpdateItemState(string id)
         {
-            var go = _shopItems.FirstOrDefault(o => o.Key == id).Value;
+            var go = _shopItems.FirstOrDefault(o => o.Value.ItemID == id).Value;
             var shopItem = go.GetComponent<ShopItem>();
-            var itemdata = ShopInventory.ShopItems.FirstOrDefault(i => i.ItemID == id);
-            shopItem.Initialize(itemdata);
+            shopItem.UpdateUI();
         }
 
         private void OnFilterToggled(UIType uiType, List<ItemAttribute> attributes, bool isActive)
@@ -66,7 +66,7 @@ namespace Shop
             {
                 foreach (var item in _shopItems)
                 {
-                    if (item.Value.GetComponent<ShopItem>().attributes.Contains(attribute))
+                    if (item.Value.GetComponent<ShopItem>().Attributes.Contains(attribute))
                         item.Value.gameObject.SetActive(!isActive);
                 }
             }
@@ -87,12 +87,19 @@ namespace Shop
 
         private void BuildShopInventory()
         {
-            Debug.Log("ShopItems: " + ShopInventory.ShopItems.Count);
             foreach (var item in ShopInventory.ShopItems)
             {
                 var newItem = Instantiate(ShopItemPrefab, ContentViewport.transform);
-                newItem.GetComponent<ShopItem>().Initialize(item);
                 _shopItems.Add(item.ItemID, newItem.GetComponent<ShopItem>());
+            }
+        }
+
+        private void InitializeItems()
+        {
+            foreach (var item in ShopInventory.ShopItems)
+            {
+                _shopItems.TryGetValue(item.ItemID, out ShopItem shopItem);
+                if (shopItem != null) shopItem.Initialize(item);
             }
         }
     }

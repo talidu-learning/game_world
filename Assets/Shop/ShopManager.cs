@@ -45,7 +45,6 @@ namespace Shop
             {
                 if (placedObject.GetComponent<SocketCollection>())
                 {
-                    Debug.Log(placedObject.GetComponent<SocketCollection>());
                     var sockets = placedObject.GetComponent<SocketCollection>().Sockets.Where(s => s.IsUsed);
 
                     foreach (var socket in sockets)
@@ -67,7 +66,6 @@ namespace Shop
         private void OnPlaceObject(string itemId, Guid uid)
         {
             if (!LocalPlayerData.Instance.IsItemPlaceable(itemId)) return;
-            Debug.Log(itemId);
             var go = ItemCreator.CreateItem(itemId, LocalPlayerData.Instance.GetUidOfUnplacedItem(itemId));
             SelectionManager.SELECT_OBJECT_EVENT.Invoke(go.GetComponent<Interactable>());
         }

@@ -34,7 +34,7 @@ namespace ServerConnection
         {
             // WebGLPluginJS.SetUpTestToken();
             //#if DEVELOPMENT_BUILD
-            token = WebGLPluginJS.GetTokenFromLocalStorage();
+            //token = WebGLPluginJS.GetTokenFromLocalStorage();
             taliduGraphApi.SetAuthToken(token);
             id = new Guid(await GetStudentID());
 

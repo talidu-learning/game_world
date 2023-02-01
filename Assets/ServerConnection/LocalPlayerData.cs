@@ -74,7 +74,6 @@ namespace ServerConnection
             {
                 var updateStarCount = await ServerConnection.UpdateStarCount(_stars - itemValue);
                 var newItem = await ServerConnection.CreateNewItemForCurrentPlayer(id);
-                Debug.Log(updateStarCount);
                 if (updateStarCount && newItem.id == id)
                 {
                     _stars -= itemValue;
@@ -82,7 +81,6 @@ namespace ServerConnection
                     _ownedItems.Add(newItem);
 
                     ChangedItemDataEvent.Invoke(id);
-                    Debug.Log("BOUGHT");
                     return true;
                 }
 

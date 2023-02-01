@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47869e7bcb0645e1bc102759ee316cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShopInventory: {fileID: 11400000, guid: 2e3881a7dd09dd54d97dd33e6736f7ba, type: 2}
+  ShopInventory: {fileID: 11400000, guid: 173a1df082808284196ea049c9431555, type: 2}
   ContentViewport: {fileID: 0}
   ShopItemPrefab: {fileID: 2182071670665996700, guid: 978b4ef0c2dec31419d14f7e47acb43e, type: 3}
 --- !u!114 &980725196
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d1c83d92c94c76b59a1133f794854b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopInventory: {fileID: 11400000, guid: 2e3881a7dd09dd54d97dd33e6736f7ba, type: 2}
+  shopInventory: {fileID: 11400000, guid: 173a1df082808284196ea049c9431555, type: 2}
   SocketItem: {fileID: 353450886295271579, guid: 16bc2bdadfc5dda4c86950fb305c4833, type: 3}
   ServerConnection: {fileID: 1277939598}
 --- !u!1 &5557176907917157821
@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 5557176907917157822}
   - component: {fileID: 599489674}
   - component: {fileID: 599489675}
+  - component: {fileID: 1525611444}
   m_Layer: 0
   m_Name: Logic
   m_TagString: Untagged
@@ -172,6 +173,18 @@ MonoBehaviour:
   ItemCreator: {fileID: 599489674}
   ShopInventoryDisplay: {fileID: 5557176907690520787}
   serverConnection: {fileID: 1277939598}
+--- !u!114 &1525611444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557176907917157821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78f10638065b495e8281e4b8ed441d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5557176908100838816
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +196,7 @@ GameObject:
   - component: {fileID: 5557176908100838817}
   - component: {fileID: 5557176908100838818}
   - component: {fileID: 1277939598}
+  - component: {fileID: 1303059414}
   m_Layer: 0
   m_Name: PlayerData
   m_TagString: Untagged
@@ -217,11 +231,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82bba419c45045cdbccccd53eaeec223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ServerConnection: {fileID: 1277939598}
-  ItemCreator: {fileID: 0}
-  SocketItem: {fileID: 353450886295271579, guid: 16bc2bdadfc5dda4c86950fb305c4833, type: 3}
-  ShopInventory: {fileID: 0}
-  UseServerConnection: 0
+  serverConnection: {fileID: 1277939598}
+  itemCreator: {fileID: 599489674}
+  socketItem: {fileID: 353450886295271579, guid: 16bc2bdadfc5dda4c86950fb305c4833, type: 3}
+  shopInventory: {fileID: 11400000, guid: 2e3881a7dd09dd54d97dd33e6736f7ba, type: 2}
+  useServerConnection: 0
 --- !u!114 &1277939598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,4 +249,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taliduGraphApi: {fileID: 11400000, guid: fae804bf8854c514bb57f0b4b8765e4b, type: 2}
-  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzM0Mjc1NzUsImV4cCI6MTY3MzUxMzk3NSwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.oV8z0pPLBqTvNphZG-Ad8XXU2-MpHLiZNLbXzpd9tV8
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic3R1ZGVudCIsInVzZXJfaWQiOiJmMDFlY2VjZC00YjhlLTQ4ODctOWYwNi0xZjE0NmUxN2VlNGIiLCJuYW1lIjpudWxsLCJpYXQiOjE2NzUyNDcwOTMsImV4cCI6MTY3NTMzMzQ5MywiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.E3OCnmo2aGjSbgZKnveBpjwMCMuizvdH2vTVjUPUzGw
+--- !u!114 &1303059414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557176908100838816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee2ffcbd64a9574cab86576395f6973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ownedItems: []

@@ -21,7 +21,7 @@ namespace Filter
             GetComponent<Button>().onClick.AddListener(ToggleFilter);
         }
 
-        public void ToggleFilter()
+        private void ToggleFilter()
         {
             GameAudio.PlaySoundEvent.Invoke(SoundType.Filter);
             isActivated = !isActivated;

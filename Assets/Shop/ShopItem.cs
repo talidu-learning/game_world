@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Enumerations;
 using Interactables;
@@ -17,18 +18,20 @@ namespace Shop
 
         [SerializeField] private TextMeshProUGUI Owned;
 
-        // [SerializeField] private TextMeshProUGUI Placed;
         [SerializeField] private Image ItemImage;
-        [SerializeField] private Button button;
-        public string itemID { private set; get; }
-
+        [SerializeField] private Button Button;
+        [SerializeField] private GameObject PaintBucket;
+        public string ItemID { set; get; }
+        public string BaseItemID { set; get; }
+        private Sprite BaseItemSprite { set; get; }
         private int itemValue;
-
-        public List<ItemAttribute> attributes { private set; get; }
+        
+        public List<ItemAttribute> Attributes { private set; get; }
+        public List<ItemVariant> ItemVariants { private set; get; }
 
         private void Awake()
         {
-            button.onClick.AddListener(OnBuyItemButtonClick);
+            Button.onClick.AddListener(OnBuyItemButtonClick);
         }
 
         private void Start()
@@ -36,6 +39,53 @@ namespace Shop
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(StartAsyncUpdate);
             SelectionManager.DELETE_OBJECT_EVENT.AddListener(StartAsyncUpdate);
         }
+        
+        #region public
+
+        public void Initialize(ShopItemData shopItemData)
+        {
+            ItemID = shopItemData.ItemID;
+            BaseItemID = shopItemData.BaseItemID;
+            if (string.IsNullOrEmpty(BaseItemID))
+                BaseItemID = shopItemData.ItemID;
+            ItemImage.sprite = shopItemData.ItemSprite;
+            BaseItemSprite = shopItemData.ItemSprite;
+            PriceTag.text = shopItemData.Value.ToString();
+            itemValue = shopItemData.Value;
+            Attributes = shopItemData.Attributes;
+            ItemVariants = shopItemData.ItemVariants;
+            
+            if(ItemVariants.Count==0)
+                PaintBucket.SetActive(false);
+
+            UpdateUI();
+        }
+
+        public void SwitchItemVariant(string variantID)
+        {
+            ItemID = variantID;
+            ItemImage.sprite = variantID != BaseItemID ? ItemVariants.First(v => v.ItemID == variantID).ItemSprite : BaseItemSprite;
+            UpdateUI();
+        }
+
+        public void OnClickedPaintBucket()
+        {
+            UIManager.ColorPickerEvent.Invoke(ItemVariants, this);
+        }
+
+        public void WasInvalidPlacement()
+        {
+            UpdateUI();
+        }
+
+        public void PlaceItem(bool isCopyLeft)
+        {
+            if (isCopyLeft) return;
+            StartAsyncUpdate();
+        }
+
+        #endregion
+        #region private
 
         private void StartAsyncUpdate()
         {
@@ -53,42 +103,24 @@ namespace Shop
             var boughtItem = await BuyItem();
             if (boughtItem)
             {
-                Debug.Log(boughtItem);
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Buy);
                 UpdateUI();
-                var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(itemID);
-                ShopManager.InitilizePlaceObjectEvent.Invoke(itemID, uitemID);
-                ItemInventoryUI.OnBoughtItemEvent.Invoke(itemID);
+                var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(ItemID);
+                ShopManager.InitilizePlaceObjectEvent.Invoke(ItemID, uitemID);
+                ItemInventoryUI.OnBoughtItemEvent.Invoke(ItemID);
+                UIManager.CloseColorPickerEvent.Invoke();
             }
         }
 
-        private void UpdateUI()
+        public void UpdateUI()
         {
-            int owned = LocalPlayerData.Instance.GetCountOfOwnedItems(itemID);
-            int unplaced = LocalPlayerData.Instance.GetCountOfUnplacedItems(itemID);
+            int owned = LocalPlayerData.Instance.GetCountOfOwnedItems(ItemID);
             Owned.text = owned.ToString();
-            //  Placed.text = unplaced.ToString();
-        }
-
-        public void Initialize(ShopItemData shopItemData)
-        {
-            itemID = shopItemData.ItemID;
-            ItemImage.sprite = shopItemData.ItemSprite;
-            PriceTag.text = shopItemData.Value.ToString();
-            itemValue = shopItemData.Value;
-            attributes = shopItemData.Attributes;
-
-            UpdateUI();
-        }
-
-        public void WasInvalidPlacement()
-        {
-            UpdateUI();
         }
 
         private async Task<bool> BuyItem()
         {
-            var tryBuyItem = await LocalPlayerData.Instance.TryBuyItem(itemID, itemValue);
+            var tryBuyItem = await LocalPlayerData.Instance.TryBuyItem(ItemID, itemValue);
             if (tryBuyItem)
             {
                 return true;
@@ -97,11 +129,7 @@ namespace Shop
             return false;
         }
 
-        public void PlaceItem(bool isCopyLeft)
-        {
-            if (isCopyLeft) return;
-            // placeItem.gameObject.SetActive(false);
-            StartAsyncUpdate();
-        }
+        #endregion
+
     }
 }

@@ -9,17 +9,23 @@ using UnityEngine.Events;
 namespace Shop
 {
     public class FilterEvent : UnityEvent<UIType, List<ItemAttribute>, bool> { }
+    public class ColorPickerEvent : UnityEvent<List<ItemVariant>, ShopItem> { }
 
     public class UIManager : MonoBehaviour
     {
         public static readonly FilterEvent FILTER_EVENT = new FilterEvent();
 
-
+        public static readonly ColorPickerEvent ColorPickerEvent = new ColorPickerEvent();
+        public static readonly UnityEvent CloseColorPickerEvent = new UnityEvent();
+        
         [SerializeField] private Animation LoadingAnimation;
 
         [SerializeField] private GameObject DeleteButton;
 
-        void Start()
+        [SerializeField] private ColorPickerWindow ColorPickerMenu;
+        [SerializeField] private GameObject ColorPickerGO;
+
+        private void Start()
         {
             SaveGame.TEXT_LOADED_PLAYER_DATA.AddListener(() => StartCoroutine(OnLoadedGame()));
 
@@ -29,14 +35,30 @@ namespace Shop
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(DisableDelete);
             SelectionManager.DELETE_OBJECT_EVENT.AddListener(DisableDelete);
             SelectionManager.DELETE_SOCKET_EVENT.AddListener(OnDeleteSocketItem);
+            
+            ColorPickerEvent.AddListener(OnOpenColorPickerMenu);
+            CloseColorPickerEvent.AddListener(OnCloseColorPicker);
+            
+            OnCloseColorPicker();
         }
 
-        private void OnDeleteSocketItem(Socket arg0)
+        private void OnCloseColorPicker()
+        {
+            ColorPickerGO.SetActive(false);
+        }
+
+        private void OnOpenColorPickerMenu(List<ItemVariant> variants, ShopItem shopItem)
+        {
+            ColorPickerGO.SetActive(true);
+            ColorPickerMenu.InitializeMenu(variants, shopItem);
+        }
+
+        private void OnDeleteSocketItem(Socket socket)
         {
             DisableDelete();
         }
 
-        private void OnDeselectedSocket(Socket arg0)
+        private void OnDeselectedSocket(Socket socket)
         {
             DisableDelete();
         }
