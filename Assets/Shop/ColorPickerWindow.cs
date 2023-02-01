@@ -13,27 +13,40 @@ namespace Shop
         {
             var variantsArray = variants.ToArray();
 
-            while (variantsArray.Length > variantObjects.Count)
+            // +2 because of base item
+            while (variantsArray.Length + 1 > variantObjects.Count)
             {
                 variantObjects.Add(Instantiate(VariantPrefab, transform.GetChild(0)));
             }
             
             var gameObjects = variantObjects.ToArray();
 
+            var baseItem = gameObjects[0].GetComponent<ColorVariant>();
+            InitializeColorVariant(shopItem, baseItem, new ItemVariant
+            {
+                ItemID = shopItem.BaseItemID,
+                Color = Color.white
+            });
+
             for (int i = 0; i < variantsArray.Length; i++)
             {
-                gameObjects[i].SetActive(true);
-                var cv = gameObjects[i].GetComponent<ColorVariant>();
-                cv.VariantID = variants[i].ItemID;
-                cv.ShopItem = shopItem;
-                cv.SetColor(variants[i].Color);
+                gameObjects[i+1].SetActive(true);
+                var cv = gameObjects[i+1].GetComponent<ColorVariant>();
+                InitializeColorVariant(shopItem, cv, variants[i]);
             }
 
-            for (int i = variantsArray.Length; i < gameObjects.Length; i++)
+            for (int i = variantsArray.Length + 1; i < gameObjects.Length; i++)
             {
                 gameObjects[i].SetActive(false);
             }
             
+        }
+
+        private static void InitializeColorVariant(ShopItem shopItem, ColorVariant cv, ItemVariant itemVariant)
+        {
+            cv.VariantID = itemVariant.ItemID;
+            cv.ShopItem = shopItem;
+            cv.SetColor(itemVariant.Color);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Shop
 
         public void SetColor(Color color)
         {
-            Image.color=color;
+            Image.color=new Color(color.r, color.g, color.b, 1);
         }
     }
 }

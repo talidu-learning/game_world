@@ -21,8 +21,9 @@ namespace Shop
         [SerializeField] private Image ItemImage;
         [SerializeField] private Button Button;
         [SerializeField] private GameObject PaintBucket;
-        private string ItemID { set; get; }
-        private string BaseItemID { set; get; }
+        public string ItemID { set; get; }
+        public string BaseItemID { set; get; }
+        private Sprite BaseItemSprite { set; get; }
         private int itemValue;
         
         public List<ItemAttribute> Attributes { private set; get; }
@@ -45,7 +46,10 @@ namespace Shop
         {
             ItemID = shopItemData.ItemID;
             BaseItemID = shopItemData.BaseItemID;
+            if (string.IsNullOrEmpty(BaseItemID))
+                BaseItemID = shopItemData.ItemID;
             ItemImage.sprite = shopItemData.ItemSprite;
+            BaseItemSprite = shopItemData.ItemSprite;
             PriceTag.text = shopItemData.Value.ToString();
             itemValue = shopItemData.Value;
             Attributes = shopItemData.Attributes;
@@ -60,7 +64,8 @@ namespace Shop
         public void SwitchItemVariant(string variantID)
         {
             ItemID = variantID;
-            ItemImage.sprite = ItemVariants.First(v => v.ItemID == variantID).ItemSprite;
+            ItemImage.sprite = variantID != BaseItemID ? ItemVariants.First(v => v.ItemID == variantID).ItemSprite : BaseItemSprite;
+            UpdateUI();
         }
 
         public void OnClickedPaintBucket()
@@ -103,10 +108,11 @@ namespace Shop
                 var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(ItemID);
                 ShopManager.InitilizePlaceObjectEvent.Invoke(ItemID, uitemID);
                 ItemInventoryUI.OnBoughtItemEvent.Invoke(ItemID);
+                UIManager.CloseColorPickerEvent.Invoke();
             }
         }
 
-        private void UpdateUI()
+        public void UpdateUI()
         {
             int owned = LocalPlayerData.Instance.GetCountOfOwnedItems(ItemID);
             Owned.text = owned.ToString();

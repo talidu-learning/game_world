@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VariantID: 
   ShopItem: {fileID: 0}
-  Image: {fileID: 1247722632430356437}
+  Image: {fileID: 1247722633136635195}
 --- !u!1 &1247722632430356439
 GameObject:
   m_ObjectHideFlags: 0

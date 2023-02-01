@@ -50,7 +50,6 @@ namespace Shop
         private void OnOpenColorPickerMenu(List<ItemVariant> variants, ShopItem shopItem)
         {
             ColorPickerGO.SetActive(true);
-            // ColorPickerMenu.transform.position = new Vector3(ColorPickerMenu.transform.position.x, shopItem.transform.position.y);
             ColorPickerMenu.InitializeMenu(variants, shopItem);
         }
 

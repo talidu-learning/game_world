@@ -41,10 +41,9 @@ namespace Shop
 
         private void UpdateItemState(string id)
         {
-            var go = _shopItems.FirstOrDefault(o => o.Key == id).Value;
+            var go = _shopItems.FirstOrDefault(o => o.Value.ItemID == id).Value;
             var shopItem = go.GetComponent<ShopItem>();
-            var itemdata = ShopInventory.ShopItems.FirstOrDefault(i => i.ItemID == id);
-            shopItem.Initialize(itemdata);
+            shopItem.UpdateUI();
         }
 
         private void OnFilterToggled(UIType uiType, List<ItemAttribute> attributes, bool isActive)
