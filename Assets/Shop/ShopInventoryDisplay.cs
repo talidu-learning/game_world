@@ -67,7 +67,7 @@ namespace Shop
             {
                 foreach (var item in _shopItems)
                 {
-                    if (item.Value.GetComponent<ShopItem>().attributes.Contains(attribute))
+                    if (item.Value.GetComponent<ShopItem>().Attributes.Contains(attribute))
                         item.Value.gameObject.SetActive(!isActive);
                 }
             }

@@ -1,16 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class ButtonPressAnimations : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public RectTransform ButtonGraphic;
-    public RectTransform TargetPosition;
-    public float downPressTime = 0.04f;
-    public float buttonUpTime = 0.1f;
+    public UnityEvent OnClick = new UnityEvent();
+    
+    [SerializeField]private RectTransform ButtonGraphic;
+    [SerializeField]private RectTransform TargetPosition;
+    [SerializeField]private float DownPressTime = 0.04f;
+    
     private IEnumerator buttonDown;
     private IEnumerator buttonUp;
     private Vector2 oldButtonWorldPos;
@@ -23,6 +23,7 @@ public class ButtonPressAnimations : MonoBehaviour, IPointerDownHandler, IPointe
     public void OnPointerDown(PointerEventData eventData)
     {
         ButtonDown();
+        OnClick.Invoke();
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -35,29 +36,29 @@ public class ButtonPressAnimations : MonoBehaviour, IPointerDownHandler, IPointe
         ButtonGraphic.anchoredPosition = Vector2.zero;
     }
 
-    public void ButtonDown()
+    private void ButtonDown()
     {
         buttonDown = PressDownAnimation();
         StartCoroutine(buttonDown);
     }
 
-    public void ButtonUp()
+    private void ButtonUp()
     {
         buttonUp = PressUpAnimation();
         StartCoroutine(buttonUp);
     }
 
-    IEnumerator PressDownAnimation()
+    private IEnumerator PressDownAnimation()
     {
         float time = 0;
 
 
-        while (time < downPressTime)
+        while (time < DownPressTime)
         {
             ButtonGraphic.anchoredPosition = Vector2.Lerp(oldButtonWorldPos,
                 ButtonGraphic.parent.InverseTransformPoint(new Vector3(TargetPosition.localToWorldMatrix.m03,
                     TargetPosition.localToWorldMatrix.m13, TargetPosition.localToWorldMatrix.m23)),
-                time / downPressTime);
+                time / DownPressTime);
             time += Time.deltaTime;
             yield return null;
         }
@@ -67,17 +68,17 @@ public class ButtonPressAnimations : MonoBehaviour, IPointerDownHandler, IPointe
                 TargetPosition.localToWorldMatrix.m23));
     }
 
-    IEnumerator PressUpAnimation()
+    private IEnumerator PressUpAnimation()
     {
         float time = 0;
 
 
-        while (time < downPressTime)
+        while (time < DownPressTime)
         {
             ButtonGraphic.anchoredPosition = Vector2.Lerp(
                 ButtonGraphic.parent.InverseTransformPoint(new Vector3(TargetPosition.localToWorldMatrix.m03,
                     TargetPosition.localToWorldMatrix.m13, TargetPosition.localToWorldMatrix.m23)), oldButtonWorldPos,
-                time / downPressTime);
+                time / DownPressTime);
             time += Time.deltaTime;
             yield return null;
         }
