@@ -1676,7 +1676,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 293.28723, y: 456.29227}
+  m_AnchoredPosition: {x: 293.28723, y: 325.1388}
   m_SizeDelta: {x: 549.8318, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9024108446798677332
@@ -2375,7 +2375,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 9024108447723013249}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.99999774
+  m_Size: 0.4999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2600,6 +2600,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e35fb84b49d47fea76029d4f134bf41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShopPanel: {fileID: 0}
+  Canvas: {fileID: 0}
 --- !u!1 &9024108448514083907
 GameObject:
   m_ObjectHideFlags: 0
@@ -3894,6 +3896,10 @@ PrefabInstance:
     - target: {fileID: 2408550342522673985, guid: 2d0be6be96551294aab4be89d2dce085, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2487328224723088163, guid: 2d0be6be96551294aab4be89d2dce085, type: 3}
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2560699237768424758, guid: 2d0be6be96551294aab4be89d2dce085, type: 3}
       propertyPath: m_AnchorMax.y
