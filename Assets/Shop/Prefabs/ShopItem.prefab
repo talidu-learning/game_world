@@ -609,7 +609,8 @@ MonoBehaviour:
   PriceTag: {fileID: 2182071672255298539}
   Owned: {fileID: 5164647228031627569}
   ItemImage: {fileID: 2182071670383599861}
-  button: {fileID: 2182071670805956782}
+  Button: {fileID: 2182071670805956782}
+  PaintBucket: {fileID: 2245455238030502045}
 --- !u!1 &2182071670805956780
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,10 +773,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f02576219bd8dd7418272799bc816bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnClick:
+    m_PersistentCalls:
+      m_Calls: []
   ButtonGraphic: {fileID: 2182071670805956781}
   TargetPosition: {fileID: 95019334046595348}
-  downPressTime: 0.04
-  buttonUpTime: 0.1
+  DownPressTime: 0.04
 --- !u!1 &2182071672169037376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,10 +1624,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f02576219bd8dd7418272799bc816bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4527308238771370995}
+        m_TargetAssemblyTypeName: Shop.ShopItem, Assembly-CSharp
+        m_MethodName: OnClickedPaintBucket
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   ButtonGraphic: {fileID: 8118568318827986504}
   TargetPosition: {fileID: 4573313905264499409}
-  downPressTime: 0.04
-  buttonUpTime: 0.1
+  DownPressTime: 0.04
 --- !u!1 &3501610260935963364
 GameObject:
   m_ObjectHideFlags: 0
@@ -2089,9 +2106,9 @@ RectTransform:
   m_Father: {fileID: 1578248231252850013}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 33.812, y: -63.2979}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 75.812, y: 0}
   m_SizeDelta: {x: 0, y: 126.5958}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6872992873571870529

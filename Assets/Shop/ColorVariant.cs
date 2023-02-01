@@ -7,6 +7,7 @@ namespace Shop
     {
         public string VariantID;
         public ShopItem ShopItem;
+        public Image Image;
 
         private void Awake()
         {
@@ -20,7 +21,7 @@ namespace Shop
 
         public void SetColor(Color color)
         {
-            GetComponentInChildren<Image>().color=color;
+            Image.color=color;
         }
     }
 }
