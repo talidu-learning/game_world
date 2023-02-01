@@ -102,5 +102,16 @@ namespace Interactables
             PressGesture.enabled = true;
             TransformGesture.enabled = false;
         }
+
+        public void Flip()
+        {
+            SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
+
+            if (sprites == null) return;
+            foreach (var sprite in sprites)
+            {
+                sprite.flipX = !sprite.flipX;
+            }
+        }
     }
 }
