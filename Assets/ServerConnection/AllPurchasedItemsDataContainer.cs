@@ -52,6 +52,9 @@ namespace ServerConnection
 
         [JsonProperty("owner")]
         public Guid Owner { get; set; }
+        
+        [JsonProperty("flipped")]
+        public bool Flipped { get; set; }
     }
 
     public partial class AllPurchasedItemsDataContainer

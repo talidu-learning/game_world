@@ -1,6 +1,7 @@
 using System;
 using Enumerations;
 using GameModes;
+using Shop;
 using TouchScript.Gestures;
 using TouchScript.Gestures.TransformGestures;
 using UnityEngine;
@@ -107,6 +108,8 @@ namespace Interactables
         {
             SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
 
+            GetComponent<ItemID>().IsFlipped = !sprites[0].flipX;
+            
             if (sprites == null) return;
             foreach (var sprite in sprites)
             {

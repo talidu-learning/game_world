@@ -17,5 +17,6 @@ namespace ServerConnection
         public float z;
         public Guid[] itemsPlacedOnSockets;
         public bool isPlacedOnSocket;
+        public bool isFlipped;
     }
 }

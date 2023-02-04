@@ -64,6 +64,7 @@ namespace BuildingSystem
                 ServerConnection.UpdateItemPosition(placeableObject.gameObject.GetComponent<ItemID>().uid,
                     placeableObject.gameObject.GetComponent<ItemID>().id,
                     placeableObject.gameObject.transform.position.x, placeableObject.gameObject.transform.position.z,
+                    placeableObject.gameObject.GetComponent<ItemID>().IsFlipped,
                     serverCallbackPlacing);
             }
             else

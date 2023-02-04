@@ -96,6 +96,8 @@ namespace ServerConnection
                 gos.Add(go);
                 uids.Add(item.uid);
 
+                if (item.isFlipped) go.GetComponent<Interactable>().Flip();
+
                 var sockets = go.transform.GetChild(0).GetComponentsInChildren<Socket>();
 
                 for (int i = 0; i < sockets.Length; i++)
@@ -105,8 +107,7 @@ namespace ServerConnection
                         sockets[i].Place(item.itemsPlacedOnSockets[i]);
                         var data = allObjects.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i]);
                         allObjects.FirstOrDefault(idata => idata.uid == item.itemsPlacedOnSockets[i])!
-                                .isPlacedOnSocket =
-                            true;
+                                .isPlacedOnSocket = true;
                         CreateSocketItem(data.id, item.itemsPlacedOnSockets[i], sockets[i]);
                         uids.Add(item.itemsPlacedOnSockets[i]);
                     }
@@ -120,6 +121,7 @@ namespace ServerConnection
                 go.transform.position = new Vector3(item.x, 0, item.z);
                 gos.Add(go);
                 uids.Add(item.uid);
+                if (item.isFlipped) go.GetComponent<Interactable>().Flip();
             }
 
             return gos;

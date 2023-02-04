@@ -98,7 +98,7 @@ namespace ServerConnection
             return newItem;
         }
 
-        public async void UpdateItemPosition(Guid itemGuid, string itemID, float xCoord, float zCoord,
+        public async void UpdateItemPosition(Guid itemGuid, string itemID, float xCoord, float zCoord, bool isFlipped,
             Action<bool, string, Guid> callBack = null)
         {
             if (deactivatedServerConnection)
@@ -108,7 +108,7 @@ namespace ServerConnection
             }
             
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new {input = new {purchasedItemPatch = new {x = xCoord, z = zCoord}, uid = itemGuid}});
+            query.SetArgs(new {input = new {purchasedItemPatch = new {x = xCoord, z = zCoord, flipped = isFlipped}, uid = itemGuid}});
             var response = await SendRequest(query);
 
             if (string.IsNullOrEmpty(response))
@@ -143,7 +143,7 @@ namespace ServerConnection
                 Guid[] newSockets = new Guid[itemWithSocket.itemsPlacedOnSockets.Length];
                 query.SetArgs(new
                 {
-                    input = new {purchasedItemPatch = new {sockets = newSockets, x = 0, z = 0}, uid = itemGuid}
+                    input = new {purchasedItemPatch = new {sockets = newSockets, x = 0, z = 0, flipped = false}, uid = itemGuid}
                 });
             }
             else
@@ -244,63 +244,7 @@ namespace ServerConnection
             callBack.Invoke(true, onSocketPlacedItemGuid, itemWithSocketsGuid, socketIndex);
         }
 
-        private async Task<List<ItemData>> GetAllItems(Guid guid)
-        {
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("GetAllItems", GraphApi.Query.Type.Query);
-            query.SetArgs(new {condition = new {owner = guid}});
-
-            var result = await SendRequest(query);
-            if (string.IsNullOrEmpty(result)) return null;
-
-            var deserializedData = AllPurchasedItemsDataContainer.FromJson(result);
-
-            List<ItemData> items = new List<ItemData>();
-
-            foreach (var node in deserializedData.Data.AllPurchasedItems.Nodes)
-            {
-                if (node.Sockets != null)
-                {
-                    Guid[] socketData = new Guid[node.Sockets.Length];
-
-                    for (int i = 0; i < node.Sockets.Length; i++)
-                    {
-                        socketData[i] = new Guid(node.Sockets[i]);
-                    }
-
-                    ItemData itemData = new ItemData
-                    {
-                        id = node.Id,
-                        uid = node.Uid,
-                        x = Convert.ToSingle(node.X),
-                        z = Convert.ToSingle(node.Z),
-                        itemsPlacedOnSockets = socketData
-                    };
-                    items.Add(itemData);
-                }
-                else
-                {
-                    ItemData itemData = new ItemData
-                    {
-                        id = node.Id,
-                        uid = node.Uid,
-                        x = Convert.ToSingle(node.X),
-                        z = Convert.ToSingle(node.Z),
-                    };
-                    items.Add(itemData);
-                }
-            }
-
-            return items;
-        }
-
-        private async Task<bool> UpdateStars(Guid guid, int starCount)
-        {
-            if (deactivatedServerConnection) return true;
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateStars", GraphApi.Query.Type.Mutation);
-            query.SetArgs(new {input = new {studentPatch = new {stars = starCount}, id = guid}});
-            var response = await SendRequest(query);
-            return !string.IsNullOrEmpty(response);
-        }
+        #region Initializing
 
         private async Task<string> GetStudentID()
         {
@@ -339,6 +283,68 @@ namespace ServerConnection
                 Stars = stars
             };
             return true;
+        }
+        
+        private async Task<List<ItemData>> GetAllItems(Guid guid)
+        {
+            GraphApi.Query query = taliduGraphApi.GetQueryByName("GetAllItems", GraphApi.Query.Type.Query);
+            query.SetArgs(new {condition = new {owner = guid}});
+
+            var result = await SendRequest(query);
+            if (string.IsNullOrEmpty(result)) return null;
+
+            var deserializedData = AllPurchasedItemsDataContainer.FromJson(result);
+
+            List<ItemData> items = new List<ItemData>();
+
+            foreach (var node in deserializedData.Data.AllPurchasedItems.Nodes)
+            {
+                if (node.Sockets != null)
+                {
+                    Guid[] socketData = new Guid[node.Sockets.Length];
+
+                    for (int i = 0; i < node.Sockets.Length; i++)
+                    {
+                        socketData[i] = new Guid(node.Sockets[i]);
+                    }
+
+                    ItemData itemData = new ItemData
+                    {
+                        id = node.Id,
+                        uid = node.Uid,
+                        x = Convert.ToSingle(node.X),
+                        z = Convert.ToSingle(node.Z),
+                        itemsPlacedOnSockets = socketData,
+                        isFlipped = node.Flipped
+                    };
+                    items.Add(itemData);
+                }
+                else
+                {
+                    ItemData itemData = new ItemData
+                    {
+                        id = node.Id,
+                        uid = node.Uid,
+                        x = Convert.ToSingle(node.X),
+                        z = Convert.ToSingle(node.Z),
+                        isFlipped = node.Flipped
+                    };
+                    items.Add(itemData);
+                }
+            }
+
+            return items;
+        }
+
+        #endregion
+
+        private async Task<bool> UpdateStars(Guid guid, int starCount)
+        {
+            if (deactivatedServerConnection) return true;
+            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateStars", GraphApi.Query.Type.Mutation);
+            query.SetArgs(new {input = new {studentPatch = new {stars = starCount}, id = guid}});
+            var response = await SendRequest(query);
+            return !string.IsNullOrEmpty(response);
         }
 
         private async Task<string> SendRequest(GraphApi.Query query)
