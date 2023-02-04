@@ -1831,6 +1831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoadingAnimation: {fileID: 1579080642}
   DeleteButton: {fileID: 7593015385582642325}
+  FlipButton: {fileID: 0}
   ColorPickerMenu: {fileID: 1527848382}
   ColorPickerGO: {fileID: 6832442402321046264}
 --- !u!1 &4787235969624430031
@@ -4788,7 +4789,6 @@ GameObject:
   - component: {fileID: 9065527744351622806}
   - component: {fileID: 5634277150131296212}
   - component: {fileID: 2970459537605079873}
-  - component: {fileID: 504268556}
   - component: {fileID: 504268557}
   m_Layer: 5
   m_Name: FilterInventory (1)
@@ -4873,21 +4873,6 @@ MonoBehaviour:
   ButtonGraphic: {fileID: 7439313649909090162}
   TargetPosition: {fileID: 6480473964593691093}
   DownPressTime: 0.04
---- !u!114 &504268556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7574186830689037135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dec29c5bbc94959b2f3b4934e89f186, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIType: 0
-  SelectedItemAttributes: 06000000
-  FilterImage: {fileID: 5634277150131296212}
 --- !u!114 &504268557
 MonoBehaviour:
   m_ObjectHideFlags: 0

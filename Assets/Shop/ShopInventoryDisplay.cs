@@ -61,6 +61,17 @@ namespace Shop
 
                 return;
             }
+            
+            if (attributes.Contains(ItemAttribute.NotBought))
+            {
+                foreach (var item in _shopItems)
+                {
+                    if (LocalPlayerData.Instance.GetCountOfOwnedItems(item.Key) > 0)
+                        item.Value.gameObject.SetActive(!isActive);
+                }
+
+                return;
+            }
 
 
             foreach (var attribute in attributes)

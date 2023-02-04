@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Interactables;
-using Shop;
 using TouchScript.Gestures;
 using UnityEngine;
 using TouchScript.Gestures.TransformGestures;
@@ -51,7 +50,7 @@ namespace TouchScript.Examples.CameraControl
             isZoomEnabled = true;
         }
 
-        private void OnSelectedObject(Interactable arg0)
+        private void OnSelectedObject(Interactable interactable)
         {
             ZoomOut();
             isZoomEnabled = false;

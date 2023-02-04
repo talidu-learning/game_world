@@ -140,13 +140,11 @@ namespace Inventory
 
             var spriteRenderer = socketItem.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = shopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.ItemSprite;
-
             return socketItem;
         }
 
         private void OnSelectedSocket(Socket socket)
         {
-            Debug.Log("Selected: " + socket);
             currentSocket = socket;
         }
     }

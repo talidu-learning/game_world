@@ -8,6 +8,7 @@
         VeryHuge,
         WaterOnly,
         SoilOnly,
-        Bought
+        Bought,
+        NotBought
     }
 }
