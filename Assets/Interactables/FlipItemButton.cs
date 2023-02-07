@@ -1,16 +1,15 @@
-using Interactables;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class FlipItemButton : MonoBehaviour
+namespace Interactables
 {
-    void Awake()
+    public class FlipItemButton : TaliduButton
     {
-        GetComponent<Button>().onClick.AddListener(OnClick);
-    }
+        protected override void OnClickedButton()
+        {
+            OnClick();
+        }
 
-    void OnClick()
-    {
-        SelectionManager.FLIP_OBJECT_EVENT.Invoke();
+        void OnClick()
+        {
+            SelectionManager.FLIP_OBJECT_EVENT.Invoke();
+        }
     }
 }

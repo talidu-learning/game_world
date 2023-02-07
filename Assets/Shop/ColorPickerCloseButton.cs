@@ -1,16 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-
-namespace Shop
+﻿namespace Shop
 {
-    public class ColorPickerCloseButton : MonoBehaviour
+    public class ColorPickerCloseButton : TaliduButton
     {
-        private void Awake()
-        {
-            GetComponent<Button>().onClick.AddListener(OnClickedButton);
-        }
-
-        private void OnClickedButton()
+        protected override void OnClickedButton()
         {
             UIManager.CloseColorPickerEvent.Invoke();
         }

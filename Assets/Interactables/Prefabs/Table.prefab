@@ -92,7 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edfb717faca4bada655b9d82c87e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Neighbour: {fileID: 0}
   IsUsed: 0
 --- !u!212 &5962241302424503965
 SpriteRenderer:
@@ -386,8 +385,8 @@ MonoBehaviour:
   OnLongPress:
     m_PersistentCalls:
       m_Calls: []
-  timeToPress: 1
-  distanceLimit: 1
+  timeToPress: 0.5
+  distanceLimit: 0.1
 --- !u!114 &4883471184429529532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,8 +406,8 @@ MonoBehaviour:
   generalProps: 0
   limitsProps: 0
   advancedProps: 0
-  minPointers: 0
-  maxPointers: 0
+  minPointers: 1
+  maxPointers: 1
   useSendMessage: 0
   sendStateChangeMessages: 0
   sendMessageTarget: {fileID: 0}
@@ -557,7 +556,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edfb717faca4bada655b9d82c87e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Neighbour: {fileID: 0}
   IsUsed: 0
 --- !u!212 &6647069183735351112
 SpriteRenderer:
@@ -703,7 +701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edfb717faca4bada655b9d82c87e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Neighbour: {fileID: 9011654220502392459}
   IsUsed: 0
 --- !u!212 &9011754346172536873
 SpriteRenderer:
@@ -849,7 +846,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edfb717faca4bada655b9d82c87e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Neighbour: {fileID: 0}
   IsUsed: 0
 --- !u!212 &7035539865228002696
 SpriteRenderer:

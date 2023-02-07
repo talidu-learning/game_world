@@ -3,11 +3,10 @@ using GameModes;
 using Interactables;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace Inventory
 {
-    public class ToggleInventoryButton : MonoBehaviour
+    public class ToggleInventoryButton : TaliduButton
     {
         public static UnityEvent CloseInventoryUnityEvent = new UnityEvent();
         public static UnityEvent ClosedInventoryUnityEvent = new UnityEvent();
@@ -17,8 +16,12 @@ namespace Inventory
 
         private void Awake()
         {
-            GetComponent<Button>().onClick.AddListener(OpenInventory);
             CloseInventoryUnityEvent.AddListener(Close);
+        }
+
+        protected override void OnClickedButton()
+        {
+            OpenInventory();
         }
 
         private void Start()

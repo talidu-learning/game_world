@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 namespace Shop
 {
-    public class ShopItem : MonoBehaviour
+    public class ShopItem : TaliduButton
     {
         [SerializeField] private TextMeshProUGUI PriceTag;
 
@@ -29,9 +29,9 @@ namespace Shop
         public List<ItemAttribute> Attributes { private set; get; }
         public List<ItemVariant> ItemVariants { private set; get; }
 
-        private void Awake()
+        protected override void OnClickedButton()
         {
-            Button.onClick.AddListener(OnBuyItemButtonClick);
+            OnBuyItemButtonClick();
         }
 
         private void Start()

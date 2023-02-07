@@ -202,8 +202,8 @@ MonoBehaviour:
   OnLongPress:
     m_PersistentCalls:
       m_Calls: []
-  timeToPress: 1
-  distanceLimit: 1
+  timeToPress: 0.5
+  distanceLimit: 0.1
 --- !u!114 &4883471184429529532
 MonoBehaviour:
   m_ObjectHideFlags: 0
