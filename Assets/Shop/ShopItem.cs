@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CustomInput;
 using Enumerations;
 using Interactables;
 using Inventory;
@@ -38,6 +39,8 @@ namespace Shop
         {
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(StartAsyncUpdate);
             SelectionManager.DELETE_OBJECT_EVENT.AddListener(StartAsyncUpdate);
+            
+            InitializeButton(Button);
         }
         
         #region public

@@ -1,4 +1,6 @@
-﻿namespace Shop
+﻿using CustomInput;
+
+namespace Shop
 {
     public class ColorPickerCloseButton : TaliduButton
     {

@@ -1,3 +1,4 @@
+using CustomInput;
 using Enumerations;
 using GameModes;
 using Interactables;
@@ -13,11 +14,6 @@ namespace Inventory
         public static UnityEvent OpenedInventoryEvent = new UnityEvent();
 
         [SerializeField] private GameObject InventoryUI;
-
-        private void Awake()
-        {
-            CloseInventoryUnityEvent.AddListener(Close);
-        }
 
         protected override void OnClickedButton()
         {

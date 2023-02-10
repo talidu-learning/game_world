@@ -1,3 +1,5 @@
+using CustomInput;
+
 namespace Interactables
 {
     public class FlipItemButton : TaliduButton
