@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CustomInput;
 using GraphQlClient.Core;
 using Plugins.WebGL;
 using ServerConnection.graphQl_client;
@@ -14,6 +16,7 @@ namespace ServerConnection
     {
         [SerializeField] private GraphApi taliduGraphApi;
         [SerializeField] private string token;
+        [SerializeField] private GameObject TouchManager;
 
         public static StudentData StudentData;
 
@@ -349,8 +352,11 @@ namespace ServerConnection
 
         private async Task<string> SendRequest(GraphApi.Query query)
         {
+            var timer = StartCoroutine(WaitForResponseTimer());
+            TouchManager.SetActive(false);
             UnityWebRequest request = await taliduGraphApi.Post(query);
-
+            StopCoroutine(timer);
+            ServerLoadingAnimation.DISABLE_ANIMATION.Invoke();
             if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError
                 or UnityWebRequest.Result.DataProcessingError)
             {
@@ -358,11 +364,29 @@ namespace ServerConnection
                 request.Dispose();
                 return String.Empty;
             }
+            
+            TouchManager.SetActive(true);
 
             var text = request.downloadHandler.text;
             request.Dispose();
 
             return text;
+        }
+
+        private IEnumerator WaitForResponseTimer()
+        {
+            var time = 0f;
+            while (true)
+            {
+                time += Time.deltaTime;
+                if (time > 1.0f)
+                {
+                    ServerLoadingAnimation.ENABLE_ANIMATION.Invoke();
+                    break;
+                }
+
+                yield return null;
+            }
         }
     }
 }

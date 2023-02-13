@@ -13,18 +13,27 @@ namespace Interactables
         private LongPressGesture LongPressGesture;
         private PressGesture PressGesture;
         private TransformGesture TransformGesture;
+        private TapGesture tapGesture;
         private bool isSelected = false;
 
         private void Awake()
         {
+            tapGesture = GetComponent<TapGesture>();
+            tapGesture.Tapped += TapGestureOnTapped;
             TransformGesture = GetComponent<TransformGesture>();
             TransformGesture.enabled = false;
             LongPressGesture = GetComponent<LongPressGesture>();
-            LongPressGesture.StateChanged += LongPressedHandler;
+            // LongPressGesture.StateChanged += LongPressedHandler;
             PressGesture = GetComponent<PressGesture>();
             PressGesture.Pressed += PressGestureOnPressed;
             DeselectOnTap.OnTapOnBackground.AddListener(OnTap);
             GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameMode);
+        }
+
+        private void TapGestureOnTapped(object sender, EventArgs e)
+        {
+            EnableDragging();
+            SelectionManager.SELECT_OBJECT_EVENT.Invoke(this);
         }
 
         private void OnSwitchedGameMode(GameMode gameMode)
@@ -85,6 +94,7 @@ namespace Interactables
             LongPressGesture.enabled = false;
             PressGesture.enabled = false;
             TransformGesture.enabled = true;
+            tapGesture.enabled = false;
         }
 
         private void OnTap()
@@ -99,6 +109,7 @@ namespace Interactables
             if (!isSelected) return;
             gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
             isSelected = false;
+            tapGesture.enabled = true;
             LongPressGesture.enabled = true;
             PressGesture.enabled = true;
             TransformGesture.enabled = false;
