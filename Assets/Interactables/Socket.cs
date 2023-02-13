@@ -7,7 +7,6 @@ namespace Interactables
 {
     public class Socket : MonoBehaviour
     {
-        public Socket Neighbour;
         public bool IsUsed;
         public Guid Uid;
 

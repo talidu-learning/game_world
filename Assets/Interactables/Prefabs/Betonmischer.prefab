@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 4883471184429529534}
   - component: {fileID: 3985199299028485562}
   - component: {fileID: 6831336688413719592}
+  - component: {fileID: -678035262135507387}
   m_Layer: 3
   m_Name: Betonmischer
   m_TagString: Untagged
@@ -203,7 +204,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   timeToPress: 1
-  distanceLimit: 1
+  distanceLimit: 0.1
 --- !u!114 &4883471184429529532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,3 +305,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d44d2dd54316c4b96a11c5804b815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-678035262135507387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4883471184429529526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a878a6ff128243dfb1d89ca0273f059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStateChange:
+    m_PersistentCalls:
+      m_Calls: []
+  basicEditor: 1
+  generalProps: 0
+  limitsProps: 0
+  advancedProps: 0
+  minPointers: 0
+  maxPointers: 0
+  useSendMessage: 0
+  sendStateChangeMessages: 0
+  sendMessageTarget: {fileID: 0}
+  useUnityEvents: 0
+  sendStateChangeEvents: 0
+  requireGestureToFail: {fileID: 0}
+  friendlyGestures: []
+  OnTap:
+    m_PersistentCalls:
+      m_Calls: []
+  numberOfTapsRequired: 1
+  timeLimit: Infinity
+  distanceLimit: Infinity
+  combinePointers: 0
+  combinePointersInterval: 0.3

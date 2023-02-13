@@ -92,7 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edfb717faca4bada655b9d82c87e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Neighbour: {fileID: 0}
   IsUsed: 0
 --- !u!212 &5962241302424503965
 SpriteRenderer:
@@ -134,7 +133,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: fd4f988ac42428e4887e14959db3b2c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -306,6 +305,7 @@ GameObject:
   - component: {fileID: 3985199299028485562}
   - component: {fileID: -3581174433241796115}
   - component: {fileID: -4508532429606414971}
+  - component: {fileID: 1239032057492203539}
   m_Layer: 3
   m_Name: Table
   m_TagString: Untagged
@@ -386,8 +386,8 @@ MonoBehaviour:
   OnLongPress:
     m_PersistentCalls:
       m_Calls: []
-  timeToPress: 1
-  distanceLimit: 1
+  timeToPress: 0.5
+  distanceLimit: 0.1
 --- !u!114 &4883471184429529532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,8 +407,8 @@ MonoBehaviour:
   generalProps: 0
   limitsProps: 0
   advancedProps: 0
-  minPointers: 0
-  maxPointers: 0
+  minPointers: 1
+  maxPointers: 1
   useSendMessage: 0
   sendStateChangeMessages: 0
   sendMessageTarget: {fileID: 0}
@@ -510,6 +510,42 @@ MonoBehaviour:
   - {fileID: 9011654220502392459}
   - {fileID: 6579452844992228434}
   - {fileID: 2521484579370403437}
+--- !u!114 &1239032057492203539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4883471184429529526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a878a6ff128243dfb1d89ca0273f059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStateChange:
+    m_PersistentCalls:
+      m_Calls: []
+  basicEditor: 1
+  generalProps: 0
+  limitsProps: 0
+  advancedProps: 0
+  minPointers: 0
+  maxPointers: 0
+  useSendMessage: 0
+  sendStateChangeMessages: 0
+  sendMessageTarget: {fileID: 0}
+  useUnityEvents: 0
+  sendStateChangeEvents: 0
+  requireGestureToFail: {fileID: 0}
+  friendlyGestures: []
+  OnTap:
+    m_PersistentCalls:
+      m_Calls: []
+  numberOfTapsRequired: 1
+  timeLimit: Infinity
+  distanceLimit: Infinity
+  combinePointers: 0
+  combinePointersInterval: 0.3
 --- !u!1 &8090857342382996020
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +593,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edfb717faca4bada655b9d82c87e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Neighbour: {fileID: 0}
   IsUsed: 0
 --- !u!212 &6647069183735351112
 SpriteRenderer:
@@ -599,7 +634,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: fd4f988ac42428e4887e14959db3b2c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -703,7 +738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edfb717faca4bada655b9d82c87e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Neighbour: {fileID: 9011654220502392459}
   IsUsed: 0
 --- !u!212 &9011754346172536873
 SpriteRenderer:
@@ -745,7 +779,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: fd4f988ac42428e4887e14959db3b2c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -849,7 +883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edfb717faca4bada655b9d82c87e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Neighbour: {fileID: 0}
   IsUsed: 0
 --- !u!212 &7035539865228002696
 SpriteRenderer:
@@ -891,7 +924,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: fd4f988ac42428e4887e14959db3b2c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -21,6 +21,7 @@ namespace Shop
         [SerializeField] private Animation LoadingAnimation;
 
         [SerializeField] private GameObject DeleteButton;
+        [SerializeField] private GameObject FlipButton;
 
         [SerializeField] private ColorPickerWindow ColorPickerMenu;
         [SerializeField] private GameObject ColorPickerGO;
@@ -71,11 +72,13 @@ namespace Shop
         private void EnableDelete(Interactable interactable)
         {
             DeleteButton.SetActive(true);
+            FlipButton.SetActive(true);
         }
 
         private void DisableDelete()
         {
             DeleteButton.SetActive(false);
+            FlipButton.SetActive(false);
         }
 
         private IEnumerator OnLoadedGame()

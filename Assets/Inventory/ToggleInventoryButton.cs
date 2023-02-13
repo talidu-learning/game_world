@@ -1,13 +1,13 @@
+using CustomInput;
 using Enumerations;
 using GameModes;
 using Interactables;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace Inventory
 {
-    public class ToggleInventoryButton : MonoBehaviour
+    public class ToggleInventoryButton : TaliduButton
     {
         public static UnityEvent CloseInventoryUnityEvent = new UnityEvent();
         public static UnityEvent ClosedInventoryUnityEvent = new UnityEvent();
@@ -15,10 +15,9 @@ namespace Inventory
 
         [SerializeField] private GameObject InventoryUI;
 
-        private void Awake()
+        protected override void OnClickedButton()
         {
-            GetComponent<Button>().onClick.AddListener(OpenInventory);
-            CloseInventoryUnityEvent.AddListener(Close);
+            OpenInventory();
         }
 
         private void Start()

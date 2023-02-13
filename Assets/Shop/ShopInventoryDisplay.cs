@@ -42,6 +42,7 @@ namespace Shop
         private void UpdateItemState(string id)
         {
             var go = _shopItems.FirstOrDefault(o => o.Value.ItemID == id).Value;
+            if(go == null)return; // can happen if item variant is not selected in the shop
             var shopItem = go.GetComponent<ShopItem>();
             shopItem.UpdateUI();
         }
@@ -55,6 +56,17 @@ namespace Shop
                 foreach (var item in _shopItems)
                 {
                     if (LocalPlayerData.Instance.GetCountOfOwnedItems(item.Key) == 0)
+                        item.Value.gameObject.SetActive(!isActive);
+                }
+
+                return;
+            }
+            
+            if (attributes.Contains(ItemAttribute.NotBought))
+            {
+                foreach (var item in _shopItems)
+                {
+                    if (LocalPlayerData.Instance.GetCountOfOwnedItems(item.Key) > 0)
                         item.Value.gameObject.SetActive(!isActive);
                 }
 

@@ -1,3 +1,4 @@
+using CustomInput;
 using Enumerations;
 using GameModes;
 using Inventory;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Shop
 {
-    public class ToggleShopButton : MonoBehaviour
+    public class ToggleShopButton : TaliduButton
     {
         [SerializeField] private ShopPanelTweening ShopPanel;
         [SerializeField] private Sprite ClosedPanel;
@@ -14,14 +15,9 @@ namespace Shop
 
         private bool isOpen = false;
 
-        void Start()
+        private void Start()
         {
-            var button = GetComponent<Button>();
-
-            button.onClick.AddListener(OnButtonClick);
-
             GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameMode);
-
             ToggleInventoryButton.OpenedInventoryEvent.AddListener(OnOpenedInventory);
         }
 
@@ -68,6 +64,11 @@ namespace Shop
                 GameAudio.PlaySoundEvent.Invoke(SoundType.CloseShop);
                 GetComponent<Image>().sprite = ClosedPanel;
             }
+        }
+
+        protected override void OnClickedButton()
+        {
+            OnButtonClick();
         }
     }
 }

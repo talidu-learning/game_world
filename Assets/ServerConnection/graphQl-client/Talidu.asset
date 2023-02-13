@@ -352,9 +352,9 @@ MonoBehaviour:
     isComplete: 1
   - name: GetAllItems
     type: 0
-    query: "query GetAllItems{\n    allPurchasedItems(  condition :{ owner :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\"}
-      ){\n        nodes{\n            nodeId\n            sockets\n            z\n           
-      x\n            id\n            uid\n            owner\n        }\n    }\n}"
+    query: "query GetAllItems2{\n    allPurchasedItems{\n        nodes{\n           
+      nodeId\n            sockets\n            z\n            x\n            id\n           
+      uid\n            owner\n            flipped\n        }\n    }\n}"
     queryString: allPurchasedItems
     returnType: PurchasedItemsConnection
     queryOptions:
@@ -434,6 +434,8 @@ MonoBehaviour:
         type: Float
       - name: sockets
         type: UUID
+      - name: flipped
+        type: Boolean
       - name: studentByOwner
         type: Student
       hasChanged: 0
@@ -457,6 +459,8 @@ MonoBehaviour:
         type: Float
       - name: sockets
         type: UUID
+      - name: flipped
+        type: Boolean
       - name: studentByOwner
         type: Student
       hasChanged: 0
@@ -480,6 +484,8 @@ MonoBehaviour:
         type: Float
       - name: sockets
         type: UUID
+      - name: flipped
+        type: Boolean
       - name: studentByOwner
         type: Student
       hasChanged: 0
@@ -503,6 +509,8 @@ MonoBehaviour:
         type: Float
       - name: sockets
         type: UUID
+      - name: flipped
+        type: Boolean
       - name: studentByOwner
         type: Student
       hasChanged: 0
@@ -526,6 +534,8 @@ MonoBehaviour:
         type: Float
       - name: sockets
         type: UUID
+      - name: flipped
+        type: Boolean
       - name: studentByOwner
         type: Student
       hasChanged: 0
@@ -549,6 +559,8 @@ MonoBehaviour:
         type: Float
       - name: sockets
         type: UUID
+      - name: flipped
+        type: Boolean
       - name: studentByOwner
         type: Student
       hasChanged: 0
@@ -572,6 +584,33 @@ MonoBehaviour:
         type: Float
       - name: sockets
         type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 7
+      name: flipped
+      type: Boolean
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
       - name: studentByOwner
         type: Student
       hasChanged: 0
@@ -938,11 +977,9 @@ MonoBehaviour:
     isComplete: 1
   - name: UpdateItem
     type: 1
-    query: "mutation UpdateItem{\n    updatePurchasedItemByUid(  input :{ purchasedItemPatch
-      :{ sockets :[\"00000000-0000-0000-0000-000000000000\",\"00000000-0000-0000-0000-000000000000\",\"cad31928-787f-4332-a485-0dda6e0bdfb8\",\"00000000-0000-0000-0000-000000000000\",\"00000000-0000-0000-0000-000000000000\"]},
-      uid :\"0159ec16-aaec-4f10-bb17-b9782b673f32\"} ){\n        clientMutationId\n       
-      purchasedItem{\n            sockets\n            x\n            z\n           
-      uid\n            id\n        }\n    }\n}"
+    query: "mutation UpdateItem{\n    updatePurchasedItemByUid{\n        clientMutationId\n       
+      purchasedItem{\n            flipped\n            sockets\n            x\n           
+      z\n            uid\n            id\n        }\n    }\n}"
     queryString: updatePurchasedItemByUid
     returnType: UpdatePurchasedItemPayload
     queryOptions:
@@ -1042,6 +1079,31 @@ MonoBehaviour:
       - name: purchasedItemEdge
         type: PurchasedItemsEdge
       hasChanged: 0
+    - index: 7
+      name: flipped
+      type: Boolean
+      parentIndexes: 01000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
     - index: 6
       name: sockets
       type: UUID
@@ -1062,6 +1124,8 @@ MonoBehaviour:
         type: Float
       - name: sockets
         type: UUID
+      - name: flipped
+        type: Boolean
       - name: studentByOwner
         type: Student
       hasChanged: 0
@@ -1085,6 +1149,8 @@ MonoBehaviour:
         type: Float
       - name: sockets
         type: UUID
+      - name: flipped
+        type: Boolean
       - name: studentByOwner
         type: Student
       hasChanged: 0

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Interactables;
-using Shop;
 using TouchScript.Gestures;
 using UnityEngine;
 using TouchScript.Gestures.TransformGestures;
@@ -23,13 +22,19 @@ namespace TouchScript.Examples.CameraControl
 
         private IList<Pointer> twoFingerPointers = new List<Pointer>();
         
-        [SerializeField] private AnimationCurve zoom;
         [SerializeField] private AnimationCurve rotation;
+        [SerializeField] private AnimationCurve distance;
         public float ZoomSpeed = 10f;
         public float currentZoom;
 
         private bool isZoomEnabled = true;
 
+        public void SetZoom(float amount)
+        {
+            currentZoom = amount;
+            CalculateZoom();
+        }
+        
         private void Awake()
         {
             cam = Camera.main.transform;
@@ -51,7 +56,7 @@ namespace TouchScript.Examples.CameraControl
             isZoomEnabled = true;
         }
 
-        private void OnSelectedObject(Interactable arg0)
+        private void OnSelectedObject(Interactable interactable)
         {
             ZoomOut();
             isZoomEnabled = false;
@@ -91,16 +96,16 @@ namespace TouchScript.Examples.CameraControl
         private void CalculateZoom()
         {
             if(!isZoomEnabled) return;
-            var getZoomValue = zoom.Evaluate(currentZoom);
-            var localPosition = cam.transform.localPosition;
-            localPosition.y = getZoomValue;
-            cam.transform.localPosition = localPosition;
-
             var rotationX = rotation.Evaluate(currentZoom);
             var rotationY = cam.rotation.eulerAngles.y;
             Quaternion targetRot = Quaternion.Euler(rotationX, rotationY, 0.0f);
             
             cam.transform.rotation = targetRot;
+            Vector3 offset = Vector3.forward * distance.Evaluate(currentZoom);
+ 
+            Vector3 targetPos = pivot.position - targetRot * offset;
+
+            cam.transform.position = targetPos;
         }
 
         private void OnEnable()

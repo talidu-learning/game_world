@@ -1,22 +1,22 @@
-﻿using Enumerations;
+﻿using CustomInput;
+using Enumerations;
 using GameModes;
 using Inventory;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Interactables
 {
-    public class DecorationModeButton : MonoBehaviour
+    public class DecorationModeButton : TaliduButton
     {
         [SerializeField] private Sprite DecoModeOn;
         [SerializeField] private Sprite DecoModeOff;
 
         private bool isModeEnabled = false;
 
-        private void Awake()
+        protected override void OnClickedButton()
         {
-            GetComponent<Button>().onClick.AddListener(ToggleDecoMode);
+            ToggleDecoMode();
         }
 
         private void Start()

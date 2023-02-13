@@ -20,6 +20,7 @@ namespace Interactables
     {
         public static readonly InteractableUnityEvent SELECT_OBJECT_EVENT = new InteractableUnityEvent();
         public static readonly UnityEvent DESELECT_OBJECT_EVENT = new UnityEvent();
+        public static readonly UnityEvent FLIP_OBJECT_EVENT = new UnityEvent();
         public static readonly UnityEvent DELETE_OBJECT_EVENT = new UnityEvent();
 
         private Interactable selectedObject;
@@ -38,10 +39,16 @@ namespace Interactables
             SELECT_OBJECT_EVENT.AddListener(SelectObject);
             DESELECT_OBJECT_EVENT.AddListener(DeselectObject);
             DELETE_OBJECT_EVENT.AddListener(DeleteObject);
+            FLIP_OBJECT_EVENT.AddListener(OnFlipObject);
 
             SELECT_SOCKET_EVENT.AddListener(SelectSocket);
             DESELECT_SOCKET_EVENT.AddListener(DeselectSocket);
             DELETE_SOCKET_EVENT.AddListener(DeleteSocket);
+        }
+
+        private void OnFlipObject()
+        {
+            selectedObject.Flip();
         }
 
         private void Start()

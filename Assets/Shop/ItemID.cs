@@ -9,6 +9,7 @@ namespace Shop
     {
         public string id;
         public Guid uid;
+        public bool IsFlipped;
 
         public List<ItemAttribute> ItemAttributes = new List<ItemAttribute>();
     }
