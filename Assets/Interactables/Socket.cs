@@ -1,5 +1,6 @@
 ﻿using System;
-using ServerConnection;
+using Enumerations;
+using GameModes;
 using TouchScript.Gestures;
 using UnityEngine;
 
@@ -10,9 +11,27 @@ namespace Interactables
         public bool IsUsed;
         public Guid Uid;
 
+        private BoxCollider collider;
+
         private void Awake()
         {
+            collider = GetComponent<BoxCollider>();
+            collider.enabled = false;
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameMode);
             GetComponent<PressGesture>().Pressed += OnTap;
+        }
+
+        private void OnSwitchedGameMode(GameMode mode)
+        {
+            switch (mode)
+            {
+                case GameMode.Deco:
+                    collider.enabled = true;
+                    break;
+                default:
+                    collider.enabled = false;
+                    break;
+            }
         }
 
         private void OnTap(object sender, EventArgs e)

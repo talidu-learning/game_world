@@ -10,7 +10,6 @@ namespace Interactables
 {
     public class Interactable : MonoBehaviour
     {
-        private LongPressGesture LongPressGesture;
         private PressGesture PressGesture;
         private TransformGesture TransformGesture;
         private TapGesture tapGesture;
@@ -22,8 +21,6 @@ namespace Interactables
             tapGesture.Tapped += TapGestureOnTapped;
             TransformGesture = GetComponent<TransformGesture>();
             TransformGesture.enabled = false;
-            LongPressGesture = GetComponent<LongPressGesture>();
-            // LongPressGesture.StateChanged += LongPressedHandler;
             PressGesture = GetComponent<PressGesture>();
             PressGesture.Pressed += PressGestureOnPressed;
             DeselectOnTap.OnTapOnBackground.AddListener(OnTap);
@@ -54,14 +51,14 @@ namespace Interactables
 
         private void EnableMoving()
         {
-            LongPressGesture.enabled = true;
+            tapGesture.enabled = true;
             PressGesture.enabled = true;
             GetComponent<BoxCollider>().enabled = true;
         }
 
         private void DisableMoving()
         {
-            LongPressGesture.enabled = false;
+            tapGesture.enabled = false;
             PressGesture.enabled = false;
             GetComponent<BoxCollider>().enabled = false;
         }
@@ -73,25 +70,25 @@ namespace Interactables
             GameAudio.PlaySoundEvent.Invoke(SoundType.Select);
         }
 
-        private void LongPressedHandler(object sender, GestureStateChangeEventArgs e)
-        {
-            if (e.State == Gesture.GestureState.Recognized)
-            {
-                EnableDragging();
-                SelectionManager.SELECT_OBJECT_EVENT.Invoke(this);
-            }
-            else if (e.State == Gesture.GestureState.Failed)
-            {
-                gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
-                GameAudio.StopPLaying.Invoke();
-            }
-        }
+        // private void LongPressedHandler(object sender, GestureStateChangeEventArgs e)
+        // {
+        //     if (e.State == Gesture.GestureState.Recognized)
+        //     {
+        //         EnableDragging();
+        //         SelectionManager.SELECT_OBJECT_EVENT.Invoke(this);
+        //     }
+        //     else if (e.State == Gesture.GestureState.Failed)
+        //     {
+        //         gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
+        //         GameAudio.StopPLaying.Invoke();
+        //     }
+        // }
 
         public void EnableDragging()
         {
             gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.green;
             isSelected = true;
-            LongPressGesture.enabled = false;
+            //LongPressGesture.enabled = false;
             PressGesture.enabled = false;
             TransformGesture.enabled = true;
             tapGesture.enabled = false;
@@ -110,7 +107,6 @@ namespace Interactables
             gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
             isSelected = false;
             tapGesture.enabled = true;
-            LongPressGesture.enabled = true;
             PressGesture.enabled = true;
             TransformGesture.enabled = false;
         }
@@ -121,7 +117,6 @@ namespace Interactables
 
             GetComponent<ItemID>().IsFlipped = !sprites[0].flipX;
             
-            if (sprites == null) return;
             foreach (var sprite in sprites)
             {
                 sprite.flipX = !sprite.flipX;

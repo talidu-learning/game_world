@@ -23,6 +23,7 @@ namespace Inventory
         private void Start()
         {
             GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameModes);
+            CloseInventoryUnityEvent.AddListener(Close);
         }
 
         private void OnSwitchedGameModes(GameMode mode)
