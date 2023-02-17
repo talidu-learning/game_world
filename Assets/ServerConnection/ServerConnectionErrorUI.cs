@@ -1,23 +1,24 @@
-using System.Collections;
-using TouchScript;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ServerConnectionErrorUI : MonoBehaviour
+namespace ServerConnection
 {
-    [SerializeField] private GameObject ServerConnectionErrorUIWrapper;
-    [SerializeField] private Animation Animation;
-
-    public static UnityEvent ServerErrorOccuredEvent = new UnityEvent();
-
-    private void Awake()
+    public class ServerConnectionErrorUI : MonoBehaviour
     {
-        ServerErrorOccuredEvent.AddListener(OnErrorOccured);
-    }
+        [SerializeField] private GameObject ServerConnectionErrorUIWrapper;
+        [SerializeField] private Animation Animation;
 
-    private void OnErrorOccured()
-    {
-        ServerConnectionErrorUIWrapper.SetActive(true);
-        Animation.Play("Flicker");
+        public static UnityEvent ServerErrorOccuredEvent = new UnityEvent();
+
+        private void Awake()
+        {
+            ServerErrorOccuredEvent.AddListener(OnErrorOccured);
+        }
+
+        private void OnErrorOccured()
+        {
+            ServerConnectionErrorUIWrapper.SetActive(true);
+            Animation.Play("Flicker");
+        }
     }
 }

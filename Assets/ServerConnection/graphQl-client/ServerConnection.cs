@@ -38,14 +38,34 @@ namespace ServerConnection
             // WebGLPluginJS.SetUpTestToken();
             //#if DEVELOPMENT_BUILD
             token = WebGLPluginJS.GetTokenFromLocalStorage();
+            Debug.Log("Took token from local storage: " + token);
             taliduGraphApi.SetAuthToken(token);
-            id = new Guid(await GetStudentID());
 
-            if (id == null || id == Guid.Empty) return;
+            var idString = await GetStudentID();
+
+            bool isValid = Guid.TryParse(idString, out Guid guid);
+
+            if (!isValid)
+            {
+                ThrowServerError();
+                return;
+            }
+            
+            id = guid;
+
+            if (id == null || id == Guid.Empty)
+            {
+                ThrowServerError();
+                return;
+            }
 
             var studentData = await GetStudentData(id);
 
-            if (!studentData) return;
+            if (!studentData)
+            {
+                ThrowServerError();
+                return;
+            }
 
             var items = await GetAllItems(id);
 
@@ -253,6 +273,7 @@ namespace ServerConnection
         {
             GraphApi.Query query = taliduGraphApi.GetQueryByName("UserId", GraphApi.Query.Type.Query);
             var response = await SendRequest(query);
+            Debug.Log("Response: " + response);
             return RegExJsonParser.GetValueOfField("currentUserId", response);
         }
 
@@ -261,6 +282,8 @@ namespace ServerConnection
             GraphApi.Query query = taliduGraphApi.GetQueryByName("Student", GraphApi.Query.Type.Query);
             query.SetArgs(new {id = guid});
             var responseText = await SendRequest(query);
+
+            if (String.IsNullOrEmpty(responseText)) return false;
 
             var dataString = responseText.Replace("{\"data\":{\"studentById\":{", "")
                 .Replace("}", "").Replace('"', ' ').Replace(" ", "");
@@ -357,10 +380,11 @@ namespace ServerConnection
             UnityWebRequest request = await taliduGraphApi.Post(query);
             StopCoroutine(timer);
             ServerLoadingAnimation.DISABLE_ANIMATION.Invoke();
+            Debug.Log("Error: " + request.error);
             if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError
-                or UnityWebRequest.Result.DataProcessingError)
+                or UnityWebRequest.Result.DataProcessingError || !String.IsNullOrEmpty(request.error))
             {
-                ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
+                ThrowServerError();
                 request.Dispose();
                 return String.Empty;
             }
@@ -371,6 +395,11 @@ namespace ServerConnection
             request.Dispose();
 
             return text;
+        }
+
+        private static void ThrowServerError()
+        {
+            ServerConnectionErrorUI.ServerErrorOccuredEvent.Invoke();
         }
 
         private IEnumerator WaitForResponseTimer()
