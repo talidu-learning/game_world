@@ -726,7 +726,7 @@ ScriptedImporter:
     flatten: 0
     isImported: 0
     isVisible: 1
-  - name: Ice_Trophy
+  - name: Trophy_Ice.png
     spriteName: 
     isGroup: 1
     parentIndex: 0
@@ -786,7 +786,7 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Raciing_Trophy
+  - name: Trophy_Racing.png
     spriteName: 
     isGroup: 1
     parentIndex: 0
@@ -846,7 +846,7 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Memory_trophy
+  - name: Trophy_Memory.png
     spriteName: 
     isGroup: 1
     parentIndex: 0
@@ -896,7 +896,7 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Wortverwandt_Trophy
+  - name: Trophy_Wortverwandt.png
     spriteName: 
     isGroup: 1
     parentIndex: 0
@@ -946,7 +946,7 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: ZerlegemTrophy
+  - name: Trophy_Zerlegen.png
     spriteName: 
     isGroup: 1
     parentIndex: 0
@@ -996,7 +996,7 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: StarTrophy
+  - name: Trophy_Star.png
     spriteName: 
     isGroup: 1
     parentIndex: 0

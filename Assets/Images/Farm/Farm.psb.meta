@@ -92,94 +92,6 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: Hammer
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 1975
-      y: 2855
-      width: 602
-      height: 384
-    spriteID: ee90211db97ebd248b451e9955cc4d35
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 1975, y: 2855}
-    spritePosition: {x: 1575, y: 1185}
-  - name: Layer 119
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 1367
-      y: 2172
-      width: 1391
-      height: 675
-    spriteID: f86660d17c7b6ee44b18e67de0b3eaf0
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 1367, y: 2172}
-    spritePosition: {x: 1179, y: 567}
-  - name: Layer 120
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 2172
-      width: 1355
-      height: 1546
-    spriteID: fda5a10ad2d95684587e92dc18c8883e
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 4, y: 2172}
-    spritePosition: {x: 1160, y: 310}
-  - name: Layer 117
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 2766
-      y: 2172
-      width: 1173
-      height: 615
-    spriteID: 1c2a5ecbbf3d28840a4e1b81a688d096
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 2766, y: 2172}
-    spritePosition: {x: 1212, y: 614}
   - name: RefBed
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -187,8 +99,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 3726
+      x: 612
+      y: 2172
       width: 665
       height: 328
     spriteID: 19512a6eb354f2e4b8fe4cd22dffbb2f
@@ -200,7 +112,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 4, y: 3726}
+    uvTransform: {x: 612, y: 2172}
     spritePosition: {x: 1507, y: 479}
   - name: RefCylinder
     originalName: 
@@ -209,8 +121,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 1367
-      y: 2855
+      x: 4
+      y: 2172
       width: 600
       height: 779
     spriteID: 0517f028bda7b3549bcb82f9ac99d672
@@ -222,7 +134,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 1367, y: 2855}
+    uvTransform: {x: 4, y: 2172}
     spritePosition: {x: 2655, y: 687}
   - name: Background
     originalName: 
@@ -285,7 +197,7 @@ ScriptedImporter:
     mosaicPosition: {x: 0, y: 0}
     flatten: 0
     isImported: 0
-    isVisible: 1
+    isVisible: 0
   - name: Hammer
     spriteName: Hammer
     isGroup: 0
@@ -294,7 +206,7 @@ ScriptedImporter:
     layerID: 179
     mosaicPosition: {x: 1975, y: 2855}
     flatten: 0
-    isImported: 1
+    isImported: 0
     isVisible: 1
   - name: Layer 119
     spriteName: Layer 119
@@ -304,7 +216,7 @@ ScriptedImporter:
     layerID: 178
     mosaicPosition: {x: 1367, y: 2172}
     flatten: 0
-    isImported: 1
+    isImported: 0
     isVisible: 1
   - name: Layer 120
     spriteName: Layer 120
@@ -314,7 +226,7 @@ ScriptedImporter:
     layerID: 177
     mosaicPosition: {x: 4, y: 2172}
     flatten: 0
-    isImported: 1
+    isImported: 0
     isVisible: 1
   - name: Layer 117
     spriteName: Layer 117
@@ -324,7 +236,7 @@ ScriptedImporter:
     layerID: 176
     mosaicPosition: {x: 2766, y: 2172}
     flatten: 0
-    isImported: 1
+    isImported: 0
     isVisible: 1
   - name: CratePile.png
     spriteName: 
@@ -1882,7 +1794,7 @@ ScriptedImporter:
     parentIndex: 158
     spriteID: 19512a6eb354f2e4b8fe4cd22dffbb2f
     layerID: 224
-    mosaicPosition: {x: 4, y: 3726}
+    mosaicPosition: {x: 612, y: 2172}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -1892,7 +1804,7 @@ ScriptedImporter:
     parentIndex: 158
     spriteID: 0517f028bda7b3549bcb82f9ac99d672
     layerID: 223
-    mosaicPosition: {x: 1367, y: 2855}
+    mosaicPosition: {x: 4, y: 2172}
     flatten: 0
     isImported: 1
     isVisible: 1
