@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CustomInput;
 using GraphQlClient.Core;
+using Newtonsoft.Json;
 using Plugins.WebGL;
 using ServerConnection.graphQl_client;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace ServerConnection
 {
     public class ServerConnection : MonoBehaviour
     {
-        [SerializeField] private GraphApi taliduGraphApi;
+        [SerializeField] private GraphApi TaliduGraphApi;
         [SerializeField] private string token;
         [SerializeField] private GameObject TouchManager;
 
@@ -35,11 +36,9 @@ namespace ServerConnection
         
         public async Task GetStudentData()
         {
-            // WebGLPluginJS.SetUpTestToken();
-            //#if DEVELOPMENT_BUILD
-            token = WebGLPluginJS.GetTokenFromLocalStorage();
+            // token = WebGLPluginJS.GetTokenFromLocalStorage();
             Debug.Log("Took token from local storage: " + token);
-            taliduGraphApi.SetAuthToken(token);
+            TaliduGraphApi.SetAuthToken(token);
 
             var idString = await GetStudentID();
 
@@ -99,7 +98,7 @@ namespace ServerConnection
                 return item;
             }
             
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("CreateItem", GraphApi.Query.Type.Mutation);
+            GraphApi.Query query = TaliduGraphApi.GetQueryByName("CreateItem", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {input = new {purchasedItem = new {owner = guid, id = itemId}}});
             var response = await SendRequest(query);
 
@@ -130,7 +129,7 @@ namespace ServerConnection
                 return;
             }
             
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
+            GraphApi.Query query = TaliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {input = new {purchasedItemPatch = new {x = xCoord, z = zCoord, flipped = isFlipped}, uid = itemGuid}});
             var response = await SendRequest(query);
 
@@ -159,7 +158,7 @@ namespace ServerConnection
                 return;
             }
 
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
+            GraphApi.Query query = TaliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
 
             if (itemWithSocket.itemsPlacedOnSockets != null)
             {
@@ -208,7 +207,7 @@ namespace ServerConnection
             itemWithSocket.itemsPlacedOnSockets[socketIndex] = onSocketPlacedItemGuid;
             Debug.Log(itemWithSocket.itemsPlacedOnSockets[socketIndex]);
 
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
+            GraphApi.Query query = TaliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
             query.SetArgs(new
             {
                 input = new
@@ -247,7 +246,7 @@ namespace ServerConnection
 
             itemWithSocket.itemsPlacedOnSockets[socketIndex] = Guid.Empty;
 
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
+            GraphApi.Query query = TaliduGraphApi.GetQueryByName("UpdateItem", GraphApi.Query.Type.Mutation);
             query.SetArgs(new
             {
                 input = new
@@ -271,49 +270,28 @@ namespace ServerConnection
 
         private async Task<string> GetStudentID()
         {
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("UserId", GraphApi.Query.Type.Query);
-            var response = await SendRequest(query);
-            Debug.Log("Response: " + response);
-            return RegExJsonParser.GetValueOfField("currentUserId", response);
+            GraphApi.Query idQuery = TaliduGraphApi.GetQueryByName("UserId", GraphApi.Query.Type.Query);
+            IdRequestData idRequestData = await WebRequest<IdRequestData>(idQuery);
+            return idRequestData.query.currentUserId;
         }
 
         private async Task<bool> GetStudentData(Guid guid)
         {
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("Student", GraphApi.Query.Type.Query);
-            query.SetArgs(new {id = guid});
-            var responseText = await SendRequest(query);
-
-            if (String.IsNullOrEmpty(responseText)) return false;
-
-            var dataString = responseText.Replace("{\"data\":{\"studentById\":{", "")
-                .Replace("}", "").Replace('"', ' ').Replace(" ", "");
-
-            var array = dataString.Split(',');
-
-            string[] arrayTrimmed = new string[array.Length];
-            int i = 0;
-            foreach (var data in array)
-            {
-                var trimmed = data.Substring(data.IndexOf(':') + 1);
-                arrayTrimmed[i] = trimmed;
-                i++;
-            }
-
-            int stars = Int32.Parse(arrayTrimmed[3]);
+            GraphApi.Query studentQuery = TaliduGraphApi.GetQueryByName("Student", GraphApi.Query.Type.Query);
+            studentQuery.SetArgs( new {id = guid});
+            StudentDataJson studentDataJson = await WebRequest<StudentDataJson>(studentQuery);
 
             StudentData = new StudentData
             {
-                Proficiency = int.Parse(arrayTrimmed[0]),
-                Age = int.Parse(arrayTrimmed[1]),
-                Name = arrayTrimmed[2],
-                Stars = stars
+                Proficiency = studentDataJson.studentById.proficiency,
+                Stars = studentDataJson.studentById.stars
             };
             return true;
         }
         
         private async Task<List<ItemData>> GetAllItems(Guid guid)
         {
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("GetAllItems", GraphApi.Query.Type.Query);
+            GraphApi.Query query = TaliduGraphApi.GetQueryByName("GetAllItems", GraphApi.Query.Type.Query);
             query.SetArgs(new {condition = new {owner = guid}});
 
             var result = await SendRequest(query);
@@ -367,34 +345,84 @@ namespace ServerConnection
         private async Task<bool> UpdateStars(Guid guid, int starCount)
         {
             if (deactivatedServerConnection) return true;
-            GraphApi.Query query = taliduGraphApi.GetQueryByName("UpdateStars", GraphApi.Query.Type.Mutation);
+            GraphApi.Query query = TaliduGraphApi.GetQueryByName("UpdateStars", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {input = new {studentPatch = new {stars = starCount}, id = guid}});
-            var response = await SendRequest(query);
-            return !string.IsNullOrEmpty(response);
+            var response = await WebRequest<UpdateStars>(query);
+            Debug.Log(response);
+            Debug.Log(response.updateStudentById);
+            Debug.Log(response.updateStudentById.student);
+            Debug.Log(response.updateStudentById.student.stars);
+            if(response.updateStudentById.student.stars == starCount)
+                return true;
+
+            return false;
         }
 
         private async Task<string> SendRequest(GraphApi.Query query)
         {
             var timer = StartCoroutine(WaitForResponseTimer());
             TouchManager.SetActive(false);
-            UnityWebRequest request = await taliduGraphApi.Post(query);
+            UnityWebRequest request = await TaliduGraphApi.Post(query);
             StopCoroutine(timer);
             ServerLoadingAnimation.DISABLE_ANIMATION.Invoke();
-            Debug.Log("Error: " + request.error);
             if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError
-                or UnityWebRequest.Result.DataProcessingError || !String.IsNullOrEmpty(request.error))
+                    or UnityWebRequest.Result.DataProcessingError || !String.IsNullOrEmpty(request.error))
             {
+                Debug.Log("Error: " + request.error);
                 ThrowServerError();
                 request.Dispose();
                 return String.Empty;
             }
             
             TouchManager.SetActive(true);
-
+        
             var text = request.downloadHandler.text;
             request.Dispose();
-
+        
             return text;
+        }
+        
+        private async Task<T> WebRequest<T>(GraphApi.Query query)
+        {
+            var timer = StartCoroutine(WaitForResponseTimer());
+            TouchManager.SetActive(false);
+            UnityWebRequest request = await TaliduGraphApi.Post(query);
+            StopCoroutine(timer);
+            ServerLoadingAnimation.DISABLE_ANIMATION.Invoke();
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                ThrowServerError();
+                request.Dispose();
+                object obj = new object();
+                return (T)obj;
+            }
+
+            TouchManager.SetActive(true);
+
+            return DeserializeData<T>(request.downloadHandler.text);
+        }
+        
+        private async void WebRequest(GraphApi.Query query)
+        {
+            var timer = StartCoroutine(WaitForResponseTimer());
+            TouchManager.SetActive(false);
+            UnityWebRequest request = await TaliduGraphApi.Post(query);
+            StopCoroutine(timer);
+            ServerLoadingAnimation.DISABLE_ANIMATION.Invoke();
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                ThrowServerError();
+                request.Dispose();
+            }
+            
+            TouchManager.SetActive(true);
+        }
+
+        private static T DeserializeData<T>(string json)
+        {
+            RequestData requestData = JsonConvert.DeserializeObject<RequestData>(json, new RequestDataConverter());
+            object data = requestData?.data;
+            return (T)data;
         }
 
         private static void ThrowServerError()
