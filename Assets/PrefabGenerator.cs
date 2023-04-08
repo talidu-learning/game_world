@@ -58,7 +58,7 @@ public class PrefabGenerator : MonoBehaviour
     
     public static void GeneratePrefabVariant(string prefabName, Sprite sprite)
     {
-        GameObject source = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Interactables/Prefabs/NewPrefabs/0InteractablePrefab.prefab");
+        GameObject source = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Interactables/Prefabs/0InteractablePrefab.prefab");
         GameObject objSource = (GameObject)PrefabUtility.InstantiatePrefab(source);
         // hier einfach Sahen mit dem prefab machen, bevor es gespeichert wird
         objSource.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = sprite;

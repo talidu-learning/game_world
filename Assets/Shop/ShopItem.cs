@@ -51,7 +51,8 @@ namespace Shop
             BaseItemID = shopItemData.BaseItemID;
             if (string.IsNullOrEmpty(BaseItemID))
                 BaseItemID = shopItemData.ItemID;
-            ItemImage.sprite = shopItemData.ItemSprite;
+            if(!shopItemData.ItemSprite) ItemImage.sprite = shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+            else ItemImage.sprite = shopItemData.ItemSprite;
             BaseItemSprite = shopItemData.ItemSprite;
             PriceTag.text = shopItemData.Value.ToString();
             itemValue = shopItemData.Value;
