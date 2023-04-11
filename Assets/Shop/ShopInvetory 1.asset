@@ -13,40 +13,32 @@ MonoBehaviour:
   m_Name: ShopInvetory 1
   m_EditorClassIdentifier: 
   ShopItems:
-  - ItemID: Table
+  - ItemID: Log Table
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: aa61202a0d0d8144ea9d1b3926342f1f, type: 3}
+    ItemSprite: {fileID: 21300000, guid: e181e79ece9ffe14f9fad878d4988116, type: 3}
     Value: 2
-    Prefab: {fileID: 4883471184429529526, guid: 5be658ec8f2e2ab4fa9277a91b155d41, type: 3}
+    Prefab: {fileID: 8624253927025194015, guid: a0363ae3d81b5ba479632429c0493cbb, type: 3}
     Attributes: 02000000
     ItemVariants: []
-  - ItemID: Kaktus
+  - ItemID: Happy Cactus
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 6cae25cbeed4807438c1bb2063d23a0d, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 2eee121c08fee6c4e9c8d6287c33795a, type: 3}
     Value: 2
-    Prefab: {fileID: 4883471184429529526, guid: a3719859f4fdab841946194ea736e9c8, type: 3}
+    Prefab: {fileID: 6514674043545464911, guid: d488737b0916e69418bd79ebdf55736d, type: 3}
     Attributes: 00000000
     ItemVariants: []
   - ItemID: Crate
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 8bc20814a9216174aba27ed2f144dfca, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 2a0e348f1bba8ec44ae38598d0a42264, type: 3}
     Value: 2
-    Prefab: {fileID: 4883471184429529526, guid: 48237f5c94496c746b5599555f3cdce8, type: 3}
+    Prefab: {fileID: 6532109583357595815, guid: 55991185137150540a772a3171fa033d, type: 3}
     Attributes: 01000000
-    ItemVariants:
-    - ItemID: CrateGlass
-      ItemSprite: {fileID: 21300000, guid: 3b9927d325e35e3459ab04120ad9485f, type: 3}
-      Prefab: {fileID: 4883471184429529526, guid: 3d213f7ae3e84d24aa93a65111d78494, type: 3}
-      Color: {r: 0.08018869, g: 0.9250292, b: 1, a: 0}
-    - ItemID: CratePink
-      ItemSprite: {fileID: 21300000, guid: 71c6d2872d628374a9035536be377d7c, type: 3}
-      Prefab: {fileID: 4883471184429529526, guid: 554d9b251770b9641810520dfbefd244, type: 3}
-      Color: {r: 0.9622642, g: 0, b: 0.66370404, a: 0}
+    ItemVariants: []
   - ItemID: Grammophon
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: dcaa8dffbefb67d4aae8845c5414219a, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 1ac6f9aa74e16ee4caba7e8598ac0090, type: 3}
     Value: 50
-    Prefab: {fileID: 4883471184429529526, guid: 7c51bf2706ad5fd43a48be3e409e30ee, type: 3}
+    Prefab: {fileID: 4247651964940016094, guid: 099de3dd414947e4393ddd26f491f5e6, type: 3}
     Attributes: 00000000
     ItemVariants: []
   - ItemID: Doggo
