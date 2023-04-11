@@ -11,12 +11,12 @@ namespace Interactables
         public bool IsUsed;
         public Guid Uid;
 
-        private BoxCollider collider;
+        private BoxCollider boxCollider;
 
         private void Awake()
         {
-            collider = GetComponent<BoxCollider>();
-            collider.enabled = false;
+            boxCollider = GetComponent<BoxCollider>();
+            boxCollider.enabled = false;
             GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameMode);
             GetComponent<PressGesture>().Pressed += OnTap;
         }
@@ -26,10 +26,10 @@ namespace Interactables
             switch (mode)
             {
                 case GameMode.Deco:
-                    collider.enabled = true;
+                    boxCollider.enabled = true;
                     break;
                 default:
-                    collider.enabled = false;
+                    boxCollider.enabled = false;
                     break;
             }
         }

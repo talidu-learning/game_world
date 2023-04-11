@@ -2,8 +2,12 @@
 {
     public enum GameMode
     {
-        DefaultPlacing,
+        Default,
+        Placing,
+        Inventory,
         Deco,
-        Terrain
+        DecoInventory,
+        Shop,
+        SelectedSocket,
     }
 }

@@ -28,7 +28,7 @@ namespace Shop
 
         private void Start()
         {
-            SaveGame.TEXT_LOADED_PLAYER_DATA.AddListener(() => StartCoroutine(OnLoadedGame()));
+            SaveGame.LoadedPlayerData.AddListener(() => StartCoroutine(OnLoadedGame()));
 
             SelectionManager.SELECT_OBJECT_EVENT.AddListener(EnableDelete);
             SelectionManager.SELECT_SOCKET_EVENT.AddListener(OnSelectedSocket);

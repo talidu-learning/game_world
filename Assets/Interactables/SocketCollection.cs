@@ -27,7 +27,17 @@ namespace Interactables
                 case GameMode.Deco:
                     ActivateSockets();
                     break;
-                case GameMode.Terrain:
+                case GameMode.Default:
+                    break;
+                case GameMode.Placing:
+                    break;
+                case GameMode.Inventory:
+                    break;
+                case GameMode.DecoInventory:
+                    break;
+                case GameMode.Shop:
+                    break;
+                case GameMode.SelectedSocket:
                     break;
                 default:
                     DeactivateSockets();

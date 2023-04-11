@@ -12,33 +12,33 @@ namespace ServerConnection
 {
     public class SaveGame : MonoBehaviour
     {
-        [SerializeField] private ServerConnection serverConnection;
+        [SerializeField] private ServerConnection ServerConnection;
 
-        [SerializeField] private ItemCreator itemCreator;
-        [SerializeField] private GameObject socketItem;
-        [SerializeField] private ShopInventory shopInventory;
-        [SerializeField] private bool useServerConnection;
-        public static readonly UnityEvent TEXT_LOADED_PLAYER_DATA = new UnityEvent();
+        [SerializeField] private ItemCreator ItemCreator;
+        [SerializeField] private GameObject SocketItem;
+        [SerializeField] private ShopInventory ShopInventory;
+        [SerializeField] private bool UseServerConnection;
+        public static readonly UnityEvent LoadedPlayerData = new UnityEvent();
 
         private LocalPlayerData localPlayerData;
 
         private void Awake()
         {
-            useServerConnection = true;
+            UseServerConnection = true;
 
             localPlayerData = gameObject.GetComponent<LocalPlayerData>();
         }
 
         async void Start()
         {
-            if (useServerConnection)
+            if (UseServerConnection)
             {
-                await serverConnection.GetStudentData();
+                await ServerConnection.GetStudentData();
                 StartCoroutine(LoadGameDataFromServer());
             }
             else
             {
-                serverConnection.DeactivateServerConnection();
+                ServerConnection.DeactivateServerConnection();
                 StartCoroutine(LoadGameDataFromLocalFile());
             }
         }
@@ -50,7 +50,7 @@ namespace ServerConnection
             StarCountUI.UpdateStarCount.Invoke(LocalPlayerData.Instance.GetStarCount().ToString());
 
             yield return null;
-            TEXT_LOADED_PLAYER_DATA.Invoke();
+            LoadedPlayerData.Invoke();
         }
 
         private void LoadGameStatus()
@@ -66,7 +66,8 @@ namespace ServerConnection
         {
             yield return new WaitUntil(() => ServerConnection.Loaded);
 
-            localPlayerData._ownedItems = ServerConnection.purchasedItems;
+            var ownedItems = ServerConnection.purchasedItems;
+            localPlayerData._ownedItems = ValidateItems(ownedItems);
             localPlayerData.Initialize();
 
             LoadGameStatus();
@@ -76,7 +77,26 @@ namespace ServerConnection
 
 
             yield return null;
-            TEXT_LOADED_PLAYER_DATA.Invoke();
+            LoadedPlayerData.Invoke();
+        }
+
+        private List<ItemData> ValidateItems(List<ItemData> ownedItems)
+        {
+            List<ItemData> validItems = new List<ItemData>();
+            foreach (var item in ownedItems)
+            {
+                if (ShopInventory.ShopItems.Count(i => i.ItemID == item.id) < 1)
+                {
+                    ServerConnection.DeleteItemFromDatabase(item.uid);
+                    ServerConnection.UpdateStarCount(ServerConnection.StudentData.Stars+50);
+                }
+                else
+                {
+                    validItems.Add(item);
+                }
+            }
+
+            return validItems;
         }
 
         private List<GameObject> CreateGameObjects(List<ItemData> placedItems, ref List<ItemData> allObjects)
@@ -90,7 +110,7 @@ namespace ServerConnection
             foreach (var item in itemswithsockets)
             {
                 if (uids.Contains(item.uid)) continue;
-                var go = itemCreator.CreateItem(item.id, item.uid);
+                var go = ItemCreator.CreateItem(item.id, item.uid);
                 go.transform.position = new Vector3(item.x, 0, item.z);
                 gos.Add(go);
                 uids.Add(item.uid);
@@ -116,7 +136,7 @@ namespace ServerConnection
             foreach (var item in itemswithoutsockets)
             {
                 if (uids.Contains(item.uid)) continue;
-                var go = itemCreator.CreateItem(item.id, item.uid);
+                var go = ItemCreator.CreateItem(item.id, item.uid);
                 go.transform.position = new Vector3(item.x, 0, item.z);
                 gos.Add(go);
                 uids.Add(item.uid);
@@ -128,9 +148,9 @@ namespace ServerConnection
 
         private void CreateSocketItem(string itemId, Guid uid, Socket currentSocket)
         {
-            var socketItemGo = Instantiate(this.socketItem, currentSocket.gameObject.transform, false);
+            var socketItemGo = Instantiate(this.SocketItem, currentSocket.gameObject.transform, false);
 
-            var localScale = shopInventory.ShopItems.First(i => i.ItemID == itemId).Prefab.transform
+            var localScale = ShopInventory.ShopItems.First(i => i.ItemID == itemId).Prefab.transform
                 .GetChild(0).localScale;
 
             SocketPlacement.ScaleGameObjectForSocket(localScale, socketItemGo);
@@ -138,10 +158,10 @@ namespace ServerConnection
             var component = socketItemGo.AddComponent<ItemID>();
             component.id = itemId;
             component.uid = uid;
-            component.ItemAttributes = shopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.Attributes;
+            component.ItemAttributes = ShopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.Attributes;
 
             var spriteRenderer = socketItemGo.GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = shopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.ItemSprite;
+            spriteRenderer.sprite = ShopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.ItemSprite;
         }
         
     }

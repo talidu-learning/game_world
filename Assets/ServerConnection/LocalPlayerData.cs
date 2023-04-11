@@ -84,7 +84,7 @@ namespace ServerConnection
                     return true;
                 }
 
-                if (updateStarCount) ServerConnection.UpdateStarCount(_stars);
+                if (updateStarCount) await ServerConnection.UpdateStarCount(_stars);
             }
             return false;
         }

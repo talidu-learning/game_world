@@ -352,9 +352,10 @@ MonoBehaviour:
     isComplete: 1
   - name: GetAllItems
     type: 0
-    query: "query GetAllItems2{\n    allPurchasedItems{\n        nodes{\n           
-      nodeId\n            sockets\n            z\n            x\n            id\n           
-      uid\n            owner\n            flipped\n        }\n    }\n}"
+    query: "query GetAllItems{\n    allPurchasedItems(  condition :{ owner :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\"}
+      ){\n        nodes{\n            nodeId\n            sockets\n            z\n           
+      x\n            id\n            uid\n            owner\n            flipped\n       
+      }\n    }\n}"
     queryString: allPurchasedItems
     returnType: PurchasedItemsConnection
     queryOptions:
@@ -1226,10 +1227,10 @@ MonoBehaviour:
     isComplete: 1
   - name: DeleteItem
     type: 1
-    query: "mutation DeleteItem{\n    deletePurchasedItemByUid{\n        clientMutationId\n       
-      deletedPurchasedItemId\n    }\n}"
+    query: "mutation DeleteItem{\n    deletePurchasedItemByUid(  input :{ uid :\"fffd6a6c-b983-4a12-989b-7f6f71c2ee52\"}
+      ){\n        deletedPurchasedItemId\n        clientMutationId\n    }\n}"
     queryString: deletePurchasedItemByUid
-    returnType: DeletePurchasedItemPayload
+    returnType: CreateAustWordPayload
     queryOptions:
     - createAustWord
     - createClass
@@ -1293,25 +1294,6 @@ MonoBehaviour:
     - teacherSignIn
     - teacherSignUp
     fields:
-    - index: 0
-      name: clientMutationId
-      type: String
-      parentIndexes: 
-      hasSubField: 0
-      possibleFields:
-      - name: clientMutationId
-        type: String
-      - name: purchasedItem
-        type: PurchasedItem
-      - name: deletedPurchasedItemId
-        type: ID
-      - name: query
-        type: Query
-      - name: studentByOwner
-        type: Student
-      - name: purchasedItemEdge
-        type: PurchasedItemsEdge
-      hasChanged: 0
     - index: 2
       name: deletedPurchasedItemId
       type: ID
@@ -1330,6 +1312,21 @@ MonoBehaviour:
         type: Student
       - name: purchasedItemEdge
         type: PurchasedItemsEdge
+      hasChanged: 0
+    - index: 0
+      name: clientMutationId
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: clientMutationId
+        type: String
+      - name: austWord
+        type: AustWord
+      - name: query
+        type: Query
+      - name: austWordEdge
+        type: AustWordsEdge
       hasChanged: 0
     isComplete: 1
   subscriptions: []

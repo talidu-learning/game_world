@@ -28,7 +28,7 @@ namespace Inventory
 
         private void Start()
         {
-            SaveGame.TEXT_LOADED_PLAYER_DATA.AddListener(UpdateItemStates);
+            SaveGame.LoadedPlayerData.AddListener(UpdateItemStates);
 
             UIManager.FILTER_EVENT.AddListener(OnFilterToggled);
 
@@ -48,7 +48,7 @@ namespace Inventory
                     true);
                 FilterPanel.SetActive(false);
             }
-            else if(gameMode == GameMode.DefaultPlacing)
+            else if(gameMode == GameMode.Default)
             {
                 FilterPanel.SetActive(true);
                 OnFilterToggled(UIType.Inventory,
@@ -71,7 +71,8 @@ namespace Inventory
         private void OnSelectedSocket(Socket socket)
         {
             if (socket.IsUsed) return;
-            ToggleButton.OpenInventory();
+            GameModeSwitcher.SwitchGameMode.Invoke(GameMode.SelectedSocket);
+            // ToggleButton.OpenInventory();
         }
 
         private void OnFilterToggled(UIType uiType, List<ItemAttribute> attributes, bool isActive)
@@ -118,6 +119,7 @@ namespace Inventory
         {
             var itemGO = Instantiate(InventoryItemPrefab, InventoryUIContent.transform);
             var inventoryItem = itemGO.GetComponent<InventoryItem>();
+            Debug.Log("id:" + itemId);
             var itemData = ShopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId);
             inventoryItem.Initialize(itemData);
 

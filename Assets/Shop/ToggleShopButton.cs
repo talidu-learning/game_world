@@ -18,7 +18,6 @@ namespace Shop
         private void Start()
         {
             GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameMode);
-            ToggleInventoryButton.OpenedInventoryEvent.AddListener(OnOpenedInventory);
         }
 
         private void OnSwitchedGameMode(GameMode gameMode)
@@ -28,22 +27,31 @@ namespace Shop
                 case GameMode.Deco: 
                     gameObject.SetActive(false);
                     break;
-                case GameMode.Terrain: break;
+                case GameMode.Default:
+                    gameObject.SetActive(true);
+                    break;
+                case GameMode.Placing:
+                    gameObject.SetActive(false);
+                    break;
+                case GameMode.Inventory:
+                    if (!isOpen) return;
+                    ShopPanel.Toggle();
+                    isOpen = false;
+                    GetComponent<Image>().sprite = ClosedPanel;
+                    break;
+                case GameMode.DecoInventory:
+                    gameObject.SetActive(false);
+                    break;
+                case GameMode.Shop:
+                    gameObject.SetActive(true);
+                    break;
+                case GameMode.SelectedSocket:
+                    gameObject.SetActive(false);
+                    break;
                 default: 
                     gameObject.SetActive(true);
                     break;
             }
-        }
-
-        private void OnOpenedInventory()
-        {
-            if (!isOpen) return;
-
-            ShopPanel.Toggle();
-
-            isOpen = false;
-
-            GetComponent<Image>().sprite = ClosedPanel;
         }
 
         private void OnButtonClick()

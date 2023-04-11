@@ -40,8 +40,17 @@ namespace Interactables
                 case GameMode.Deco:
                     DisableMoving();
                     break;
-                case GameMode.Terrain:
-                    DisableMoving();
+                case GameMode.Default:
+                    break;
+                case GameMode.Placing:
+                    break;
+                case GameMode.Inventory:
+                    break;
+                case GameMode.DecoInventory:
+                    break;
+                case GameMode.Shop:
+                    break;
+                case GameMode.SelectedSocket:
                     break;
                 default:
                     EnableMoving();

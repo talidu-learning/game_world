@@ -32,7 +32,7 @@ namespace Interactables
         private Socket selectedSocket;
 
         private Action serverCallback;
-        private GameMode currentMode = GameMode.DefaultPlacing;
+        private GameMode currentMode = GameMode.Default;
 
         private void Awake()
         {
@@ -61,16 +61,24 @@ namespace Interactables
             switch (gameMode)
             {
                 case GameMode.Deco:
-                    currentMode = gameMode;
                     break;
-                case GameMode.Terrain:
-                    currentMode = gameMode;
+                case GameMode.Default:
+                    break;
+                case GameMode.Placing:
+                    break;
+                case GameMode.Inventory:
+                    break;
+                case GameMode.DecoInventory:
+                    break;
+                case GameMode.Shop:
+                    break;
+                case GameMode.SelectedSocket:
                     break;
                 default:
                     if(currentMode == GameMode.Deco) OnDisableDecoMode();
-                    currentMode = GameMode.DefaultPlacing;
                     break;
             }
+            currentMode = gameMode;
         }
 
         private void OnDisableDecoMode()

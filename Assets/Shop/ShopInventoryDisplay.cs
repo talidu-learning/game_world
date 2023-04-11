@@ -31,7 +31,7 @@ namespace Shop
 
         private void Start()
         {
-            SaveGame.TEXT_LOADED_PLAYER_DATA.AddListener(UpdateItemStates);
+            SaveGame.LoadedPlayerData.AddListener(UpdateItemStates);
             UIManager.FILTER_EVENT.AddListener(OnFilterToggled);
 
             LocalPlayerData.ChangedItemDataEvent.AddListener(UpdateItemState);

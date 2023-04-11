@@ -1,7 +1,7 @@
-﻿using CustomInput;
+﻿using System;
+using CustomInput;
 using Enumerations;
 using GameModes;
-using Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,12 +21,42 @@ namespace Interactables
 
         private void Start()
         {
-            ToggleInventoryButton.OpenedInventoryEvent.AddListener(() => gameObject.SetActive(false));
-            ToggleInventoryButton.ClosedInventoryUnityEvent.AddListener(() => gameObject.SetActive(true));
-
             SelectionManager.SELECT_OBJECT_EVENT.AddListener(OnSelectedObject);
             SelectionManager.DESELECT_OBJECT_EVENT.AddListener(OnDeselectedObject);
             SelectionManager.DELETE_OBJECT_EVENT.AddListener(OnDeselectedObject);
+            
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameMode);
+        }
+
+        private void OnSwitchedGameMode(GameMode gameMode)
+        {
+            switch (gameMode)
+            {
+                case GameMode.Default:
+                    gameObject.SetActive(true);
+                    GetComponent<Image>().sprite = DecoModeOff;
+                    break;
+                case GameMode.Placing:
+                    gameObject.SetActive(false);
+                    break;
+                case GameMode.Inventory:
+                    gameObject.SetActive(false);
+                    break;
+                case GameMode.Deco:
+                    gameObject.SetActive(true);
+                    GetComponent<Image>().sprite = DecoModeOn;
+                    break;
+                case GameMode.DecoInventory:
+                    gameObject.SetActive(false);
+                    break;
+                case GameMode.Shop:
+                    gameObject.SetActive(false);
+                    break;
+                case GameMode.SelectedSocket:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(gameMode), gameMode, null);
+            }
         }
 
         private void OnDeselectedObject()
@@ -43,12 +73,10 @@ namespace Interactables
         {
             if (isModeEnabled)
             {
-                GetComponent<Image>().sprite = DecoModeOff;
-                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.DefaultPlacing);
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Default);
             }
             else
             {
-                GetComponent<Image>().sprite = DecoModeOn;
                 GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Deco);
             }
 

@@ -22,8 +22,9 @@ namespace Shop
         [SerializeField] private Image ItemImage;
         [SerializeField] private Button Button;
         [SerializeField] private GameObject PaintBucket;
-        public string ItemID { set; get; }
-        public string BaseItemID { set; get; }
+        public string ItemID { private set; get; }
+        public string BaseItemID { private set; get; }
+        public Color Color { private set; get; }
         private Sprite BaseItemSprite { set; get; }
         private int itemValue;
         
@@ -51,13 +52,13 @@ namespace Shop
             BaseItemID = shopItemData.BaseItemID;
             if (string.IsNullOrEmpty(BaseItemID))
                 BaseItemID = shopItemData.ItemID;
-            if(!shopItemData.ItemSprite) ItemImage.sprite = shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
-            else ItemImage.sprite = shopItemData.ItemSprite;
+            ItemImage.sprite = shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
             BaseItemSprite = shopItemData.ItemSprite;
             PriceTag.text = shopItemData.Value.ToString();
             itemValue = shopItemData.Value;
             Attributes = shopItemData.Attributes;
             ItemVariants = shopItemData.ItemVariants;
+            Color = shopItemData.DefaultColor;
             
             if(ItemVariants.Count==0)
                 PaintBucket.SetActive(false);

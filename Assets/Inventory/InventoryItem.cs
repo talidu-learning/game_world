@@ -44,7 +44,18 @@ namespace Inventory
                 case GameMode.Deco:
                     OnSelectedSocket();
                     break;
-                case GameMode.Terrain:
+                case GameMode.Default:
+                    OnDeselectedSocket();
+                    break;
+                case GameMode.Placing:
+                    break;
+                case GameMode.Inventory:
+                    break;
+                case GameMode.DecoInventory:
+                    break;
+                case GameMode.Shop:
+                    break;
+                case GameMode.SelectedSocket:
                     break;
                 default:
                     OnDeselectedSocket();
@@ -92,20 +103,23 @@ namespace Inventory
         {
             var uitemID = LocalPlayerData.Instance.GetUidOfUnplacedItem(ItemID);
             ShopManager.InitilizePlaceObjectEvent.Invoke(ItemID, uitemID);
-            ToggleInventoryButton.CloseInventoryUnityEvent.Invoke();
+            GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Placing);
         }
 
         private void PlaceOnSocket()
         {
-            ToggleInventoryButton.CloseInventoryUnityEvent.Invoke();
+            GameModeSwitcher.SwitchGameMode.Invoke(GameMode.SelectedSocket);
             SocketPlacement.PlaceItemOnSocket.Invoke(ItemID);
         }
 
         public void Initialize(ShopItemData shopItemData)
         {
             ItemID = shopItemData.ItemID;
-            if (!shopItemData.ItemSprite) ItemImage.sprite = shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
-            else ItemImage.sprite = shopItemData.ItemSprite;
+            Debug.Log(shopItemData.ItemID);
+            Debug.Log(shopItemData.Prefab);
+            Debug.Log(shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>());
+            Debug.Log(shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>().sprite);
+            ItemImage.sprite = !shopItemData.ItemSprite ? shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>().sprite : shopItemData.ItemSprite;
             attributes = shopItemData.Attributes;
             UpdateUI();
         }

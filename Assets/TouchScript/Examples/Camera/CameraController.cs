@@ -45,10 +45,9 @@ namespace TouchScript.Examples.CameraControl
 
         private void Start()
         {
-            SelectionManager.SELECT_OBJECT_EVENT.AddListener(OnSelectedObject);
-            SelectionManager.DESELECT_OBJECT_EVENT.AddListener(OnDeselectedObject);
-            SelectionManager.DELETE_OBJECT_EVENT.AddListener(OnDeselectedObject);
-            
+            // SelectionManager.SELECT_OBJECT_EVENT.AddListener(OnSelectedObject);
+            // SelectionManager.DESELECT_OBJECT_EVENT.AddListener(OnDeselectedObject);
+            // SelectionManager.DELETE_OBJECT_EVENT.AddListener(OnDeselectedObject);
         }
 
         private void OnDeselectedObject()

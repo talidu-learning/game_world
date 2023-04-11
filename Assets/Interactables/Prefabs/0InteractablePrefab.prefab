@@ -56,7 +56,6 @@ GameObject:
   - component: {fileID: 7547315181327198866}
   - component: {fileID: 7547315181327198871}
   - component: {fileID: 7547315181327198867}
-  - component: {fileID: 7547315181327198877}
   - component: {fileID: 7547315181327198876}
   - component: {fileID: 7547315181327198878}
   - component: {fileID: 2032994411060008602}
@@ -111,40 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4362cf550dfd7864a907fdeff2fb74c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7547315181327198877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7547315181327198870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c8d97aff62a473e888feae3bec54cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnStateChange:
-    m_PersistentCalls:
-      m_Calls: []
-  basicEditor: 0
-  generalProps: 0
-  limitsProps: 0
-  advancedProps: 0
-  minPointers: 1
-  maxPointers: 1
-  useSendMessage: 0
-  sendStateChangeMessages: 0
-  sendMessageTarget: {fileID: 0}
-  useUnityEvents: 0
-  sendStateChangeEvents: 0
-  requireGestureToFail: {fileID: 0}
-  friendlyGestures:
-  - {fileID: 7547315181327198876}
-  OnLongPress:
-    m_PersistentCalls:
-      m_Calls: []
-  timeToPress: 0.5
-  distanceLimit: 0.1
 --- !u!114 &7547315181327198876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,8 +137,7 @@ MonoBehaviour:
   useUnityEvents: 0
   sendStateChangeEvents: 0
   requireGestureToFail: {fileID: 0}
-  friendlyGestures:
-  - {fileID: 7547315181327198877}
+  friendlyGestures: []
   OnPress:
     m_PersistentCalls:
       m_Calls: []
@@ -351,7 +315,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7d7667952fbae424e81db7f87f7121a5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

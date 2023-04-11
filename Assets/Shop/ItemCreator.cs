@@ -11,7 +11,7 @@ namespace Shop
 
         public GameObject CreateItem(string id, Guid uid)
         {
-            GameObject prefab = _inventory.ShopItems.First(i => i.ItemID == id).Prefab;
+            GameObject prefab = _inventory.ShopItems.FirstOrDefault(i => i.ItemID == id)?.Prefab;
             if (!prefab) prefab = _placeholderPrefab;
 
             var go = Instantiate(prefab);

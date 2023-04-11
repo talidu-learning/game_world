@@ -9,7 +9,7 @@ public class ZoomSlider : MonoBehaviour
 
     [SerializeField] private CameraController cameraController;
     [SerializeField] private Image handleImage;
-    // Start is called before the first frame update
+
     void Start()
     {
         slider = GetComponent<Slider>();

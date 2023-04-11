@@ -25,7 +25,7 @@ namespace Shop
             InitializeColorVariant(shopItem, baseItem, new ItemVariant
             {
                 ItemID = shopItem.BaseItemID,
-                Color = Color.white
+                Color = shopItem.Color
             });
 
             for (int i = 0; i < variantsArray.Length; i++)

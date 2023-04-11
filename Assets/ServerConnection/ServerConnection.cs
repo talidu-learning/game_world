@@ -16,7 +16,7 @@ namespace ServerConnection
     public class ServerConnection : MonoBehaviour
     {
         [SerializeField] private GraphApi TaliduGraphApi;
-        [SerializeField] private string token;
+        [SerializeField] private string Token;
         [SerializeField] private GameObject TouchManager;
 
         public static StudentData StudentData;
@@ -37,8 +37,8 @@ namespace ServerConnection
         public async Task GetStudentData()
         {
             // token = WebGLPluginJS.GetTokenFromLocalStorage();
-            Debug.Log("Took token from local storage: " + token);
-            TaliduGraphApi.SetAuthToken(token);
+            Debug.Log("Took token from local storage: " + Token);
+            TaliduGraphApi.SetAuthToken(Token);
 
             var idString = await GetStudentID();
 
@@ -183,6 +183,28 @@ namespace ServerConnection
             }
 
             callBack?.Invoke(true, itemID, itemGuid);
+        }
+        
+        public async void DeleteItemFromDatabase(Guid itemGuid)
+        {
+            if (deactivatedServerConnection)
+            {
+                return;
+            }
+            
+            var itemWithSocket = purchasedItems.FirstOrDefault(i => i.uid == itemGuid);
+
+            if (itemWithSocket == null)
+            {
+                return;
+            }
+
+            GraphApi.Query query = TaliduGraphApi.GetQueryByName("DeleteItem", GraphApi.Query.Type.Mutation);
+
+            query.SetArgs(new{input = new {uid = itemGuid}});
+
+
+            await SendRequest(query);
         }
 
         public async void OnPlacedItemOnSocket(Guid onSocketPlacedItemGuid, int socketCount, int socketIndex,
@@ -348,10 +370,6 @@ namespace ServerConnection
             GraphApi.Query query = TaliduGraphApi.GetQueryByName("UpdateStars", GraphApi.Query.Type.Mutation);
             query.SetArgs(new {input = new {studentPatch = new {stars = starCount}, id = guid}});
             var response = await WebRequest<UpdateStars>(query);
-            Debug.Log(response);
-            Debug.Log(response.updateStudentById);
-            Debug.Log(response.updateStudentById.student);
-            Debug.Log(response.updateStudentById.student.stars);
             if(response.updateStudentById.student.stars == starCount)
                 return true;
 

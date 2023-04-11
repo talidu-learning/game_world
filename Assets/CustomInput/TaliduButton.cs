@@ -18,7 +18,7 @@ namespace CustomInput
                 button.onClick.AddListener(DoAction);
         }
 
-        private void DoAction()
+        protected void DoAction()
         {
             button.interactable = false;
             OnClickedButton();

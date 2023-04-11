@@ -43,120 +43,120 @@ MonoBehaviour:
     ItemVariants: []
   - ItemID: Doggo
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 99b4dc152061c3a40b4d6bd80977c0a7, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 04d1cef2810b2494ab54b1618a2488f3, type: 3}
     Value: 10
-    Prefab: {fileID: 4883471184429529526, guid: a0181cf4826fbcd47b2ac200fbc78fc8, type: 3}
+    Prefab: {fileID: 8838806251169689040, guid: 047f450da1103344fba867942e791d37, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: Bed
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 8c5bf6764f7ac604493a4cca3b457ad7, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 939cce3e18cc56b49937d27625957f64, type: 3}
     Value: 10
-    Prefab: {fileID: 4883471184429529526, guid: 550f9341963b3f74fa364eea402bdc99, type: 3}
+    Prefab: {fileID: 1375020183246399904, guid: 198be928a910f6f49b1ba8ef90e22759, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: Duck
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 9286366d1bc9947469fa09324692eae2, type: 3}
+    ItemSprite: {fileID: 21300000, guid: e89f9c16b23a4c742a12c54501cc5080, type: 3}
     Value: 5
-    Prefab: {fileID: 4883471184429529526, guid: cd1f4f4b00941df4fad05e544ab3bba4, type: 3}
+    Prefab: {fileID: 3533630057444998808, guid: a26bba8ecfe3ef04d91d588b0f9eaa07, type: 3}
     Attributes: 00000000
     ItemVariants: []
   - ItemID: PileOfCrates
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: c5d1b630caa41264c946439caf9d8f71, type: 3}
+    ItemSprite: {fileID: 21300000, guid: c95e175659e16284d8454e2943ba4c10, type: 3}
     Value: 40
-    Prefab: {fileID: 4883471184429529526, guid: 8956601fccc25134f83bd81791aea7c7, type: 3}
+    Prefab: {fileID: 1101273479016977177, guid: 692feb7ebe11ee948961248d7ff433a2, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: LogBank
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 0cf5f40326bb7b54dabfe83714ae676a, type: 3}
+    ItemSprite: {fileID: 21300000, guid: acb849e3cf608d04e97f59e9a66a5fbe, type: 3}
     Value: 30
-    Prefab: {fileID: 4883471184429529526, guid: 43d2805e791e5794e9aab7bb4a527f0b, type: 3}
+    Prefab: {fileID: 1454941382016744328, guid: 9573ff0e74ecbdb49942c066a582b16a, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: Betonmischer
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: daeceaaec0ed2d246bcb2f8185272eb9, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 3d71e7b0661e9e647bad7a0d24d13f96, type: 3}
     Value: 100
-    Prefab: {fileID: 4883471184429529526, guid: accc6c77851e58744a568dad389a5f7e, type: 3}
+    Prefab: {fileID: 4371460915405403613, guid: ce40144a83202a74789704118093b460, type: 3}
     Attributes: 03000000
     ItemVariants: []
   - ItemID: Tent
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: f8fa27985cb67504fbd00458ef7c5f7f, type: 3}
+    ItemSprite: {fileID: 21300000, guid: c83fab555fe217e4290c37ea6b36286c, type: 3}
     Value: 80
-    Prefab: {fileID: 4883471184429529526, guid: d54cab98427dd9a47b9d8b1e6ffc9d70, type: 3}
+    Prefab: {fileID: 4826623310983340459, guid: a1bde4fc6d9949c4fa0a505e5ae21877, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: TableSmall
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 518e9ae07157fb44794f360f061564a1, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 5252c7ebe25ee0442af5c5b033b3af38, type: 3}
     Value: 40
-    Prefab: {fileID: 4883471184429529526, guid: 83927800ad0f8ce418a3a7d420209983, type: 3}
+    Prefab: {fileID: 3620995593721786296, guid: 036e835314f693544ab38d1299ab7626, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: Vogelbecken
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 9ec0b8b6c7859344b8032243e1fafeae, type: 3}
+    ItemSprite: {fileID: 21300000, guid: bc56f341d60b6aa4ba416f5de12297e3, type: 3}
     Value: 70
-    Prefab: {fileID: 4883471184429529526, guid: d758a937b9c34b347bc46ddbf446cc48, type: 3}
+    Prefab: {fileID: 2514248332313136517, guid: 9d6c4c8196192cb4f8201965c735bc1c, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: AppleBasket
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 34b91c2612089dc4fa43cfe40c6c130b, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 445c398363eabd5429a5441c786db9e7, type: 3}
     Value: 20
-    Prefab: {fileID: 4883471184429529526, guid: bc15177436287b3419720a0a4495293a, type: 3}
+    Prefab: {fileID: 2015938195570754269, guid: 89bfd899617dec44b8385bb5b6967b2d, type: 3}
     Attributes: 01000000
     ItemVariants: []
   - ItemID: ChairSmall
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 002f344181ff608419602a9f90f65b42, type: 3}
+    ItemSprite: {fileID: 21300000, guid: ad0324d20660ccf409d47312f96b1861, type: 3}
     Value: 35
-    Prefab: {fileID: 4883471184429529526, guid: 72ab14435a74a4143b812ce914824c42, type: 3}
+    Prefab: {fileID: 4150297872435828425, guid: f460c46677e024944bec6828184de789, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: Brunnen
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 431d38357a6419447b8adb912e67c1f2, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 3b27d437bfeff1c4db48984d2b228ad1, type: 3}
     Value: 55
-    Prefab: {fileID: 4883471184429529526, guid: ba18d85e1858b1c4dbcb6070baf34d8c, type: 3}
+    Prefab: {fileID: 8798061058511329733, guid: 7ba9564c0c7b03448a8d919e1011b528, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: Umbrella
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: e3800dfcdf5ac2f4ea02f85c4e68a3b5, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 4e9df212c5a51b34ebeac65f041e101c, type: 3}
     Value: 65
-    Prefab: {fileID: 4883471184429529526, guid: fef9f723c47a0cc43b626dc1f845a27d, type: 3}
+    Prefab: {fileID: 7774043678748173094, guid: 75b24c25eb16dbb428c91941cf72e357, type: 3}
     Attributes: 03000000
     ItemVariants: []
   - ItemID: Rennauto
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: e1372e8a419b36d4082df9b2fe7a6950, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 10f63889c54a2e4439c5cc99e69ba169, type: 3}
     Value: 130
-    Prefab: {fileID: 4883471184429529526, guid: a1c2707b2ba28ce418b40db003a15235, type: 3}
+    Prefab: {fileID: 4202146216031001861, guid: 03e7720b378fb9948a617b9d8d14093e, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: Giesskanne
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 69877d63bc0d5ab419816d203b4e27a6, type: 3}
+    ItemSprite: {fileID: 21300000, guid: 419ed46069515064d97fa645ab50db31, type: 3}
     Value: 25
-    Prefab: {fileID: 4883471184429529526, guid: 34c3cb52be367864a990ded49bf8dd81, type: 3}
+    Prefab: {fileID: 5402543030980656136, guid: 3650e43b44129d34e8136a9c93d72ff4, type: 3}
     Attributes: 00000000
     ItemVariants: []
   - ItemID: Mower
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 209da2100d2c15541877673fbf4cc023, type: 3}
+    ItemSprite: {fileID: 21300000, guid: ef000aa5a8f57ae408904d496635a722, type: 3}
     Value: 40
-    Prefab: {fileID: 4883471184429529526, guid: 21e03d6671d74c847a6ac169d4d3604c, type: 3}
+    Prefab: {fileID: 2038148671093804314, guid: 4f8eb830d7bcc94419a4e71eb0b97018, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: Apfelbaum
     BaseItemID: 
-    ItemSprite: {fileID: 21300000, guid: 90b4f539f62b7d4458e8b57b9c971cd9, type: 3}
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
     Value: 50
-    Prefab: {fileID: 4883471184429529526, guid: 0e4d1731206016e4cbc5b5aa1f468b49, type: 3}
+    Prefab: {fileID: 5027111815897562767, guid: 59dce5b8d21083d479413d8dd224f8f7, type: 3}
     Attributes: 02000000
     ItemVariants: []

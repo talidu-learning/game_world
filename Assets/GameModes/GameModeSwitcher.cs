@@ -8,7 +8,7 @@ namespace GameModes
 
     public class GameModeSwitcher : MonoBehaviour
     {
-        public static GameMode currentGameMode = GameMode.DefaultPlacing;
+        public static GameMode currentGameMode = GameMode.Default;
 
         public static GameModeUnityEvent SwitchGameMode = new GameModeUnityEvent();
         public static GameModeUnityEvent OnSwitchedGameMode = new GameModeUnityEvent();
