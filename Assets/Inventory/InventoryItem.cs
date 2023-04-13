@@ -108,7 +108,7 @@ namespace Inventory
 
         private void PlaceOnSocket()
         {
-            GameModeSwitcher.SwitchGameMode.Invoke(GameMode.SelectedSocket);
+            GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Deco);
             SocketPlacement.PlaceItemOnSocket.Invoke(ItemID);
         }
 

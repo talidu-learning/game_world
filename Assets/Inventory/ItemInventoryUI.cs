@@ -43,18 +43,40 @@ namespace Inventory
         {
             if (gameMode == GameMode.DecoInventory)
             {
-                OnFilterToggled(UIType.Inventory,
-                    new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
-                    true);
+                DisplayOnlyDecoObjects();
                 FilterPanel.SetActive(false);
             }
-            else if(gameMode == GameMode.Default)
+            else if (gameMode == GameMode.Default)
             {
                 FilterPanel.SetActive(true);
-                OnFilterToggled(UIType.Inventory,
-                    new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
-                    true);
+                DisplayAllObjects();
             }
+        }
+
+        private void DisplayAllObjects()
+        {
+            foreach (var item in inventoryItems)
+            {
+                item.Value.SetActive(true);
+            }
+        }
+
+        private void DisplayOnlyDecoObjects()
+        {
+            foreach (var item in inventoryItems)
+            {
+                if (IsDeco(item))
+                {
+                    item.Value.SetActive(false);
+                }
+            }
+        }
+
+        private static bool IsDeco(KeyValuePair<string, GameObject> item)
+        {
+            return (item.Value.GetComponent<InventoryItem>().attributes.Contains(ItemAttribute.TwoSocketDeco) ||
+                    item.Value.GetComponent<InventoryItem>().attributes.Contains(ItemAttribute.OneSocketDeco))
+                   && LocalPlayerData.Instance.GetCountOfUnplacedItems(item.Key) > 0;
         }
 
         private void UpdateItemState(string id)
@@ -93,7 +115,7 @@ namespace Inventory
             var ownedItems = LocalPlayerData.Instance.GetOwnedItems();
 
             var uniqueItems =
-                ownedItems.GroupBy(i => i.id, o => o.uid, (key, uid) => new { Id = key, UIDs = uid.ToList() });
+                ownedItems.GroupBy(i => i.id, o => o.uid, (key, uid) => new {Id = key, UIDs = uid.ToList()});
 
             foreach (var item in uniqueItems)
             {

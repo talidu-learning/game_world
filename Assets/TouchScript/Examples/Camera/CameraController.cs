@@ -170,7 +170,10 @@ namespace TouchScript.Examples.CameraControl
             newPos.z = -newPos.y;
             newPos.x = -newPos.x;
             newPos.y = 0;
-            pivot.localPosition += newPos;
+            var newPosClamped = pivot.localPosition + newPos;
+            newPosClamped.z = Mathf.Clamp(newPosClamped.z, -20, 60);
+            newPosClamped.x = Mathf.Clamp(newPosClamped.x, -63, 69);
+            pivot.localPosition = newPosClamped;
         }
     }
 }

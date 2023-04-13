@@ -37,7 +37,7 @@ namespace Inventory
             Transform parent = GetParentWithIDComponent();
             Debug.Log(currentSocket);
             ServerConnection.OnDeletedItemOnSocket(currentSocket.Uid, currentSocket.transform.GetSiblingIndex(),
-                parent.parent.GetComponent<ItemID>().uid, serverCallbackDelete);
+                parent.GetComponent<ItemID>().uid, serverCallbackDelete);
         }
 
         private Transform GetParentWithIDComponent()
@@ -141,6 +141,7 @@ namespace Inventory
 
             var spriteRenderer = socketItem.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = shopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.ItemSprite;
+            socketItem.transform.position = Vector3.zero;
             return socketItem;
         }
 

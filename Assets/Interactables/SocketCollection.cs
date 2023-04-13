@@ -28,6 +28,7 @@ namespace Interactables
                     ActivateSockets();
                     break;
                 case GameMode.Default:
+                    DeactivateSockets();
                     break;
                 case GameMode.Placing:
                     break;
