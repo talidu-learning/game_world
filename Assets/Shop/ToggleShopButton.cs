@@ -29,6 +29,8 @@ namespace Shop
                     break;
                 case GameMode.Default:
                     gameObject.SetActive(true);
+                    if(isOpen)
+                        ToggleShop();
                     break;
                 case GameMode.Placing:
                     gameObject.SetActive(false);
@@ -44,6 +46,7 @@ namespace Shop
                     break;
                 case GameMode.Shop:
                     gameObject.SetActive(true);
+                    ToggleShop();
                     break;
                 case GameMode.SelectedSocket:
                     gameObject.SetActive(false);
@@ -54,14 +57,10 @@ namespace Shop
             }
         }
 
-        private void OnButtonClick()
+        private void ToggleShop()
         {
-            //ShopPanel.gameObject.SetActive(!ShopPanel.gameObject.activeSelf);
-
             ShopPanel.Toggle();
-
             isOpen = !isOpen;
-
             if (isOpen)
             {
                 GameAudio.PlaySoundEvent.Invoke(SoundType.OpenShop);
@@ -76,7 +75,7 @@ namespace Shop
 
         protected override void OnClickedButton()
         {
-            OnButtonClick();
+            GameModeSwitcher.SwitchGameMode.Invoke(isOpen ? GameMode.Default : GameMode.Shop);
         }
     }
 }

@@ -15,7 +15,17 @@ namespace Inventory
         
         protected override void OnClickedButton()
         {
-            GameModeSwitcher.SwitchGameMode.Invoke(isOpen ? GameMode.Default : GameMode.Inventory);
+            if(GameModeSwitcher.currentGameMode == GameMode.SelectedSocket)
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.DecoInventory);
+            
+            else if(GameModeSwitcher.currentGameMode == GameMode.Default)
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Inventory);
+            
+            else if(GameModeSwitcher.currentGameMode == GameMode.Inventory)
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Default);
+            
+            else if(GameModeSwitcher.currentGameMode == GameMode.DecoInventory)
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.SelectedSocket);
 
             isOpen = !isOpen;
         }
@@ -51,6 +61,7 @@ namespace Inventory
                     break;
                 case GameMode.DecoInventory:
                     gameObject.SetActive(false);
+                    OpenInventory();
                     break;
                 case GameMode.Shop:
                     gameObject.SetActive(false);

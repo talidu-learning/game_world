@@ -63,6 +63,7 @@ namespace Interactables
                 case GameMode.Deco:
                     break;
                 case GameMode.Default:
+                    if(currentMode == GameMode.Deco) OnDisableDecoMode();
                     break;
                 case GameMode.Placing:
                     break;
@@ -73,9 +74,6 @@ namespace Interactables
                 case GameMode.Shop:
                     break;
                 case GameMode.SelectedSocket:
-                    break;
-                default:
-                    if(currentMode == GameMode.Deco) OnDisableDecoMode();
                     break;
             }
             currentMode = gameMode;
@@ -102,6 +100,7 @@ namespace Interactables
 
         private void SelectSocket(Socket socket)
         {
+            GameModeSwitcher.SwitchGameMode.Invoke(GameMode.SelectedSocket);
             if (selectedSocket != null) selectedSocket.Deselect();
             selectedSocket = socket;
             selectedSocket.Select();
@@ -109,7 +108,7 @@ namespace Interactables
 
         private void DeleteObject()
         {
-            if (currentMode == GameMode.Deco)
+            if (currentMode != GameMode.Placing)
             {
                 SocketPlacement.DeleteItemOnSocket.Invoke();
             }

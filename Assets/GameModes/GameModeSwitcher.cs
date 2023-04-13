@@ -20,6 +20,8 @@ namespace GameModes
 
         private void OnSwitchingGameModes(GameMode newMode)
         {
+            Debug.Log("gameMode: " + newMode);
+            
             if(newMode != currentGameMode)
                 OnSwitchedGameMode.Invoke(newMode);
             
