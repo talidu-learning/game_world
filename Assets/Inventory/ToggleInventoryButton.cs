@@ -3,6 +3,7 @@ using Enumerations;
 using GameModes;
 using Interactables;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Inventory
 {
@@ -15,9 +16,18 @@ namespace Inventory
         
         protected override void OnClickedButton()
         {
-            GameModeSwitcher.SwitchGameMode.Invoke(isOpen ? GameMode.Default : GameMode.Inventory);
-
-            isOpen = !isOpen;
+            if(GameModeSwitcher.currentGameMode == GameMode.SelectedSocket)
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.DecoInventory);
+            
+            else if(GameModeSwitcher.currentGameMode == GameMode.Default)
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Inventory);
+            
+            else if(GameModeSwitcher.currentGameMode == GameMode.Inventory)
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Default);
+            
+            else if(GameModeSwitcher.currentGameMode == GameMode.DecoInventory)
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Deco);
+            
         }
 
         public void ToggleButton()
@@ -35,38 +45,44 @@ namespace Inventory
             switch (mode)
             {
                 case GameMode.Deco:
-                    gameObject.SetActive(false);
+                    if(isOpen)
+                        CloseInventory(false);
+                    else
+                    {
+                        gameObject.SetActive(false);
+                    }
                     break;
                 case GameMode.Default:
                     if(isOpen)
-                        CloseInventory();
-                    gameObject.SetActive(true);
+                        CloseInventory(true);
+                    else
+                    {
+                        gameObject.SetActive(true);
+                    }
                     break;
                 case GameMode.Placing:
                     if(isOpen)
-                        CloseInventory();
+                        CloseInventory(true);
                     break;
                 case GameMode.Inventory:
                     OpenInventory();
                     break;
                 case GameMode.DecoInventory:
-                    gameObject.SetActive(false);
+                    OpenInventory();
                     break;
                 case GameMode.Shop:
                     gameObject.SetActive(false);
                     break;
                 case GameMode.SelectedSocket:
-                    gameObject.SetActive(true);
-                    break;
-                default:
+                    ActivateInventoryButton();
                     break;
             }
         }
 
-        private void CloseInventory()
+        private void CloseInventory(bool reactivateButton)
         {
             GameAudio.PlaySoundEvent.Invoke(SoundType.CloseInventory);
-            Close();
+            Close(reactivateButton);
         }
 
         private void OpenInventory()
@@ -79,13 +95,28 @@ namespace Inventory
 
         private void Open()
         {
-            LeanTween.moveLocalY(InventoryUI, 0, 0.8f).setEase(LeanTweenType.easeOutElastic);
+            isOpen = true;
+            gameObject.GetComponent<Image>().enabled = false;
+            LeanTween.moveLocalY(InventoryUI, 0, 0.8f).setEase(LeanTweenType.easeOutElastic).setOnComplete(()=> gameObject.SetActive(false));
         }
 
-        private void Close()
+        private void ActivateInventoryButton()
         {
+            gameObject.SetActive(true);
+            gameObject.GetComponent<Image>().enabled = true;
+        }
+        
+        private void Close(bool reactivateButton)
+        {
+            isOpen = false;
+            gameObject.SetActive(true);
             LeanTween.move(InventoryUI, new Vector2(Screen.width / 2, -Screen.height - 10f), 0.8f)
-                .setEase(LeanTweenType.easeOutElastic);
+                .setEase(LeanTweenType.easeOutElastic)
+                .setOnComplete(() =>
+                {
+                    gameObject.GetComponent<Image>().enabled = true;
+                    gameObject.SetActive(reactivateButton);
+                });
         }
     }
 }

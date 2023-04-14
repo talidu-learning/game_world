@@ -16,15 +16,12 @@ namespace Interactables
 
         protected override void OnClickedButton()
         {
-            ToggleDecoMode();
+            GameModeSwitcher.SwitchGameMode.Invoke(isModeEnabled ? GameMode.Default : GameMode.Deco);
+            isModeEnabled = !isModeEnabled;
         }
 
         private void Start()
         {
-            SelectionManager.SELECT_OBJECT_EVENT.AddListener(OnSelectedObject);
-            SelectionManager.DESELECT_OBJECT_EVENT.AddListener(OnDeselectedObject);
-            SelectionManager.DELETE_OBJECT_EVENT.AddListener(OnDeselectedObject);
-            
             GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameMode);
         }
 
@@ -33,7 +30,8 @@ namespace Interactables
             switch (gameMode)
             {
                 case GameMode.Default:
-                    gameObject.SetActive(true);
+                    if(FindObjectOfType<Socket>())
+                        gameObject.SetActive(true);
                     GetComponent<Image>().sprite = DecoModeOff;
                     break;
                 case GameMode.Placing:
@@ -58,29 +56,6 @@ namespace Interactables
                     throw new ArgumentOutOfRangeException(nameof(gameMode), gameMode, null);
             }
         }
-
-        private void OnDeselectedObject()
-        {
-            gameObject.SetActive(true);
-        }
-
-        private void OnSelectedObject(Interactable arg0)
-        {
-            gameObject.SetActive(false);
-        }
-
-        private void ToggleDecoMode()
-        {
-            if (isModeEnabled)
-            {
-                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Default);
-            }
-            else
-            {
-                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Deco);
-            }
-
-            isModeEnabled = !isModeEnabled;
-        }
+        
     }
 }

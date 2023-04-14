@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Enumerations;
+using GameModes;
 using Interactables;
 using TouchScript.Gestures;
 using UnityEngine;
 using TouchScript.Gestures.TransformGestures;
 using TouchScript.InputSources;
-using TouchScript.Pointers;
 
 namespace TouchScript.Examples.CameraControl
 {
@@ -20,8 +22,6 @@ namespace TouchScript.Examples.CameraControl
         [SerializeField] private GameObject TouchManagerGameObject;
         private Transform cam;
 
-        private IList<Pointer> twoFingerPointers = new List<Pointer>();
-        
         [SerializeField] private AnimationCurve rotation;
         [SerializeField] private AnimationCurve distance;
         public float ZoomSpeed = 10f;
@@ -48,6 +48,38 @@ namespace TouchScript.Examples.CameraControl
             // SelectionManager.SELECT_OBJECT_EVENT.AddListener(OnSelectedObject);
             // SelectionManager.DESELECT_OBJECT_EVENT.AddListener(OnDeselectedObject);
             // SelectionManager.DELETE_OBJECT_EVENT.AddListener(OnDeselectedObject);
+            
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameModes);
+        }
+
+        private void OnSwitchedGameModes(GameMode gameMode)
+        {
+            switch (gameMode)
+            {
+                case GameMode.Default:
+                    isZoomEnabled = true;
+                    break;
+                case GameMode.Placing:
+                    isZoomEnabled = true;
+                    break;
+                case GameMode.Inventory:
+                    isZoomEnabled = false;
+                    break;
+                case GameMode.Deco:
+                    isZoomEnabled = true;
+                    break;
+                case GameMode.DecoInventory:
+                    isZoomEnabled = false;
+                    break;
+                case GameMode.Shop:
+                    isZoomEnabled = false;
+                    break;
+                case GameMode.SelectedSocket:
+                    isZoomEnabled = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(gameMode), gameMode, null);
+            }
         }
 
         private void OnDeselectedObject()
@@ -81,6 +113,7 @@ namespace TouchScript.Examples.CameraControl
 
         private void Update()
         {
+            if(!isZoomEnabled) return;
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
                 // Vector3 newZoom = cam.transform.localPosition + Vector3.up * Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
@@ -121,6 +154,7 @@ namespace TouchScript.Examples.CameraControl
 
         private void ManipulationTransformedHandler(object sender, System.EventArgs e)
         {
+            if(!isZoomEnabled) return;
             // var zoomFactor = Vector3.up * (ManipulationGesture.DeltaScale - 1f) * ZoomSpeed;
             // Vector3 localPosition = cam.transform.localPosition + zoomFactor;
             // localPosition.y = Mathf.Clamp(localPosition.y, 5.0f, 40.5f);
@@ -136,7 +170,10 @@ namespace TouchScript.Examples.CameraControl
             newPos.z = -newPos.y;
             newPos.x = -newPos.x;
             newPos.y = 0;
-            pivot.localPosition += newPos;
+            var newPosClamped = pivot.localPosition + newPos;
+            newPosClamped.z = Mathf.Clamp(newPosClamped.z, -20, 60);
+            newPosClamped.x = Mathf.Clamp(newPosClamped.x, -63, 69);
+            pivot.localPosition = newPosClamped;
         }
     }
 }

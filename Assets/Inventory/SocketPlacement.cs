@@ -35,6 +35,7 @@ namespace Inventory
         private void OnDeleteItem()
         {
             Transform parent = GetParentWithIDComponent();
+            Debug.Log(currentSocket);
             ServerConnection.OnDeletedItemOnSocket(currentSocket.Uid, currentSocket.transform.GetSiblingIndex(),
                 parent.GetComponent<ItemID>().uid, serverCallbackDelete);
         }
@@ -131,15 +132,16 @@ namespace Inventory
 
         private GameObject CreateSocketItem(string itemId, Guid uid)
         {
-            var socketItem = Instantiate(SocketItem, currentSocket.gameObject.transform, false);
+            var socketItem = Instantiate(new GameObject(), currentSocket.gameObject.transform, false);
 
             var component = socketItem.AddComponent<ItemID>();
             component.id = itemId;
             component.uid = uid;
             component.ItemAttributes = shopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.Attributes;
 
-            var spriteRenderer = socketItem.GetComponent<SpriteRenderer>();
+            var spriteRenderer = socketItem.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = shopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId)?.ItemSprite;
+            socketItem.transform.position = Vector3.zero;
             return socketItem;
         }
 

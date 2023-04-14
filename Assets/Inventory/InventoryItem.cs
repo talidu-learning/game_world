@@ -108,17 +108,13 @@ namespace Inventory
 
         private void PlaceOnSocket()
         {
-            GameModeSwitcher.SwitchGameMode.Invoke(GameMode.SelectedSocket);
+            GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Deco);
             SocketPlacement.PlaceItemOnSocket.Invoke(ItemID);
         }
 
         public void Initialize(ShopItemData shopItemData)
         {
             ItemID = shopItemData.ItemID;
-            Debug.Log(shopItemData.ItemID);
-            Debug.Log(shopItemData.Prefab);
-            Debug.Log(shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>());
-            Debug.Log(shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>().sprite);
             ItemImage.sprite = !shopItemData.ItemSprite ? shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>().sprite : shopItemData.ItemSprite;
             attributes = shopItemData.Attributes;
             UpdateUI();

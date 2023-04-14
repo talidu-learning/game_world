@@ -11,7 +11,7 @@ namespace Inventory
 {
     public class ItemInventoryUI : MonoBehaviour
     {
-        public static StringUnityEvent OnBoughtItemEvent = new StringUnityEvent();
+        public static readonly StringUnityEvent OnBoughtItemEvent = new StringUnityEvent();
 
         [SerializeField] private ShopInventory ShopInventory;
         [SerializeField] private GameObject InventoryItemPrefab;
@@ -19,7 +19,7 @@ namespace Inventory
         [SerializeField] private GameObject FilterPanel;
         [SerializeField] private ToggleInventoryButton ToggleButton;
 
-        private Dictionary<string, GameObject> inventoryItems = new Dictionary<string, GameObject>();
+        private readonly Dictionary<string, GameObject> inventoryItems = new Dictionary<string, GameObject>();
 
         private void Awake()
         {
@@ -41,20 +41,42 @@ namespace Inventory
 
         private void OnSwitchedGameMode(GameMode gameMode)
         {
-            if (gameMode == GameMode.Deco)
+            if (gameMode == GameMode.DecoInventory)
             {
-                OnFilterToggled(UIType.Inventory,
-                    new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
-                    true);
+                DisplayOnlyDecoObjects();
                 FilterPanel.SetActive(false);
             }
-            else if(gameMode == GameMode.Default)
+            else if (gameMode == GameMode.Default)
             {
                 FilterPanel.SetActive(true);
-                OnFilterToggled(UIType.Inventory,
-                    new List<ItemAttribute> { ItemAttribute.Wide, ItemAttribute.VeryHuge },
-                    true);
+                DisplayAllObjects();
             }
+        }
+
+        private void DisplayAllObjects()
+        {
+            foreach (var item in inventoryItems)
+            {
+                item.Value.SetActive(true);
+            }
+        }
+
+        private void DisplayOnlyDecoObjects()
+        {
+            foreach (var item in inventoryItems)
+            {
+                if (IsDeco(item))
+                {
+                    item.Value.SetActive(false);
+                }
+            }
+        }
+
+        private static bool IsDeco(KeyValuePair<string, GameObject> item)
+        {
+            return (item.Value.GetComponent<InventoryItem>().attributes.Contains(ItemAttribute.TwoSocketDeco) ||
+                    item.Value.GetComponent<InventoryItem>().attributes.Contains(ItemAttribute.OneSocketDeco))
+                   && LocalPlayerData.Instance.GetCountOfUnplacedItems(item.Key) > 0;
         }
 
         private void UpdateItemState(string id)
@@ -72,7 +94,6 @@ namespace Inventory
         {
             if (socket.IsUsed) return;
             GameModeSwitcher.SwitchGameMode.Invoke(GameMode.SelectedSocket);
-            // ToggleButton.OpenInventory();
         }
 
         private void OnFilterToggled(UIType uiType, List<ItemAttribute> attributes, bool isActive)
@@ -81,7 +102,6 @@ namespace Inventory
 
             foreach (var item in inventoryItems)
             {
-                Debug.Log("Item : " + item.Key + " intersects: " + item.Value.GetComponent<InventoryItem>().attributes.Intersect(attributes).Any());
                 if (item.Value.GetComponent<InventoryItem>().attributes.Intersect(attributes).Any()
                     && LocalPlayerData.Instance.GetCountOfUnplacedItems(item.Key) > 0)
                 {
@@ -95,7 +115,7 @@ namespace Inventory
             var ownedItems = LocalPlayerData.Instance.GetOwnedItems();
 
             var uniqueItems =
-                ownedItems.GroupBy(i => i.id, o => o.uid, (key, uid) => new { Id = key, UIDs = uid.ToList() });
+                ownedItems.GroupBy(i => i.id, o => o.uid, (key, uid) => new {Id = key, UIDs = uid.ToList()});
 
             foreach (var item in uniqueItems)
             {
@@ -119,7 +139,6 @@ namespace Inventory
         {
             var itemGO = Instantiate(InventoryItemPrefab, InventoryUIContent.transform);
             var inventoryItem = itemGO.GetComponent<InventoryItem>();
-            Debug.Log("id:" + itemId);
             var itemData = ShopInventory.ShopItems.FirstOrDefault(i => i.ItemID == itemId);
             inventoryItem.Initialize(itemData);
 
