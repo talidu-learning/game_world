@@ -1,3 +1,0 @@
-[2023-4-14 13:49:40] layer "FlowerBow.png copy": Expected end of input but "c" found.
-[2023-4-14 13:49:40] layer "FlowerBow.png copy 2": Expected end of input but "c" found.
-[2023-4-14 13:49:47] layer "FlowerBow.png": Duplicate path: FlowerBow.png
