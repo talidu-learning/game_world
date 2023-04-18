@@ -114,11 +114,13 @@ namespace Interactables
             {
                 selectedObject = null;
                 BuildingSystem.BuildingSystem.Current.DeleteSelectedObject();
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Default);
             }
         }
 
         private void DeselectObject()
         {
+            GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Default);
             // can happen when delete button is pressed. Interference with OnTap from Interactable?
             if (!selectedObject) return;
             selectedObject.DisableDragging();
@@ -147,6 +149,8 @@ namespace Interactables
                 var go = BuildingSystem.BuildingSystem.Current.StartPlacingObjectOnGrid(interactable.gameObject);
                 selectedObject = go.GetComponent<Interactable>();
             }
+            
+            GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Placing);
         }
 
 

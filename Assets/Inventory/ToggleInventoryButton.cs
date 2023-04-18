@@ -63,6 +63,7 @@ namespace Inventory
                 case GameMode.Placing:
                     if(isOpen)
                         CloseInventory(true);
+                    gameObject.SetActive(false);
                     break;
                 case GameMode.Inventory:
                     OpenInventory();

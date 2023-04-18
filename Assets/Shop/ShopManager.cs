@@ -17,7 +17,6 @@ namespace Shop
     {
         [SerializeField] private ItemCreator ItemCreator;
         [SerializeField] private ShopInventoryDisplay ShopInventoryDisplay;
-        [SerializeField] private ServerConnection.ServerConnection serverConnection;
 
         public static StringGuidUnityEvent InitilizePlaceObjectEvent = new StringGuidUnityEvent();
 
@@ -37,7 +36,6 @@ namespace Shop
             if (wasPlacedSuccessfully)
             {
                 GameAudio.PlaySoundEvent.Invoke(SoundType.Place);
-                // var updatedItem = await serverConnection.UpdateItemPosition(uid, id,placedObject.transform.position.x, placedObject.transform.position.z);
                 LocalPlayerData.Instance.OnPlacedItem(uid, placedObject.transform.position.x,
                     placedObject.transform.position.z);
             }
@@ -49,14 +47,11 @@ namespace Shop
 
                     foreach (var socket in sockets)
                     {
-                        // var updatedItem = await ServerConnection.UpdateItemPosition(uid, 0, 0);
                         LocalPlayerData.Instance.OnDeletedItem(socket.Uid, uid, socket.transform.GetSiblingIndex());
                         socket.Delete();
                     }
                 }
 
-                // var updatedItem = await ServerConnection.UpdateItemPosition(uid, 0, 0);
-                // var onWithdrewItem2 = await LocalPlayerData.Instance.OnWithdrewItem(uid);
                 Destroy(placedObject);
             }
 

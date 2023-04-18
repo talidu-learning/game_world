@@ -33,6 +33,8 @@ namespace Shop
                         ToggleShop();
                     break;
                 case GameMode.Placing:
+                    if(isOpen)
+                        ToggleShop();
                     gameObject.SetActive(false);
                     break;
                 case GameMode.Inventory:

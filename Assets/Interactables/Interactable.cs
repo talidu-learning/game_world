@@ -119,6 +119,9 @@ namespace Interactables
 
         public void Flip()
         {
+            // TODO Flip 3D-Objects
+            if( GetComponentsInChildren<SpriteRenderer>().Length <=0)return;
+            
             SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
 
             GetComponent<ItemID>().IsFlipped = !sprites[0].flipX;

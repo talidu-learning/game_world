@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CustomInput;
 using Enumerations;
+using GameModes;
 using Interactables;
 using Inventory;
 using ServerConnection;
@@ -114,6 +115,7 @@ namespace Shop
                 ShopManager.InitilizePlaceObjectEvent.Invoke(ItemID, uitemID);
                 ItemInventoryUI.OnBoughtItemEvent.Invoke(ItemID);
                 UIManager.CloseColorPickerEvent.Invoke();
+                GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Placing);
             }
         }
 
