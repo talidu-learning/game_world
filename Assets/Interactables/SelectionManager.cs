@@ -18,6 +18,7 @@ namespace Interactables
 
     public class SelectionManager : MonoBehaviour
     {
+        [SerializeField] private HighlightParticlesManager highlightParticlesManager;
         public static readonly InteractableUnityEvent SELECT_OBJECT_EVENT = new InteractableUnityEvent();
         public static readonly UnityEvent DESELECT_OBJECT_EVENT = new UnityEvent();
         public static readonly UnityEvent FLIP_OBJECT_EVENT = new UnityEvent();
@@ -106,6 +107,8 @@ namespace Interactables
 
         private void DeleteObject()
         {
+            highlightParticlesManager.StopParticleSystem();
+            
             if (currentMode != GameMode.Placing)
             {
                 SocketPlacement.DeleteItemOnSocket.Invoke();
@@ -120,6 +123,8 @@ namespace Interactables
 
         private void DeselectObject()
         {
+            highlightParticlesManager.StopParticleSystem();
+            
             GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Default);
             // can happen when delete button is pressed. Interference with OnTap from Interactable?
             if (!selectedObject) return;
@@ -136,6 +141,7 @@ namespace Interactables
                 DeselectObject();
             }
 
+            highlightParticlesManager.MoveParticleSystem(interactable.gameObject);
 
             if (ObjectWasPlacedBefore(interactable))
             {
