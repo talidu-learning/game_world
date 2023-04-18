@@ -99,6 +99,9 @@ namespace Interactables
             PressGesture.enabled = false;
             TransformGesture.enabled = true;
             tapGesture.enabled = false;
+
+            LeanTween.moveLocalY(gameObject, 1, 1).setLoopPingPong().setEase(LeanTweenType.easeInOutSine).setOnComplete(
+                () => { gameObject.transform.position = new Vector3(transform.position.x, 0, transform.position.z); });
         }
 
         private void OnTap()
@@ -115,6 +118,9 @@ namespace Interactables
             tapGesture.enabled = true;
             PressGesture.enabled = true;
             TransformGesture.enabled = false;
+            
+            LeanTween.cancelAll(true);
+            DustParticleSystem.PlayDustPartclesEvent.Invoke(transform.position);
         }
 
         public void Flip()

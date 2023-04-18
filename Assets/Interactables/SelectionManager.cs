@@ -5,6 +5,7 @@ using GameModes;
 using Inventory;
 using UnityEngine;
 using UnityEngine.Events;
+using VFX;
 
 namespace Interactables
 {

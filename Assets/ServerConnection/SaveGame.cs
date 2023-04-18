@@ -88,7 +88,9 @@ namespace ServerConnection
                 if (ShopInventory.ShopItems.Count(i => i.ItemID == item.id) < 1)
                 {
                     ServerConnection.DeleteItemFromDatabase(item.uid);
+#pragma warning disable 4014
                     ServerConnection.UpdateStarCount(ServerConnection.StudentData.Stars+50);
+#pragma warning restore 4014
                 }
                 else
                 {
