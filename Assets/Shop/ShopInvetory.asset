@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7766321e4550d7c4bac7b2ac26f103ce, type: 3}
-  m_Name: ShopInvetory 1
+  m_Name: ShopInvetory
   m_EditorClassIdentifier: 
   ShopItems:
   - ItemID: Log Table
