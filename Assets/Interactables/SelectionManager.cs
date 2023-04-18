@@ -61,8 +61,7 @@ namespace Interactables
             switch (gameMode)
             {
                 case GameMode.Deco:
-                    if(selectedSocket)
-                        DeselectSocket(selectedSocket);
+                    DeselectSocket(selectedSocket);
                     break;
                 case GameMode.Default:
                     if(currentMode == GameMode.Deco) OnDisableDecoMode();
@@ -88,14 +87,12 @@ namespace Interactables
 
         private void DeleteSocket(Socket socket)
         {
-            socket.Deselect();
             selectedSocket = null;
         }
 
         private void DeselectSocket(Socket socket)
         {
             if (selectedSocket == null) return;
-            Debug.Log("DeselectSocket");
             selectedSocket.Deselect();
             selectedSocket = null;
         }

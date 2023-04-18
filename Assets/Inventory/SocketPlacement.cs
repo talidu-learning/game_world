@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using Enumerations;
+using GameModes;
 using Interactables;
 using ServerConnection;
 using Shop;
@@ -74,12 +76,14 @@ namespace Inventory
             if (sucessfullyConnected)
                 OnSuccessfulDeletion(socketItemUid, socketcollectionuid, siblingindex);
             else OnFailedDeletion();
+            GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Deco);
         }
 
         private void OnSuccessfulDeletion(Guid socketItemUid, Guid uid, int siblingindex)
         {
-            LocalPlayerData.Instance.OnDeletedItem(socketItemUid, uid, siblingindex);
+            SelectionManager.DELETE_SOCKET_EVENT.Invoke(currentSocket);
             currentSocket.Delete();
+            LocalPlayerData.Instance.OnDeletedItem(socketItemUid, uid, siblingindex);
             currentSocket = null;
         }
 
@@ -121,7 +125,8 @@ namespace Inventory
         {
             go.transform.localScale = localScale;
 
-            go.transform.position += new Vector3(0, Mathf.Abs(localScale.y), 0);
+            // go.transform.position += new Vector3(0, Mathf.Abs(localScale.y), 0);
+            go.transform.localPosition = new Vector3(0, 0, 0);
         }
 
         private void OnFailedPlacement()

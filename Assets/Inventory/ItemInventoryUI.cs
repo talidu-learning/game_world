@@ -17,7 +17,6 @@ namespace Inventory
         [SerializeField] private GameObject InventoryItemPrefab;
         [SerializeField] private GameObject InventoryUIContent;
         [SerializeField] private GameObject FilterPanel;
-        [SerializeField] private ToggleInventoryButton ToggleButton;
 
         private readonly Dictionary<string, GameObject> inventoryItems = new Dictionary<string, GameObject>();
 
@@ -57,7 +56,8 @@ namespace Inventory
         {
             foreach (var item in inventoryItems)
             {
-                item.Value.SetActive(true);
+                if(LocalPlayerData.Instance.GetCountOfUnplacedItems(item.Key) > 0)
+                    item.Value.SetActive(true);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Inventory
         {
             foreach (var item in inventoryItems)
             {
-                if (IsDeco(item))
+                if (!IsDeco(item))
                 {
                     item.Value.SetActive(false);
                 }

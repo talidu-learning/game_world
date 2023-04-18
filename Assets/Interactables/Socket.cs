@@ -60,6 +60,7 @@ namespace Interactables
         {
             Destroy(transform.GetChild(0).gameObject);
             IsUsed = false;
+            GetComponent<SpriteRenderer>().color = Color.white;
         }
     }
 }

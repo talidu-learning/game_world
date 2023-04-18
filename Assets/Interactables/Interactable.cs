@@ -75,7 +75,6 @@ namespace Interactables
 
         private void PressGestureOnPressed(object sender, EventArgs e)
         {
-            gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.grey;
             GameAudio.PlaySoundEvent.Invoke(SoundType.Select);
         }
 
@@ -95,7 +94,6 @@ namespace Interactables
 
         public void EnableDragging()
         {
-            gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.green;
             isSelected = true;
             //LongPressGesture.enabled = false;
             PressGesture.enabled = false;
@@ -113,7 +111,6 @@ namespace Interactables
         public void DisableDragging()
         {
             if (!isSelected) return;
-            gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
             isSelected = false;
             tapGesture.enabled = true;
             PressGesture.enabled = true;
