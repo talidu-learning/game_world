@@ -1,2 +1,2 @@
-[2023-4-12 09:25:44] layer "Star.png copy": Expected end of input but "c" found.
-[2023-4-12 09:25:44] layer "Main/InventoryChest.png": Duplicate path: Main\InventoryChest.png
+[2023-4-21 13:00:35] layer "Star.png copy": Expected end of input but "c" found.
+[2023-4-21 13:00:35] layer "Main/InventoryChest.png": Duplicate path: Main\InventoryChest.png
