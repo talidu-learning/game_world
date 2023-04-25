@@ -23,7 +23,7 @@ public class PrefabGenerator : MonoBehaviour
     }
     
     [MenuItem("AssetDatabase/GeneratePrefabs")]
-    static void GeneratePrefabs()
+    private static void GeneratePrefabs()
     {
         var dirs = GetRelevantDirectories();
 
@@ -36,6 +36,24 @@ public class PrefabGenerator : MonoBehaviour
             if (prefabs.Any(p => p.Key == s.name)) continue;
             GeneratePrefabVariant(s.name, s);
         }
+    }
+    
+    [MenuItem("AssetDatabase/Get CSV File")]
+    private static void GetCSVFile()
+    {
+        var dirs = GetRelevantDirectories();
+
+        if (GetSprites(dirs, out var sprites)) return;
+
+        string fileNames = "Name;Item-Wert;Preis;\n";
+        foreach (var s in sprites)
+        {
+            fileNames += s.name + ";\n";
+        }
+
+        StreamWriter writer = new StreamWriter("Assets/itemDatabase.csv", false);
+        writer.WriteLine(fileNames);
+        writer.Close();
     }
 
     private static bool GetSprites(List<string> dirs, out List<Sprite> sprites)
