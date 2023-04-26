@@ -1,0 +1,30 @@
+URP Stylized And Realistic Dynamic Shaders
+
+THANK YOU FOR YOUR SUPPORT.
+
+-IMPORTANT:
+Please select "Depth Texture" from your camera or pipeline settings before using the shader
+-
+
+-URP Stylized And Realistic Dynamic Shaders SETTINGS EXPLANATIONS:
+
+WATERCOLOR: changes our main color
+LIGHTCOLOR: It is used to change the color of the water voronoi texture
+DARKCOLOR sets the color of the bottom effect
+FOAM SHADOWCOLOR: changes color of bottom part of voronoi textur like light color
+NOISE NORMALMAP: Voronoi makes the texture stir according to the Normal Map
+HEIGHT: sets the height of the wave
+SIZE: adjusts the size of the voronoi
+STRENGTH: Controls the distortion of the watertexture relative to the noisenormalmap map
+NOISESPEED: sets the movement speed of the distortion
+WAWE SPEED: adjusts the movement of the wave
+WAWENORMAL SIZE: sets the size of the wawenormal map
+wAWENORMAL STRENGTH: sets the salience of the wawenormal map
+FOAMCOLOR: Sets the color of the foam effect created at the edges of objects inside the material
+FOAMDISTANCE: Adjusts the depth of the foaming effect
+FOAMEDGE: Sets the frequency at which the foam effect propagates from the corner
+FOAMSPEED: Sets the foam speed
+FOAMSCALE: Sets the foam size
+ALPHAVALUE: Sets the transparency of the general material
+DEEPDISTANCE: Adjusts how deep the objects in the material appear
+-
