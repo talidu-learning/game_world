@@ -82,6 +82,10 @@ Material:
     - _BUILTIN_ZWrite: 1
     - _BUILTIN_ZWriteControl: 1
     - _Blend: 1
+    - _C1step1: 0.23
+    - _C1step2: 0.92
+    - _C2step1: 0.54
+    - _C2step2: 0.9
     - _CastShadows: 1
     - _Cull: 2
     - _DstBlend: 10
@@ -92,7 +96,7 @@ Material:
     - _NormalStrength: 0
     - _Offset: -38.38
     - _PatternSpeed: 0.02
-    - _PatternVisibility: 1
+    - _PatternVisibility: 0.66
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Range: 203.54
@@ -104,24 +108,27 @@ Material:
     - _Shinyness: 0
     - _SrcBlend: 1
     - _Surface: 1
-    - _Test: 0.26
+    - _Test: 0.44
+    - _TipWhitenes: 0.36
     - _WaterDepth: 8.48
     - _WaveSpeed: 2.07
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
+    - _step: 0.81
+    - _step2: 0.8
     m_Colors:
-    - _ColorVariant1: {r: 0, g: 0.34078872, b: 0.5, a: 1}
-    - _ColorVariant2: {r: 0.5543426, g: 0.2901744, b: 0.6226415, a: 1}
+    - _ColorVariant1: {r: 0, g: 0.36915508, b: 0.5943396, a: 1}
+    - _ColorVariant2: {r: 0, g: 0.5377358, b: 0.473539, a: 1}
     - _DeepColor: {r: 1, g: 0, b: 0, a: 1}
-    - _DistanceColor: {r: 0.060163744, g: 0.35483325, b: 0.6132076, a: 0}
-    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _DistanceColor: {r: 0, g: 0.35126445, b: 0.6603774, a: 0}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 0.8745098}
     - _FoamScale: {r: 1500.13, g: 1500, b: 0, a: 0}
     - _NormalColor: {r: 0.27118188, g: 0.37585872, b: 0.5188679, a: 0.35686275}
     - _PatternScale: {r: 20, g: 20, b: 0, a: 0}
     - _ReafractionScale: {r: 50, g: 50, b: 0, a: 0}
-    - _SurfaceColor: {r: 0.29411763, g: 0.8784314, b: 0.6389411, a: 0.47058824}
+    - _SurfaceColor: {r: 0, g: 0.7490196, b: 1, a: 1}
     - _TextureScale: {r: 50, g: 50, b: 0, a: 0}
     - _UnderWaterColor: {r: 1, g: 1, b: 1, a: 0.509804}
   m_BuildTextureStacks: []
