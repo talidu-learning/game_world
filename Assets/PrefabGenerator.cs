@@ -123,7 +123,11 @@ public class PrefabGenerator : MonoBehaviour
 
             foreach (var variant in shopItem.ItemVariants)
             {
-                variant.ItemSprite = variant.Prefab.GetComponentInChildren<SpriteRenderer>()?.sprite;
+                if (!variant.Prefab.GetComponentInChildren<MeshFilter>())
+                    variant.ItemSprite = variant.Prefab.GetComponentInChildren<SpriteRenderer>()?.sprite;
+                else
+                    variant.ItemSprite =
+                        AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Images/Other/Other-assets/MissingPrefab.png");
             }
         }
     }
