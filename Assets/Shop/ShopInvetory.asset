@@ -17,7 +17,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: e181e79ece9ffe14f9fad878d4988116, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 2
+    Value: 160
     Prefab: {fileID: 8624253927025194015, guid: a0363ae3d81b5ba479632429c0493cbb, type: 3}
     Attributes: 02000000
     ItemVariants: []
@@ -33,7 +33,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: 2a0e348f1bba8ec44ae38598d0a42264, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 2
+    Value: 160
     Prefab: {fileID: 6532109583357595815, guid: 55991185137150540a772a3171fa033d, type: 3}
     Attributes: 01000000
     ItemVariants: []
@@ -41,7 +41,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: 1ac6f9aa74e16ee4caba7e8598ac0090, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 50
+    Value: 430
     Prefab: {fileID: 4247651964940016094, guid: 099de3dd414947e4393ddd26f491f5e6, type: 3}
     Attributes: 00000000
     ItemVariants: []
@@ -49,7 +49,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: 04d1cef2810b2494ab54b1618a2488f3, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 10
+    Value: 870
     Prefab: {fileID: 8838806251169689040, guid: 047f450da1103344fba867942e791d37, type: 3}
     Attributes: 02000000
     ItemVariants: []
@@ -57,7 +57,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: 939cce3e18cc56b49937d27625957f64, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 10
+    Value: 430
     Prefab: {fileID: 1375020183246399904, guid: 198be928a910f6f49b1ba8ef90e22759, type: 3}
     Attributes: 02000000
     ItemVariants: []
@@ -65,7 +65,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: e89f9c16b23a4c742a12c54501cc5080, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 5
+    Value: 160
     Prefab: {fileID: 3533630057444998808, guid: a26bba8ecfe3ef04d91d588b0f9eaa07, type: 3}
     Attributes: 00000000
     ItemVariants: []
@@ -73,7 +73,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: c95e175659e16284d8454e2943ba4c10, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 40
+    Value: 170
     Prefab: {fileID: 1101273479016977177, guid: 692feb7ebe11ee948961248d7ff433a2, type: 3}
     Attributes: 02000000
     ItemVariants: []
@@ -81,7 +81,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: acb849e3cf608d04e97f59e9a66a5fbe, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 30
+    Value: 150
     Prefab: {fileID: 1454941382016744328, guid: 9573ff0e74ecbdb49942c066a582b16a, type: 3}
     Attributes: 02000000
     ItemVariants: []
@@ -89,15 +89,15 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: 3d71e7b0661e9e647bad7a0d24d13f96, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 100
+    Value: 3310
     Prefab: {fileID: 4371460915405403613, guid: ce40144a83202a74789704118093b460, type: 3}
     Attributes: 03000000
     ItemVariants: []
   - ItemID: Tent
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: c83fab555fe217e4290c37ea6b36286c, type: 3}
-    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 80
+    DefaultColor: {r: 0, g: 0.0791831, b: 1, a: 1}
+    Value: 550
     Prefab: {fileID: 4826623310983340459, guid: a1bde4fc6d9949c4fa0a505e5ae21877, type: 3}
     Attributes: 02000000
     ItemVariants: []
@@ -105,7 +105,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: 5252c7ebe25ee0442af5c5b033b3af38, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 40
+    Value: 560
     Prefab: {fileID: 3620995593721786296, guid: 036e835314f693544ab38d1299ab7626, type: 3}
     Attributes: 02000000
     ItemVariants: []
@@ -113,15 +113,15 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: bc56f341d60b6aa4ba416f5de12297e3, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 70
+    Value: 580
     Prefab: {fileID: 2514248332313136517, guid: 9d6c4c8196192cb4f8201965c735bc1c, type: 3}
     Attributes: 02000000
     ItemVariants: []
-  - ItemID: AppleBasket
+  - ItemID: AppleBasketEmpty
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: 445c398363eabd5429a5441c786db9e7, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 20
+    Value: 160
     Prefab: {fileID: 2015938195570754269, guid: 89bfd899617dec44b8385bb5b6967b2d, type: 3}
     Attributes: 01000000
     ItemVariants: []
@@ -129,7 +129,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: ad0324d20660ccf409d47312f96b1861, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 35
+    Value: 440
     Prefab: {fileID: 4150297872435828425, guid: f460c46677e024944bec6828184de789, type: 3}
     Attributes: 02000000
     ItemVariants: []
@@ -137,7 +137,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: 3b27d437bfeff1c4db48984d2b228ad1, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 55
+    Value: 430
     Prefab: {fileID: 8798061058511329733, guid: 7ba9564c0c7b03448a8d919e1011b528, type: 3}
     Attributes: 02000000
     ItemVariants: []
@@ -145,7 +145,7 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: 4e9df212c5a51b34ebeac65f041e101c, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 65
+    Value: 500
     Prefab: {fileID: 7774043678748173094, guid: 75b24c25eb16dbb428c91941cf72e357, type: 3}
     Attributes: 03000000
     ItemVariants: []
@@ -153,23 +153,23 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: 10f63889c54a2e4439c5cc99e69ba169, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 130
+    Value: 4200
     Prefab: {fileID: 4202146216031001861, guid: 03e7720b378fb9948a617b9d8d14093e, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: Giesskanne
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: 419ed46069515064d97fa645ab50db31, type: 3}
-    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 25
+    DefaultColor: {r: 1, g: 0, b: 0, a: 1}
+    Value: 130
     Prefab: {fileID: 5402543030980656136, guid: 3650e43b44129d34e8136a9c93d72ff4, type: 3}
     Attributes: 00000000
     ItemVariants: []
   - ItemID: Mower
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: ef000aa5a8f57ae408904d496635a722, type: 3}
-    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 40
+    DefaultColor: {r: 1, g: 0, b: 0, a: 1}
+    Value: 515
     Prefab: {fileID: 2038148671093804314, guid: 4f8eb830d7bcc94419a4e71eb0b97018, type: 3}
     Attributes: 02000000
     ItemVariants: []
@@ -177,15 +177,467 @@ MonoBehaviour:
     BaseItemID: 
     ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 50
+    Value: 440
     Prefab: {fileID: 5027111815897562767, guid: 59dce5b8d21083d479413d8dd224f8f7, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Anvil
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 430
+    Prefab: {fileID: 8187634958807316551, guid: 5a96d95266d58914aa0fd4056fa70b36, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Apple_A
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 120
+    Prefab: {fileID: 8016089278933963932, guid: 8bc38702711b5064bb7fbef22aa6e6fa, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Balloon_Blue
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0.19503069, b: 1, a: 1}
+    Value: 140
+    Prefab: {fileID: 1664469454375258166, guid: 934d014a366a2f5489fcffebc28566dc, type: 3}
+    Attributes: 02000000
+    ItemVariants:
+    - ItemID: Balloon_Yellow
+      ItemSprite: {fileID: 0}
+      Prefab: {fileID: 5133515924292679673, guid: 3567c3d0ac9118847ba1be174260f02e, type: 3}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+    - ItemID: Balloon_Red
+      ItemSprite: {fileID: 0}
+      Prefab: {fileID: 6878746370023642302, guid: 327ed50c8a4c42345b7d5cabbb68a4a1, type: 3}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+  - ItemID: Balloon_Red
+    BaseItemID: Balloon_Blue
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 1, g: 0.04995039, b: 0, a: 1}
+    Value: 140
+    Prefab: {fileID: 6878746370023642302, guid: 327ed50c8a4c42345b7d5cabbb68a4a1, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Balloon_Yellow
+    BaseItemID: Balloon_Blue
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 1, g: 0.99296916, b: 0, a: 1}
+    Value: 140
+    Prefab: {fileID: 5133515924292679673, guid: 3567c3d0ac9118847ba1be174260f02e, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Barrel
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 190
+    Prefab: {fileID: 4642847882312084984, guid: 5e4567852f9d8a04ea37f4696862bd30, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Baumhaus
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 2535
+    Prefab: {fileID: 3893948962093966274, guid: 74da32c5fec3387459a6cbcc9f201024, type: 3}
+    Attributes: 03000000
+    ItemVariants: []
+  - ItemID: Cat
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 4000
+    Prefab: {fileID: 1658359658961842625, guid: 0075a48dfb6bce542a2b369fd762bcc8, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Bluetit
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 470
+    Prefab: {fileID: 1721167034464587066, guid: a84035842a2589b46a351e8fe3829342, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: BrickCube
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 180
+    Prefab: {fileID: 7489171227153047783, guid: 6fb735e407a656c42b5b2a2f3200827e, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Bush
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0.6666667, g: 0.9725491, b: 0.5019608, a: 1}
+    Value: 190
+    Prefab: {fileID: 3159932399921054866, guid: a1b36b499b4f98b498b02dfaa5ed94e6, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Bush01
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 185
+    Prefab: {fileID: 1308317554077484158, guid: 2bb16fc78bf37584e90c963f8d935f74, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Bush02
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 165
+    Prefab: {fileID: 8547788385332144963, guid: edcc5c8c4ccaf584685e290821d6dc85, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: ChestClosed
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 400
+    Prefab: {fileID: 7210506910823640470, guid: 3d2fa96ee759b67408ca5ed2af96cc9f, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: CookingFireplace
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 480
+    Prefab: {fileID: 61580058600760978, guid: eb498edca7c1c2a46b3c4e2d70ec8a26, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Dog
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 770
+    Prefab: {fileID: 6187757140568559098, guid: 0661c2badbc5f2342b203a9ba702783b, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Doll_Bird
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0.2971698, g: 0.678047, b: 1, a: 1}
+    Value: 870
+    Prefab: {fileID: 7571421339521888387, guid: f721bc5c098adaf41b61c749e5e1ccfe, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: Doll_Cat
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 870
+    Prefab: {fileID: 8903151390226687571, guid: 092dfa10e3d2d494e9fff164c1b54b0c, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: Doll_Dog
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 870
+    Prefab: {fileID: 8838806251169689040, guid: 047f450da1103344fba867942e791d37, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: Doll_Dragon
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 870
+    Prefab: {fileID: 8252322886991610919, guid: 2fa9c4fd364e25c46b1a1452ae6ff52c, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: Doll_Elephant
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 870
+    Prefab: {fileID: 7632759738109385490, guid: 30c50c16dfa0fa44db27871edb7c455f, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: Doll_Rabbit
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 870
+    Prefab: {fileID: 8277069078142915500, guid: 1a9a656b5679d374f90e12c127860515, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: Doll_Robo
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 870
+    Prefab: {fileID: 8200410963848024082, guid: d3faa92ba47a5d1469517253151b76d9, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: Doll_Slug
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 870
+    Prefab: {fileID: 8200410963848024082, guid: d3faa92ba47a5d1469517253151b76d9, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: Doll_Tree
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 870
+    Prefab: {fileID: 8200410963848024082, guid: d3faa92ba47a5d1469517253151b76d9, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: Eisstand
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 4200
+    Prefab: {fileID: 1358456048713843737, guid: 7f40eaae2dbf5d944942138913d9eaa2, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Fireplace
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 165
+    Prefab: {fileID: 8418337659655558149, guid: 34475c74473d463448daa65743277ab9, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Fliegenpilz
+    BaseItemID: 
+    ItemSprite: {fileID: 21300000, guid: dee8f086821c6b14b83c8c40a497ee3d, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 160
+    Prefab: {fileID: 2745991053434861327, guid: 0daf32a58105d584a9fe1c3efaae18ba, type: 3}
     Attributes: 02000000
     ItemVariants: []
   - ItemID: FlowerBedSmall
     BaseItemID: 
-    ItemSprite: {fileID: 4693743016591341531, guid: f4716bba7bd6b704d940de8d22c401dc, type: 3}
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
     DefaultColor: {r: 0, g: 0, b: 0, a: 0}
-    Value: 50
+    Value: 280
     Prefab: {fileID: 2958250774259048327, guid: 9ff674adb4ea64042a3427d7f7d570ff, type: 3}
     Attributes: 02000000
+    ItemVariants: []
+  - ItemID: FlowerBedMedium
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 350
+    Prefab: {fileID: 1548587358767809851, guid: 53aa693dccad17644bc70dbbe6873e32, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: FlowerBedLarge
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 420
+    Prefab: {fileID: 5839557569829300515, guid: c69736bdea181ab4197c864f07b228cb, type: 3}
+    Attributes: 03000000
+    ItemVariants: []
+  - ItemID: FlowerAloe
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 400
+    Prefab: {fileID: 6692871465754848291, guid: 69d6c345510df5c408ff0f955cdb9e71, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerBow
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 1100
+    Prefab: {fileID: 3605054991421258992, guid: 9394c0f1f52b25846b586c2800e9f73f, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerCactus
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 550
+    Prefab: {fileID: 2404692930617515357, guid: f97dbdfc056da1445b3d622b0e742a2f, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerCat
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 1000
+    Prefab: {fileID: 8656392168046337927, guid: 4510019e9ebc76c40aadbd54572981a2, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerFlamingo_Pink
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 1, g: 0, b: 0.69475746, a: 1}
+    Value: 400
+    Prefab: {fileID: 393340137014907057, guid: a3c7a3c5acf25224bbccd46ee243a69d, type: 3}
+    Attributes: 00000000
+    ItemVariants:
+    - ItemID: FlowerFlamingo_White
+      ItemSprite: {fileID: 0}
+      Prefab: {fileID: 2177093582909680921, guid: 369e9c3fa1eca1d46ad5341d4f1abe93, type: 3}
+      Color: {r: 1, g: 1, b: 1, a: 1}
+    - ItemID: FlowerFlamingo_Red
+      ItemSprite: {fileID: 0}
+      Prefab: {fileID: 6292478829455086672, guid: 28c257c94b8872a48bde671ca3ff885a, type: 3}
+      Color: {r: 1, g: 0, b: 0, a: 1}
+  - ItemID: FlowerFlamingo_White
+    BaseItemID: FlowerFlamingo_Pink
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 1, g: 1, b: 1, a: 1}
+    Value: 400
+    Prefab: {fileID: 2177093582909680921, guid: 369e9c3fa1eca1d46ad5341d4f1abe93, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerFlamingo_Red
+    BaseItemID: FlowerFlamingo_Pink
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 1, g: 0, b: 0.04943371, a: 1}
+    Value: 400
+    Prefab: {fileID: 6292478829455086672, guid: 28c257c94b8872a48bde671ca3ff885a, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerFleischfressend
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 1, g: 0, b: 0.04943371, a: 1}
+    Value: 1000
+    Prefab: {fileID: 4229254394452190779, guid: a8c78d494dca98a40b639ec430035247, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerLily
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 560
+    Prefab: {fileID: 2205611772610451371, guid: adc502b7b6a7db843a13c3d49b89587f, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: FlowerOrchid_Lilac
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0.7725491, g: 0.7725491, b: 0.9960785, a: 1}
+    Value: 180
+    Prefab: {fileID: 9038382436863740, guid: 2352dc1d28811b141862e4e0f188ada1, type: 3}
+    Attributes: 00000000
+    ItemVariants:
+    - ItemID: FlowerOrchid_Pink
+      ItemSprite: {fileID: 0}
+      Prefab: {fileID: 1884924470453620403, guid: 42d582b2c8ded774181ee5b2d7c52df0, type: 3}
+      Color: {r: 0.998508, g: 0, b: 1, a: 1}
+    - ItemID: FlowerOrchid_Red
+      ItemSprite: {fileID: 0}
+      Prefab: {fileID: 304419359772656587, guid: 2e9e9fbe5e641dd45a386a8f367ffe69, type: 3}
+      Color: {r: 1, g: 0, b: 0.09019608, a: 1}
+    - ItemID: FlowerOrchid_Violett
+      ItemSprite: {fileID: 0}
+      Prefab: {fileID: 6767488263843476942, guid: 0fe1b8b62e23b4743ae824062b3abae5, type: 3}
+      Color: {r: 0.8705883, g: 0.27058825, b: 0.9960785, a: 1}
+    - ItemID: FlowerOrchid_White
+      ItemSprite: {fileID: 0}
+      Prefab: {fileID: 7317137995410965748, guid: ca183af6aea64d3468ac7fcae93f2159, type: 3}
+      Color: {r: 0.9960785, g: 0.9960785, b: 0.9960785, a: 1}
+    - ItemID: FlowerOrchid_Yellow
+      ItemSprite: {fileID: 0}
+      Prefab: {fileID: 3851150189425019729, guid: 7ca078ae505f09849a567c525082e674, type: 3}
+      Color: {r: 0.9960785, g: 0.9921569, b: 0.37647063, a: 1}
+  - ItemID: FlowerOrchid_Pink
+    BaseItemID: FlowerOrchid_Lilac
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0.9960785, g: 0.43529415, b: 0.9960785, a: 1}
+    Value: 180
+    Prefab: {fileID: 1884924470453620403, guid: 42d582b2c8ded774181ee5b2d7c52df0, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerOrchid_Red
+    BaseItemID: FlowerOrchid_Lilac
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 1, g: 0, b: 0.09163618, a: 1}
+    Value: 180
+    Prefab: {fileID: 304419359772656587, guid: 2e9e9fbe5e641dd45a386a8f367ffe69, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerOrchid_Violett
+    BaseItemID: FlowerOrchid_Lilac
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0.8705883, g: 0.27058825, b: 0.9960785, a: 1}
+    Value: 180
+    Prefab: {fileID: 6767488263843476942, guid: 0fe1b8b62e23b4743ae824062b3abae5, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerOrchid_White
+    BaseItemID: FlowerOrchid_Lilac
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0.9960785, g: 0.9960785, b: 0.9960785, a: 1}
+    Value: 180
+    Prefab: {fileID: 7317137995410965748, guid: ca183af6aea64d3468ac7fcae93f2159, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerOrchid_Yellow
+    BaseItemID: FlowerOrchid_Lilac
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0.9960785, g: 0.9960785, b: 0.3803922, a: 1}
+    Value: 180
+    Prefab: {fileID: 7317137995410965748, guid: ca183af6aea64d3468ac7fcae93f2159, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: FlowerWesternCactus
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 180
+    Prefab: {fileID: 3345433629541404090, guid: b671b7a553752e140b8dc88432e1f100, type: 3}
+    Attributes: 00000000
+    ItemVariants: []
+  - ItemID: Fountain
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 910
+    Prefab: {fileID: 2307687070732171979, guid: 9cc543f71c01b9f46849da7713f4523b, type: 3}
+    Attributes: 03000000
+    ItemVariants: []
+  - ItemID: Hammock_Blue
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0.34901962, g: 0.5254902, b: 0.8470589, a: 1}
+    Value: 910
+    Prefab: {fileID: 1484841629912204574, guid: a27561ff09f2bae4092106ecc93dc5da, type: 3}
+    Attributes: 02000000
+    ItemVariants:
+    - ItemID: Hammock_Green
+      ItemSprite: {fileID: 0}
+      Prefab: {fileID: 1670712618338221423, guid: eeeddcd7e6bed384690b9340a2715fc7, type: 3}
+      Color: {r: 0.5372549, g: 0.6666667, b: 0.31764707, a: 1}
+    - ItemID: Hammock_Pink
+      ItemSprite: {fileID: 0}
+      Prefab: {fileID: 5181148418423748744, guid: a57308cdc4b5dc14097c8959e65c33db, type: 3}
+      Color: {r: 0.8431373, g: 0.43921572, b: 0.6862745, a: 1}
+  - ItemID: Hammock_Green
+    BaseItemID: Hammock_Blue
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0.5372549, g: 0.6666667, b: 0.31764707, a: 1}
+    Value: 910
+    Prefab: {fileID: 1670712618338221423, guid: eeeddcd7e6bed384690b9340a2715fc7, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Hammock_Pink
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0.8431373, g: 0.43921572, b: 0.6862745, a: 1}
+    Value: 910
+    Prefab: {fileID: 5181148418423748744, guid: a57308cdc4b5dc14097c8959e65c33db, type: 3}
+    Attributes: 02000000
+    ItemVariants: []
+  - ItemID: Klee
+    BaseItemID: 
+    ItemSprite: {fileID: 400444921, guid: a739c92270a4c3746856f6a5c3ba104f, type: 3}
+    DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    Value: 150
+    Prefab: {fileID: 3048238353404454976, guid: d33f2a7a57c68f34cb47ebef0a3b0d21, type: 3}
+    Attributes: 00000000
     ItemVariants: []
