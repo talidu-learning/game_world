@@ -119,11 +119,11 @@ public class PrefabGenerator : MonoBehaviour
 
         foreach (var shopItem in shopInventory.ShopItems)
         {
-            shopItem.ItemSprite = shopItem.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+            shopItem.ItemSprite = shopItem.Prefab.GetComponentInChildren<SpriteRenderer>()?.sprite;
 
             foreach (var variant in shopItem.ItemVariants)
             {
-                variant.ItemSprite = variant.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+                variant.ItemSprite = variant.Prefab.GetComponentInChildren<SpriteRenderer>()?.sprite;
             }
         }
     }
