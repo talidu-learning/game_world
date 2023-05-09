@@ -1195,7 +1195,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6756440165877228903}
-  - component: {fileID: 8357470539868571021}
   - component: {fileID: 7021890358991681034}
   m_Layer: 0
   m_Name: Solver_Chest
@@ -1219,38 +1218,6 @@ Transform:
   m_Father: {fileID: 8960655207821867045}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8357470539868571021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053842172678794830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30ae93fb156fc6d4c828c64571fc3edd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ConstrainRotation: 1
-  m_SolveFromDefaultPose: 1
-  m_Weight: 1
-  m_Chain:
-    m_EffectorTransform: {fileID: 8232074482604171202}
-    m_TargetTransform: {fileID: 5287149994512354654}
-    m_TransformCount: 3
-    m_Transforms:
-    - {fileID: 6417254740316478317}
-    - {fileID: 5113551431958360943}
-    - {fileID: 8232074482604171202}
-    m_DefaultLocalRotations:
-    - {x: 0, y: 0, z: -0.055126347, w: 0.9984794}
-    - {x: 0, y: 0, z: 0.12736666, w: 0.99185574}
-    - {x: 0, y: 0, z: 0, w: 1}
-    m_StoredLocalRotations:
-    - {x: 0, y: 0, z: 0, w: 0}
-    - {x: 0, y: 0, z: 0, w: 0}
-    - {x: 0, y: 0, z: 0, w: 0}
-  m_Flip: 1
 --- !u!114 &7021890358991681034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1269,10 +1236,19 @@ MonoBehaviour:
   m_Chain:
     m_EffectorTransform: {fileID: 8232074482604171202}
     m_TargetTransform: {fileID: 5287149994512354654}
-    m_TransformCount: 0
-    m_Transforms: []
-    m_DefaultLocalRotations: []
-    m_StoredLocalRotations: []
+    m_TransformCount: 3
+    m_Transforms:
+    - {fileID: 6417254740316478317}
+    - {fileID: 5113551431958360943}
+    - {fileID: 8232074482604171202}
+    m_DefaultLocalRotations:
+    - {x: 0, y: 0, z: -0.013479977, w: 0.9999092}
+    - {x: 0, y: 0, z: 0.0000000147798005, w: 1}
+    - {x: -0, y: -0, z: 0.085933514, w: 0.99630094}
+    m_StoredLocalRotations:
+    - {x: 0, y: 0, z: 0, w: 0}
+    - {x: 0, y: 0, z: 0, w: 0}
+    - {x: 0, y: 0, z: 0, w: 0}
   m_Iterations: 10
   m_Tolerance: 0.01
   m_Velocity: 0.5
@@ -2149,7 +2125,7 @@ MonoBehaviour:
   m_Solvers:
   - {fileID: 4673183834884627840}
   - {fileID: 6794233403678829355}
-  - {fileID: 8357470539868571021}
+  - {fileID: 7021890358991681034}
   - {fileID: 2266171855019995468}
   - {fileID: 9017586554038915939}
   - {fileID: 8479171163756118217}
