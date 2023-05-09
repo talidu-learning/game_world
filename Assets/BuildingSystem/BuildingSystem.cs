@@ -179,6 +179,8 @@ namespace BuildingSystem
             {
                 PlacePlaceable(go.GetComponent<PlaceableObject>());
             }
+            
+            GrassDecoSystem.UpdateGrassMap.Invoke();
         }
 
         private static TileBase[] GetTilesBlock(BoundsInt area, Tilemap tilemap)
