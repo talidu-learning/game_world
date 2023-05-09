@@ -115,7 +115,11 @@ namespace Inventory
         public void Initialize(ShopItemData shopItemData)
         {
             ItemID = shopItemData.ItemID;
-            ItemImage.sprite = !shopItemData.ItemSprite ? shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>().sprite : shopItemData.ItemSprite;
+            if (shopItemData.ItemSprite != null ||
+                shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>().sprite != null)
+            {
+                ItemImage.sprite = !shopItemData.ItemSprite ? shopItemData.Prefab.GetComponentInChildren<SpriteRenderer>().sprite : shopItemData.ItemSprite;
+            }
             attributes = shopItemData.Attributes;
             UpdateUI();
         }
