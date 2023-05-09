@@ -78,14 +78,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 0.39
+    - _Alpha: 0.52
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Fransigkeit: 0.08
+    - _Fransigkeit: 0.11
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -101,9 +101,9 @@ Material:
     - _TriplanarTiling: 0.11
     - _UVSec: 0
     - _ZWrite: 1
-    - _noiseStrength: 1.12
+    - _noiseStrength: 0.73
     m_Colors:
-    - _BaseColor: {r: 0.3278805, g: 0.4245283, b: 0.1457814, a: 0}
+    - _BaseColor: {r: 0.2697667, g: 0.33962262, b: 0.13296545, a: 0}
     - _Color: {r: 0.6037736, g: 0.35542896, b: 0.35542896, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _NoiseColor: {r: 0.053826936, g: 0.21762696, b: 0.6792453, a: 0}

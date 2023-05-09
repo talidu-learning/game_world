@@ -64,6 +64,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 289107680813989147, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1571921057335369650, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_Name
       value: SwimmingPool
@@ -135,6 +139,26 @@ PrefabInstance:
     - target: {fileID: 1571921057335369654, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129476916518669700, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.36123595
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129476916518669700, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.37142143
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129476916518669700, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0329
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129476916518669700, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129476916518669700, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0783
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
