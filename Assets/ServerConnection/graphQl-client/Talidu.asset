@@ -1,0 +1,1333 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ccf793b7ca1cc645b9cd36d753b8e3c, type: 3}
+  m_Name: Talidu
+  m_EditorClassIdentifier: 
+  url: https://graphql.talidu.net/graphql
+  queries:
+  - name: UserId
+    type: 0
+    query: "query UserId{\n    query{\n        currentUserId\n    }\n}"
+    queryString: query
+    returnType: Query
+    queryOptions:
+    - query
+    - nodeId
+    - node
+    - allAustWords
+    - allClasses
+    - allFeedbacks
+    - allInputSessions
+    - allSchools
+    - allStudents
+    - allTeachers
+    - allUpdateProbs
+    - allWords
+    - allWordsOlds
+    - austWordByWord
+    - classById
+    - feedbackByRegel
+    - inputSessionById
+    - schoolById
+    - studentById
+    - teacherByEmail
+    - teacherById
+    - updateProbByErrorName
+    - wordByWord
+    - wordsOldByWord
+    - currentUserId
+    - pseudoEncrypt
+    - stringifyBigint
+    - austWord
+    - class
+    - feedback
+    - inputSession
+    - school
+    - student
+    - teacher
+    - updateProb
+    - word
+    - wordsOld
+    fields:
+    - index: 24
+      name: currentUserId
+      type: UUID
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: query
+        type: Query
+      - name: nodeId
+        type: ID
+      - name: node
+        type: Node
+      - name: allAustWords
+        type: AustWordsConnection
+      - name: allClasses
+        type: ClassesConnection
+      - name: allFeedbacks
+        type: FeedbacksConnection
+      - name: allInputSessions
+        type: InputSessionsConnection
+      - name: allSchools
+        type: SchoolsConnection
+      - name: allStudents
+        type: StudentsConnection
+      - name: allTeachers
+        type: TeachersConnection
+      - name: allUpdateProbs
+        type: UpdateProbsConnection
+      - name: allWords
+        type: WordsConnection
+      - name: allWordsOlds
+        type: WordsOldsConnection
+      - name: austWordByWord
+        type: AustWord
+      - name: classById
+        type: Class
+      - name: feedbackByRegel
+        type: Feedback
+      - name: inputSessionById
+        type: InputSession
+      - name: schoolById
+        type: School
+      - name: studentById
+        type: Student
+      - name: teacherByEmail
+        type: Teacher
+      - name: teacherById
+        type: Teacher
+      - name: updateProbByErrorName
+        type: UpdateProb
+      - name: wordByWord
+        type: Word
+      - name: wordsOldByWord
+        type: WordsOld
+      - name: currentUserId
+        type: UUID
+      - name: pseudoEncrypt
+        type: Int
+      - name: stringifyBigint
+        type: String
+      - name: austWord
+        type: AustWord
+      - name: class
+        type: Class
+      - name: feedback
+        type: Feedback
+      - name: inputSession
+        type: InputSession
+      - name: school
+        type: School
+      - name: student
+        type: Student
+      - name: teacher
+        type: Teacher
+      - name: updateProb
+        type: UpdateProb
+      - name: word
+        type: Word
+      - name: wordsOld
+        type: WordsOld
+      hasChanged: 0
+    isComplete: 1
+  - name: Student
+    type: 0
+    query: "query Student{\n    studentById(  id :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\"
+      ){\n        proficiency\n        age\n        name\n        stars\n    }\n}"
+    queryString: studentById
+    returnType: Query
+    queryOptions:
+    - query
+    - nodeId
+    - node
+    - allAustWords
+    - allClasses
+    - allFeedbacks
+    - allInputSessions
+    - allSchools
+    - allStudents
+    - allTeachers
+    - allUpdateProbs
+    - allWords
+    - allWordsOlds
+    - austWordByWord
+    - classById
+    - feedbackByRegel
+    - inputSessionById
+    - schoolById
+    - studentById
+    - teacherByEmail
+    - teacherById
+    - updateProbByErrorName
+    - wordByWord
+    - wordsOldByWord
+    - currentUserId
+    - pseudoEncrypt
+    - stringifyBigint
+    - austWord
+    - class
+    - feedback
+    - inputSession
+    - school
+    - student
+    - teacher
+    - updateProb
+    - word
+    - wordsOld
+    fields:
+    - index: 9
+      name: proficiency
+      type: Int
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: id
+        type: UUID
+      - name: login
+        type: String
+      - name: age
+        type: Int
+      - name: class
+        type: UUID
+      - name: mistakePrognosis
+        type: JSON
+      - name: name
+        type: String
+      - name: gender
+        type: String
+      - name: alias
+        type: String
+      - name: proficiency
+        type: Int
+      - name: beginnerLevel
+        type: Int
+      - name: trainedOnKeyboard
+        type: Boolean
+      - name: stars
+        type: Int
+      - name: month
+        type: String
+      - name: estimatedSkill
+        type: String
+      - name: classByClass
+        type: Class
+      - name: inputSessionsByStudent
+        type: InputSessionsConnection
+      hasChanged: 0
+    - index: 3
+      name: age
+      type: Int
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: id
+        type: UUID
+      - name: login
+        type: String
+      - name: age
+        type: Int
+      - name: class
+        type: UUID
+      - name: mistakePrognosis
+        type: JSON
+      - name: name
+        type: String
+      - name: gender
+        type: String
+      - name: alias
+        type: String
+      - name: proficiency
+        type: Int
+      - name: beginnerLevel
+        type: Int
+      - name: trainedOnKeyboard
+        type: Boolean
+      - name: stars
+        type: Int
+      - name: month
+        type: String
+      - name: estimatedSkill
+        type: String
+      - name: classByClass
+        type: Class
+      - name: inputSessionsByStudent
+        type: InputSessionsConnection
+      hasChanged: 0
+    - index: 6
+      name: name
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: id
+        type: UUID
+      - name: login
+        type: String
+      - name: age
+        type: Int
+      - name: class
+        type: UUID
+      - name: mistakePrognosis
+        type: JSON
+      - name: name
+        type: String
+      - name: gender
+        type: String
+      - name: alias
+        type: String
+      - name: proficiency
+        type: Int
+      - name: beginnerLevel
+        type: Int
+      - name: trainedOnKeyboard
+        type: Boolean
+      - name: stars
+        type: Int
+      - name: month
+        type: String
+      - name: estimatedSkill
+        type: String
+      - name: classByClass
+        type: Class
+      - name: inputSessionsByStudent
+        type: InputSessionsConnection
+      hasChanged: 0
+    - index: 12
+      name: stars
+      type: Int
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: id
+        type: UUID
+      - name: login
+        type: String
+      - name: age
+        type: Int
+      - name: class
+        type: UUID
+      - name: mistakePrognosis
+        type: JSON
+      - name: name
+        type: String
+      - name: gender
+        type: String
+      - name: alias
+        type: String
+      - name: proficiency
+        type: Int
+      - name: beginnerLevel
+        type: Int
+      - name: trainedOnKeyboard
+        type: Boolean
+      - name: stars
+        type: Int
+      - name: month
+        type: String
+      - name: estimatedSkill
+        type: String
+      - name: classByClass
+        type: Class
+      - name: inputSessionsByStudent
+        type: InputSessionsConnection
+      hasChanged: 0
+    isComplete: 1
+  - name: GetAllItems
+    type: 0
+    query: "query GetAllItems{\n    allPurchasedItems(  condition :{ owner :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\"}
+      ){\n        nodes{\n            nodeId\n            sockets\n            z\n           
+      x\n            id\n            uid\n            owner\n            flipped\n       
+      }\n    }\n}"
+    queryString: allPurchasedItems
+    returnType: PurchasedItemsConnection
+    queryOptions:
+    - query
+    - nodeId
+    - node
+    - allAustWords
+    - allClasses
+    - allFeedbacks
+    - allInputSessions
+    - allPurchasedItems
+    - allSchools
+    - allStudents
+    - allTeachers
+    - allUpdateProbs
+    - allWords
+    - allWordsOlds
+    - austWordByWord
+    - classById
+    - feedbackByRegel
+    - inputSessionById
+    - purchasedItemByUid
+    - schoolById
+    - studentById
+    - teacherByEmail
+    - teacherById
+    - updateProbByErrorName
+    - wordByWord
+    - wordsOldByWord
+    - currentUserId
+    - pseudoEncrypt
+    - stringifyBigint
+    - austWord
+    - class
+    - feedback
+    - inputSession
+    - purchasedItem
+    - school
+    - student
+    - teacher
+    - updateProb
+    - word
+    - wordsOld
+    fields:
+    - index: 0
+      name: nodes
+      type: PurchasedItem
+      parentIndexes: 
+      hasSubField: 1
+      possibleFields:
+      - name: nodes
+        type: PurchasedItem
+      - name: edges
+        type: PurchasedItemsEdge
+      - name: pageInfo
+        type: PageInfo
+      - name: totalCount
+        type: Int
+      hasChanged: 0
+    - index: 0
+      name: nodeId
+      type: ID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 6
+      name: sockets
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 5
+      name: z
+      type: Float
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 4
+      name: x
+      type: Float
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 2
+      name: id
+      type: String
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 1
+      name: uid
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 3
+      name: owner
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 7
+      name: flipped
+      type: Boolean
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    isComplete: 1
+  mutations:
+  - name: UpdateStars
+    type: 1
+    query: "mutation UpdateStars{\n    updateStudentById{\n        student{\n           
+      stars\n        }\n    }\n}"
+    queryString: updateStudentById
+    returnType: UpdateStudentPayload
+    queryOptions:
+    - createAustWord
+    - createClass
+    - createFeedback
+    - createInputSession
+    - createPurchasedItem
+    - createSchool
+    - createStudent
+    - createTeacher
+    - createUpdateProb
+    - createWord
+    - createWordsOld
+    - updateAustWord
+    - updateAustWordByWord
+    - updateClass
+    - updateClassById
+    - updateFeedback
+    - updateFeedbackByRegel
+    - updateInputSession
+    - updateInputSessionById
+    - updatePurchasedItem
+    - updatePurchasedItemByUid
+    - updateSchool
+    - updateSchoolById
+    - updateStudent
+    - updateStudentById
+    - updateTeacher
+    - updateTeacherByEmail
+    - updateTeacherById
+    - updateUpdateProb
+    - updateUpdateProbByErrorName
+    - updateWord
+    - updateWordByWord
+    - updateWordsOld
+    - updateWordsOldByWord
+    - deleteAustWord
+    - deleteAustWordByWord
+    - deleteClass
+    - deleteClassById
+    - deleteFeedback
+    - deleteFeedbackByRegel
+    - deleteInputSession
+    - deleteInputSessionById
+    - deletePurchasedItem
+    - deletePurchasedItemByUid
+    - deleteSchool
+    - deleteSchoolById
+    - deleteStudent
+    - deleteStudentById
+    - deleteTeacher
+    - deleteTeacherByEmail
+    - deleteTeacherById
+    - deleteUpdateProb
+    - deleteUpdateProbByErrorName
+    - deleteWord
+    - deleteWordByWord
+    - deleteWordsOld
+    - deleteWordsOldByWord
+    - generateLoginCode
+    - studentSignIn
+    - teacherSignIn
+    - teacherSignUp
+    fields:
+    - index: 1
+      name: student
+      type: Student
+      parentIndexes: 
+      hasSubField: 1
+      possibleFields:
+      - name: clientMutationId
+        type: String
+      - name: student
+        type: Student
+      - name: query
+        type: Query
+      - name: classByClass
+        type: Class
+      - name: studentEdge
+        type: StudentsEdge
+      hasChanged: 0
+    - index: 12
+      name: stars
+      type: Int
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: id
+        type: UUID
+      - name: login
+        type: String
+      - name: age
+        type: Int
+      - name: class
+        type: UUID
+      - name: mistakePrognosis
+        type: JSON
+      - name: name
+        type: String
+      - name: gender
+        type: String
+      - name: alias
+        type: String
+      - name: proficiency
+        type: Int
+      - name: beginnerLevel
+        type: Int
+      - name: trainedOnKeyboard
+        type: Boolean
+      - name: stars
+        type: Int
+      - name: month
+        type: String
+      - name: estimatedSkill
+        type: String
+      - name: dailyTarget
+        type: Int
+      - name: classByClass
+        type: Class
+      - name: inputSessionsByStudent
+        type: InputSessionsConnection
+      - name: purchasedItemsByOwner
+        type: PurchasedItemsConnection
+      hasChanged: 0
+    isComplete: 1
+  - name: CreateItem
+    type: 1
+    query: "mutation CreateItem{\n    createPurchasedItem(  input :{ purchasedItem
+      :{ owner :\"f01ececd-4b8e-4887-9f06-1f146e17ee4b\", id :\"Kaktus\"}} ){\n       
+      purchasedItem{\n            sockets\n            z\n            x\n           
+      uid\n            id\n            owner\n        }\n    }\n}"
+    queryString: createPurchasedItem
+    returnType: CreatePurchasedItemPayload
+    queryOptions:
+    - createAustWord
+    - createClass
+    - createFeedback
+    - createInputSession
+    - createPurchasedItem
+    - createSchool
+    - createStudent
+    - createTeacher
+    - createUpdateProb
+    - createWord
+    - createWordsOld
+    - updateAustWord
+    - updateAustWordByWord
+    - updateClass
+    - updateClassById
+    - updateFeedback
+    - updateFeedbackByRegel
+    - updateInputSession
+    - updateInputSessionById
+    - updatePurchasedItem
+    - updatePurchasedItemByUid
+    - updateSchool
+    - updateSchoolById
+    - updateStudent
+    - updateStudentById
+    - updateTeacher
+    - updateTeacherByEmail
+    - updateTeacherById
+    - updateUpdateProb
+    - updateUpdateProbByErrorName
+    - updateWord
+    - updateWordByWord
+    - updateWordsOld
+    - updateWordsOldByWord
+    - deleteAustWord
+    - deleteAustWordByWord
+    - deleteClass
+    - deleteClassById
+    - deleteFeedback
+    - deleteFeedbackByRegel
+    - deleteInputSession
+    - deleteInputSessionById
+    - deletePurchasedItem
+    - deletePurchasedItemByUid
+    - deleteSchool
+    - deleteSchoolById
+    - deleteStudent
+    - deleteStudentById
+    - deleteTeacher
+    - deleteTeacherByEmail
+    - deleteTeacherById
+    - deleteUpdateProb
+    - deleteUpdateProbByErrorName
+    - deleteWord
+    - deleteWordByWord
+    - deleteWordsOld
+    - deleteWordsOldByWord
+    - generateLoginCode
+    - studentSignIn
+    - teacherSignIn
+    - teacherSignUp
+    fields:
+    - index: 1
+      name: purchasedItem
+      type: PurchasedItem
+      parentIndexes: 
+      hasSubField: 1
+      possibleFields:
+      - name: clientMutationId
+        type: String
+      - name: purchasedItem
+        type: PurchasedItem
+      - name: query
+        type: Query
+      - name: studentByOwner
+        type: Student
+      - name: purchasedItemEdge
+        type: PurchasedItemsEdge
+      hasChanged: 0
+    - index: 6
+      name: sockets
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 5
+      name: z
+      type: Float
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 4
+      name: x
+      type: Float
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 1
+      name: uid
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 2
+      name: id
+      type: String
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 3
+      name: owner
+      type: UUID
+      parentIndexes: 00000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    isComplete: 1
+  - name: UpdateItem
+    type: 1
+    query: "mutation UpdateItem{\n    updatePurchasedItemByUid{\n        clientMutationId\n       
+      purchasedItem{\n            flipped\n            sockets\n            x\n           
+      z\n            uid\n            id\n        }\n    }\n}"
+    queryString: updatePurchasedItemByUid
+    returnType: UpdatePurchasedItemPayload
+    queryOptions:
+    - createAustWord
+    - createClass
+    - createFeedback
+    - createInputSession
+    - createPurchasedItem
+    - createSchool
+    - createStudent
+    - createTeacher
+    - createUpdateProb
+    - createWord
+    - createWordsOld
+    - updateAustWord
+    - updateAustWordByWord
+    - updateClass
+    - updateClassById
+    - updateFeedback
+    - updateFeedbackByRegel
+    - updateInputSession
+    - updateInputSessionById
+    - updatePurchasedItem
+    - updatePurchasedItemByUid
+    - updateSchool
+    - updateSchoolById
+    - updateStudent
+    - updateStudentById
+    - updateTeacher
+    - updateTeacherByEmail
+    - updateTeacherById
+    - updateUpdateProb
+    - updateUpdateProbByErrorName
+    - updateWord
+    - updateWordByWord
+    - updateWordsOld
+    - updateWordsOldByWord
+    - deleteAustWord
+    - deleteAustWordByWord
+    - deleteClass
+    - deleteClassById
+    - deleteFeedback
+    - deleteFeedbackByRegel
+    - deleteInputSession
+    - deleteInputSessionById
+    - deletePurchasedItem
+    - deletePurchasedItemByUid
+    - deleteSchool
+    - deleteSchoolById
+    - deleteStudent
+    - deleteStudentById
+    - deleteTeacher
+    - deleteTeacherByEmail
+    - deleteTeacherById
+    - deleteUpdateProb
+    - deleteUpdateProbByErrorName
+    - deleteWord
+    - deleteWordByWord
+    - deleteWordsOld
+    - deleteWordsOldByWord
+    - generateLoginCode
+    - studentSignIn
+    - teacherSignIn
+    - teacherSignUp
+    fields:
+    - index: 0
+      name: clientMutationId
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: clientMutationId
+        type: String
+      - name: purchasedItem
+        type: PurchasedItem
+      - name: query
+        type: Query
+      - name: studentByOwner
+        type: Student
+      - name: purchasedItemEdge
+        type: PurchasedItemsEdge
+      hasChanged: 0
+    - index: 1
+      name: purchasedItem
+      type: PurchasedItem
+      parentIndexes: 
+      hasSubField: 1
+      possibleFields:
+      - name: clientMutationId
+        type: String
+      - name: purchasedItem
+        type: PurchasedItem
+      - name: query
+        type: Query
+      - name: studentByOwner
+        type: Student
+      - name: purchasedItemEdge
+        type: PurchasedItemsEdge
+      hasChanged: 0
+    - index: 7
+      name: flipped
+      type: Boolean
+      parentIndexes: 01000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 6
+      name: sockets
+      type: UUID
+      parentIndexes: 01000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 4
+      name: x
+      type: Float
+      parentIndexes: 01000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: flipped
+        type: Boolean
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 5
+      name: z
+      type: Float
+      parentIndexes: 01000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 1
+      name: uid
+      type: UUID
+      parentIndexes: 01000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    - index: 2
+      name: id
+      type: String
+      parentIndexes: 01000000
+      hasSubField: 0
+      possibleFields:
+      - name: nodeId
+        type: ID
+      - name: uid
+        type: UUID
+      - name: id
+        type: String
+      - name: owner
+        type: UUID
+      - name: x
+        type: Float
+      - name: z
+        type: Float
+      - name: sockets
+        type: UUID
+      - name: studentByOwner
+        type: Student
+      hasChanged: 0
+    isComplete: 1
+  - name: DeleteItem
+    type: 1
+    query: "mutation DeleteItem{\n    deletePurchasedItemByUid(  input :{ uid :\"fffd6a6c-b983-4a12-989b-7f6f71c2ee52\"}
+      ){\n        deletedPurchasedItemId\n        clientMutationId\n    }\n}"
+    queryString: deletePurchasedItemByUid
+    returnType: CreateAustWordPayload
+    queryOptions:
+    - createAustWord
+    - createClass
+    - createFeedback
+    - createInputSession
+    - createPurchasedItem
+    - createSchool
+    - createStudent
+    - createTeacher
+    - createUpdateProb
+    - createWord
+    - createWordsOld
+    - updateAustWord
+    - updateAustWordByWord
+    - updateClass
+    - updateClassById
+    - updateFeedback
+    - updateFeedbackByRegel
+    - updateInputSession
+    - updateInputSessionById
+    - updatePurchasedItem
+    - updatePurchasedItemByUid
+    - updateSchool
+    - updateSchoolById
+    - updateStudent
+    - updateStudentById
+    - updateTeacher
+    - updateTeacherByEmail
+    - updateTeacherById
+    - updateUpdateProb
+    - updateUpdateProbByErrorName
+    - updateWord
+    - updateWordByWord
+    - updateWordsOld
+    - updateWordsOldByWord
+    - deleteAustWord
+    - deleteAustWordByWord
+    - deleteClass
+    - deleteClassById
+    - deleteFeedback
+    - deleteFeedbackByRegel
+    - deleteInputSession
+    - deleteInputSessionById
+    - deletePurchasedItem
+    - deletePurchasedItemByUid
+    - deleteSchool
+    - deleteSchoolById
+    - deleteStudent
+    - deleteStudentById
+    - deleteTeacher
+    - deleteTeacherByEmail
+    - deleteTeacherById
+    - deleteUpdateProb
+    - deleteUpdateProbByErrorName
+    - deleteWord
+    - deleteWordByWord
+    - deleteWordsOld
+    - deleteWordsOldByWord
+    - generateLoginCode
+    - studentSignIn
+    - teacherSignIn
+    - teacherSignUp
+    fields:
+    - index: 2
+      name: deletedPurchasedItemId
+      type: ID
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: clientMutationId
+        type: String
+      - name: purchasedItem
+        type: PurchasedItem
+      - name: deletedPurchasedItemId
+        type: ID
+      - name: query
+        type: Query
+      - name: studentByOwner
+        type: Student
+      - name: purchasedItemEdge
+        type: PurchasedItemsEdge
+      hasChanged: 0
+    - index: 0
+      name: clientMutationId
+      type: String
+      parentIndexes: 
+      hasSubField: 0
+      possibleFields:
+      - name: clientMutationId
+        type: String
+      - name: austWord
+        type: AustWord
+      - name: query
+        type: Query
+      - name: austWordEdge
+        type: AustWordsEdge
+      hasChanged: 0
+    isComplete: 1
+  subscriptions: []
+  loading: 0
