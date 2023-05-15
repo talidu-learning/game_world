@@ -24,6 +24,10 @@ namespace TouchScript.Examples.CameraControl
 
         [SerializeField] private AnimationCurve rotation;
         [SerializeField] private AnimationCurve distance;
+
+        [SerializeField] private Vector2 camZPosBorders = new Vector2(-50, 50);
+        [SerializeField] private Vector2 camXPosBorders = new Vector2(-50, 50);
+
         public float ZoomSpeed = 10f;
         public float currentZoom;
 
@@ -171,8 +175,8 @@ namespace TouchScript.Examples.CameraControl
             newPos.x = -newPos.x;
             newPos.y = 0;
             var newPosClamped = pivot.localPosition + newPos;
-            newPosClamped.z = Mathf.Clamp(newPosClamped.z, -20, 60);
-            newPosClamped.x = Mathf.Clamp(newPosClamped.x, -63, 69);
+            newPosClamped.z = Mathf.Clamp(newPosClamped.z, camZPosBorders.x, camZPosBorders.y);
+            newPosClamped.x = Mathf.Clamp(newPosClamped.x, camXPosBorders.x, camXPosBorders.y);
             pivot.localPosition = newPosClamped;
         }
     }
