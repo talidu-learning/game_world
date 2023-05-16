@@ -1,79 +1,80 @@
 using System;
 using Enumerations;
 using GameModes;
-using Interactables;
 using TouchScript.Examples.CameraControl;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ZoomSlider : MonoBehaviour
+namespace CustomInput
 {
-    private Slider slider;
-
-    [SerializeField] private CameraController cameraController;
-    [SerializeField] private Image handleImage;
-
-    void Start()
+    public class ZoomSlider : MonoBehaviour
     {
-        slider = GetComponent<Slider>();
-        slider.onValueChanged.AddListener(ChangeZoom);
-        SelectionManager.SELECT_OBJECT_EVENT.AddListener(OnSelectedObject);
-        SelectionManager.DESELECT_OBJECT_EVENT.AddListener(OnDeselectedObject);
-        SelectionManager.DELETE_OBJECT_EVENT.AddListener(OnDeselectedObject);
-        
-        GameModeSwitcher.OnSwitchedGameMode.AddListener(OnChangedGameMode);
-            
-    }
+        [SerializeField] private Slider Slider;
+        [SerializeField] private Image ZoomBackground;
 
-    private void OnChangedGameMode(GameMode gameMode)
-    {
-        switch (gameMode)
+        [SerializeField] private CameraController CameraController;
+
+        void Start()
         {
-            case GameMode.Default:
-                break;
-            case GameMode.Placing:
-                break;
-            case GameMode.Inventory:
-                break;
-            case GameMode.Deco:
-                break;
-            case GameMode.DecoInventory:
-                break;
-            case GameMode.Shop:
-                break;
-            case GameMode.SelectedSocket:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(gameMode), gameMode, null);
+            Slider.onValueChanged.AddListener(ChangeZoom);
+            GameModeSwitcher.OnSwitchedGameMode.AddListener(OnChangedGameMode);
         }
-    }
 
-    private void OnDeselectedObject()
-    {
-        slider.interactable = true;
-        handleImage.color = ChangeAlpha(1f);
-    }
+        private void OnChangedGameMode(GameMode gameMode)
+        {
+            switch (gameMode)
+            {
+                case GameMode.Default:
+                    DisplayZoomSlider(true);
+                    break;
+                case GameMode.Placing:
+                    DisplayZoomSlider(true);
+                    break;
+                case GameMode.Inventory:
+                    DisplayZoomSlider(false);
+                    break;
+                case GameMode.Deco:
+                    DisplayZoomSlider(true);
+                    break;
+                case GameMode.DecoInventory:
+                    DisplayZoomSlider(false);
+                    break;
+                case GameMode.Shop:
+                    DisplayZoomSlider(false);
+                    break;
+                case GameMode.SelectedSocket:
+                    DisplayZoomSlider(true);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(gameMode), gameMode, null);
+            }
+        }
 
-    private Color ChangeAlpha(float amount)
-    {
-        var tempColor = handleImage.color;
-        tempColor.a = amount;
-        return tempColor;
-    }
+        private void DisplayZoomSlider(bool active)
+        {
+            ZoomBackground.enabled = active;
 
-    private void OnSelectedObject(Interactable interactable)
-    {
-        slider.interactable = false;
-        handleImage.color = ChangeAlpha(0.4f);
-    }
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(active);
+            }
+        }
 
-    private void ChangeZoom(float amount)
-    {
-        cameraController.SetZoom(amount);
-    }
+        private Color ChangeAlpha(float amount, Color color)
+        {
+            var tempColor = color;
+            tempColor.a = amount;
+            return tempColor;
+        }
 
-    private void LateUpdate()
-    {
-        slider.value = cameraController.currentZoom;
+        private void ChangeZoom(float amount)
+        {
+            CameraController.SetZoom(amount);
+        }
+
+        private void LateUpdate()
+        {
+            Slider.value = CameraController.currentZoom;
+        }
     }
 }

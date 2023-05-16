@@ -100,8 +100,10 @@ namespace Interactables
             TransformGesture.enabled = true;
             tapGesture.enabled = false;
 
-            LeanTween.moveLocalY(gameObject, 1, 1).setLoopPingPong().setEase(LeanTweenType.easeInOutSine).setOnComplete(
-                () => { gameObject.transform.position = new Vector3(transform.position.x, 0, transform.position.z); });
+            GameObject spriteHolder = gameObject.transform.GetChild(0).GetChild(0).gameObject;
+            var yCoord = spriteHolder.transform.localPosition.y;
+            LeanTween.moveLocalY(spriteHolder, yCoord + 0.1f, 2).setLoopPingPong().setEase(LeanTweenType.easeInOutSine).setOnComplete(
+                () => { spriteHolder.transform.localPosition = new Vector3(0, yCoord, 0); });
         }
 
         private void OnTap()
