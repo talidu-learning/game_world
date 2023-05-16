@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 691678462404084149}
   - component: {fileID: 691678462404084148}
   m_Layer: 5
-  m_Name: ColorPickBackgroundFrame
+  m_Name: Image_ColorPickBGFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2
+  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &691678462404084148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 691678462840170751}
   - component: {fileID: 691678462840170750}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Image_ColorPickSpeakCorner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 691678463133970625}
   - component: {fileID: 691678463133970624}
   - component: {fileID: 691678463133970639}
+  - component: {fileID: 1527848382}
   m_Layer: 5
   m_Name: ColorPickWindow
   m_TagString: Untagged
@@ -298,6 +299,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1527848382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691678463133970637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbf1e682ca50e54bb4754ef1041d12f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VariantPrefab: {fileID: 1247722632235987240, guid: b84bf9b7b16816e4fb161fd63324e1ff, type: 3}
 --- !u!1 &691678463861518286
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +326,7 @@ GameObject:
   - component: {fileID: 691678463861518273}
   - component: {fileID: 691678463861518272}
   m_Layer: 5
-  m_Name: ColorPickBackground (1)
+  m_Name: Panel_ColorPickBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -338,7 +352,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -15.065152, y: 0}
   m_SizeDelta: {x: 0, y: 248.38}
   m_Pivot: {x: -0.13331993, y: 0.17803927}
 --- !u!222 &691678463861518275
@@ -434,7 +448,7 @@ GameObject:
   - component: {fileID: 4263643012097316288}
   - component: {fileID: 954189790564292667}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Button_ColorPickClose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -457,7 +471,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -165.8}
+  m_AnchoredPosition: {x: 0, y: -181}
   m_SizeDelta: {x: 154.95001, y: 165.8038}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &691678463915867341
@@ -488,7 +502,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 03674c4923246bd429f754adb144b40b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bc9ec595e482904459e9d574a23fbb61, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
