@@ -2233,8 +2233,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 716348c4da96294499340f94fe7c0b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraController: {fileID: 0}
-  handleImage: {fileID: 3320596470663917990}
+  Slider: {fileID: 5477522987768950104}
+  ZoomBackground: {fileID: 4696611524019606133}
+  CameraController: {fileID: 0}
 --- !u!1 &4161260189564885160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2482,7 +2483,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1857.8058, y: 0}
+  m_SizeDelta: {x: 1654.7468, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1920238608118934835
 MonoBehaviour:
@@ -4167,7 +4168,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4787235970754933120}
   m_HandleRect: {fileID: 4787235970754933135}
   m_Direction: 2
-  m_Value: 1.0000005
+  m_Value: 1.0000006
   m_Size: 0.0039999997
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4580,7 +4581,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6764873634819226112}
   m_HandleRect: {fileID: 3402713581429799644}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

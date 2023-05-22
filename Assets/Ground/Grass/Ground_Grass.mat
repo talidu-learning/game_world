@@ -85,7 +85,7 @@ Material:
     - _AlphaClip: 0
     - _Blend: 0
     - _BlendOp: 0
-    - _BumpScale: 0.35
+    - _BumpScale: 0.2
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -97,13 +97,13 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.299
     - _GlossyReflections: 1
-    - _Metallic: 0.015
+    - _Metallic: 0
     - _Mode: 0
-    - _OcclusionStrength: 0.597
-    - _Parallax: 0.0396
+    - _OcclusionStrength: 0
+    - _Parallax: 0.0362
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.5
+    - _Smoothness: 0.408
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
