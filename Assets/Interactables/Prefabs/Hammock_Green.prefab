@@ -13,15 +13,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1484841629912204570, guid: a27561ff09f2bae4092106ecc93dc5da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.527155
+      value: 38.068333
       objectReference: {fileID: 0}
     - target: {fileID: 1484841629912204570, guid: a27561ff09f2bae4092106ecc93dc5da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.027918339
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1484841629912204570, guid: a27561ff09f2bae4092106ecc93dc5da, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 23.189512
+      value: -11.950815
       objectReference: {fileID: 0}
     - target: {fileID: 1484841629912204570, guid: a27561ff09f2bae4092106ecc93dc5da, type: 3}
       propertyPath: m_LocalRotation.w
@@ -55,9 +55,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hammock_Green
       objectReference: {fileID: 0}
+    - target: {fileID: 6078703362013009704, guid: a27561ff09f2bae4092106ecc93dc5da, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6078703362013009704, guid: a27561ff09f2bae4092106ecc93dc5da, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.33
+      objectReference: {fileID: 0}
     - target: {fileID: 8916779400029701337, guid: a27561ff09f2bae4092106ecc93dc5da, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d78648594a947094ebc748539e721aec, type: 3}
+    - target: {fileID: 8916779400029701337, guid: a27561ff09f2bae4092106ecc93dc5da, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ebb84e6e5a9b838498616fb3a8697261, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a27561ff09f2bae4092106ecc93dc5da, type: 3}

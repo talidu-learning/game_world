@@ -51,6 +51,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 4c65b091887a1fb4190c0d48988c4c28, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 95155ad4939601443a614f9c9ec690a7, type: 2}
     - target: {fileID: 919132149155446097, guid: 4c65b091887a1fb4190c0d48988c4c28, type: 3}
       propertyPath: m_Name
       value: WallStone01
@@ -98,15 +102,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1571921057335369654, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.28
+      value: 47.84176
       objectReference: {fileID: 0}
     - target: {fileID: 1571921057335369654, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.027917624
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1571921057335369654, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19.82
+      value: -14.542965
       objectReference: {fileID: 0}
     - target: {fileID: 1571921057335369654, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalRotation.w

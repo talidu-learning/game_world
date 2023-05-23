@@ -33,15 +33,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1571921057335369654, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -38.64778
+      value: 21.91259
       objectReference: {fileID: 0}
     - target: {fileID: 1571921057335369654, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.027917385
+      value: 0.00000023841858
       objectReference: {fileID: 0}
     - target: {fileID: 1571921057335369654, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.023697
+      value: -24.512075
       objectReference: {fileID: 0}
     - target: {fileID: 1571921057335369654, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalRotation.w
@@ -73,11 +73,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6129476916518669700, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.03021781
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 6129476916518669700, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.09349678
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 6129476916518669700, guid: b44d7377f4a2cda49875b6ad0dd8c799, type: 3}
       propertyPath: m_LocalPosition.x
@@ -149,6 +149,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c3d1db603aaac8b4eacba2cff8f4103b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ebb84e6e5a9b838498616fb3a8697261, type: 2}
     - target: {fileID: 919132149155446097, guid: c3d1db603aaac8b4eacba2cff8f4103b, type: 3}
       propertyPath: m_Name
       value: FenceeWooden01

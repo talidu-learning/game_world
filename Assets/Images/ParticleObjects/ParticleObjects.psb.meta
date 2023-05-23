@@ -92,7 +92,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: Rectangle.png
+  - name: DustParticle2.png
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -101,9 +101,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 552
-      width: 113
-      height: 294
-    spriteID: 9ab02b80c47ce094aaad991fc1a228d9
+      width: 164
+      height: 243
+    spriteID: 2ee8806ad2272eb4baaa492a221666a8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -112,8 +112,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 3, y: 551}
-    spritePosition: {x: 430, y: 179}
+    uvTransform: {x: 4, y: 552}
+    spritePosition: {x: 398, y: 148}
   - name: Layer 1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -176,6 +176,26 @@ ScriptedImporter:
     flatten: 0
     isImported: 0
     isVisible: 1
+  - name: DustParticle2.png
+    spriteName: DustParticle2.png
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 2ee8806ad2272eb4baaa492a221666a8
+    layerID: 13
+    mosaicPosition: {x: 4, y: 552}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: DustParticle.png
+    spriteName: DustParticle.png
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 9f5a3b6f3a09b09499c8de301d6ec2dc
+    layerID: 12
+    mosaicPosition: {x: 4, y: 552}
+    flatten: 0
+    isImported: 0
+    isVisible: 0
   - name: Rectangle.png
     spriteName: Rectangle.png
     isGroup: 0
@@ -184,8 +204,8 @@ ScriptedImporter:
     layerID: 11
     mosaicPosition: {x: 4, y: 552}
     flatten: 0
-    isImported: 1
-    isVisible: 1
+    isImported: 0
+    isVisible: 0
   - name: Snake.png
     spriteName: 
     isGroup: 0

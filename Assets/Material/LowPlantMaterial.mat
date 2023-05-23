@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TreeMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: 790ce255c6edf7844a30229264eae815, type: 3}
+  m_Name: LowPlantMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: 8a8d1654e2645c14b92a6dc0739fa999, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -33,6 +33,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AssetHUEOverlay_0819c74c60ed45b0b70f78dfe03cc2dc_Pattern_2101599622:
+        m_Texture: {fileID: 2800000, guid: dc3e21c2ebb4939419b0814dde26a252, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -58,7 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 63e5e46d1cdfde2429bcdef7b2dfada0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -92,8 +96,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
-    - _BendCutHardness: 2.03
-    - _BendStrength: 1.48
+    - _AphaClip: 0.5
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -107,26 +110,35 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _HUEOffset1: 180
+    - _HUEOffset2: -52
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Rotation: 2.83
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _WindChunkSize: 0.38
-    - _WindStrength: 0.6
+    - _Visibility1: 0.2
+    - _Visibility2: 0.3
+    - _WindStrength: 2.08
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _Amplitude: {r: -0.09, g: 0.09, b: 0, a: 0}
+    - _Amplitude: {r: -0.03, g: 0.03, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Offset1: {r: 0.08, g: 0.06, b: 0, a: 0}
+    - _Offset2: {r: 0.03, g: 0, b: 0, a: 0}
+    - _Pattern_Offset: {r: -5.53, g: 4.25, b: 0, a: 0}
+    - _Pattern_Tiling: {r: 0.15, g: 0.15, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _WindChunkSize: {r: 0.14, g: 0.11, b: 0, a: 0}
-    - _WindMovement: {r: 2, g: 0.32, b: 0, a: 0}
+    - _WindChunkSize: {r: 0.15, g: 0.21, b: 0, a: 0}
+    - _WindMovement: {r: 1.25, g: 0.76, b: 0, a: 0}
   m_BuildTextureStacks: []
