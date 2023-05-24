@@ -384,7 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c79d3108b1ff949b5e3be6c45ae8d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationObject: {fileID: 238271446}
+  AnimationObject: {fileID: 558310031589423840}
 --- !u!1 &1892403873
 GameObject:
   m_ObjectHideFlags: 0
@@ -2234,6 +2234,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Slider: {fileID: 5477522987768950104}
+  ZoomUIImages:
+  - {fileID: 5661439968537994308}
+  - {fileID: 8133565958690514378}
+  - {fileID: 640075725}
+  - {fileID: 2132661617}
+  - {fileID: 4696611524019606133}
+  - {fileID: 3403499598392621724}
+  - {fileID: 3320596470663917990}
+  - {fileID: 6104678459548844807}
   ZoomBackground: {fileID: 4696611524019606133}
   CameraController: {fileID: 0}
 --- !u!1 &4161260189564885160
@@ -2483,7 +2492,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1654.7468, y: 0}
+  m_SizeDelta: {x: 1933.6307, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1920238608118934835
 MonoBehaviour:
@@ -4168,8 +4177,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4787235970754933120}
   m_HandleRect: {fileID: 4787235970754933135}
   m_Direction: 2
-  m_Value: 1.0000006
-  m_Size: 0.0039999997
+  m_Value: 0.99999803
+  m_Size: 0.004
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4581,7 +4590,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6764873634819226112}
   m_HandleRect: {fileID: 3402713581429799644}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7794,9 +7803,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae16ddcb55833434f901facc3ad34b36, type: 3}
---- !u!1 &238271446 stripped
+--- !u!1 &558310031589423840 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 5678663604587356418, guid: ae16ddcb55833434f901facc3ad34b36, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5292062105019703348, guid: ae16ddcb55833434f901facc3ad34b36, type: 3}
   m_PrefabInstance: {fileID: 5678663604621925076}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &1860036809479578461 stripped

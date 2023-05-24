@@ -4,12 +4,14 @@ using GameModes;
 using TouchScript.Examples.CameraControl;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace CustomInput
 {
     public class ZoomSlider : MonoBehaviour
     {
         [SerializeField] private Slider Slider;
+        public List<Image> ZoomUIImages = new List<Image>();
         [SerializeField] private Image ZoomBackground;
 
         [SerializeField] private CameraController CameraController;
@@ -57,6 +59,11 @@ namespace CustomInput
             foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(active);
+            }
+
+            foreach (Image img in ZoomUIImages)
+            {
+                    img.enabled = active;
             }
         }
 
