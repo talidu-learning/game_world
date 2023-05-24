@@ -8,7 +8,7 @@ public class CameraMoveEvent : MonoBehaviour
     public static event ECameraMove OnMoved;
     private Vector3 lastFramePos = new Vector3();
 
-    void Update()
+    void FixedUpdate()
     {
         if (transform.position != lastFramePos)
         {
