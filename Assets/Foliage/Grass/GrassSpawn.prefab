@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 378846043}
   - component: {fileID: 378846046}
   - component: {fileID: 378846045}
-  - component: {fileID: 378846044}
-  - component: {fileID: 336695947213235398}
   m_Layer: 0
   m_Name: Plane_LOD0
   m_TagString: Untagged
@@ -85,32 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &378846044
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378846042}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &336695947213235398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378846042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96417735816dd984280e76ee814e7b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2968957345064936702
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,8 +94,6 @@ GameObject:
   - component: {fileID: 1062028268278207084}
   - component: {fileID: 9184719269581971591}
   - component: {fileID: 3994061802781098175}
-  - component: {fileID: 2299621142376326172}
-  - component: {fileID: 7238810828472218769}
   m_Layer: 0
   m_Name: Plane_LOD2
   m_TagString: Untagged
@@ -196,32 +166,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2299621142376326172
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2968957345064936702}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &7238810828472218769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2968957345064936702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96417735816dd984280e76ee814e7b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6968520650201259954
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,8 +177,6 @@ GameObject:
   - component: {fileID: 838370481996910055}
   - component: {fileID: 4044631039273564153}
   - component: {fileID: 3403968131703559310}
-  - component: {fileID: 2825667895215699546}
-  - component: {fileID: 1072295805620551340}
   m_Layer: 0
   m_Name: Plane_LOD1
   m_TagString: Untagged
@@ -307,32 +249,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2825667895215699546
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6968520650201259954}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1072295805620551340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6968520650201259954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96417735816dd984280e76ee814e7b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &9067291266026864351
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +259,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4942319365633188719}
   - component: {fileID: 4023856818889144722}
+  - component: {fileID: 8470189766557010255}
+  - component: {fileID: 4841426869889402590}
   m_Layer: 0
   m_Name: GrassSpawn
   m_TagString: Untagged
@@ -386,12 +304,37 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 378846045}
-  - screenRelativeHeight: 0.058975022
+  - screenRelativeHeight: 0.04654368
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3403968131703559310}
-  - screenRelativeHeight: 0.032538954
+  - screenRelativeHeight: 0.021774737
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3994061802781098175}
   m_Enabled: 1
+--- !u!65 &8470189766557010255
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9067291266026864351}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0345454, y: 1.0453036, z: 0.31806374}
+  m_Center: {x: -0.006996155, y: 0.47668934, z: 0.030581474}
+--- !u!114 &4841426869889402590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9067291266026864351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96417735816dd984280e76ee814e7b57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

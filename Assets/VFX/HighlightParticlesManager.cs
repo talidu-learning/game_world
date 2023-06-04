@@ -8,7 +8,7 @@ namespace VFX
         [SerializeField] private GameObject ParticlesgameObject;
         private ParticleSystem highlightParticleSystemComp;
 
-        private Coroutine playParticles;
+       // private Coroutine playParticles;
 
         private void Awake()
         {
@@ -18,7 +18,8 @@ namespace VFX
         public void MoveParticleSystem(GameObject item)
         {
             highlightParticleSystemComp.transform.SetParent(item.transform, false);
-            playParticles = StartCoroutine(PlayParticleSystem());
+            //   playParticles = StartCoroutine(PlayParticleSystem());
+            PlayParticleSystem();
         }
 
         public void StopParticleSystem()
@@ -28,11 +29,17 @@ namespace VFX
             ParticlesgameObject.transform.SetParent(transform, false);
         }
 
-        private IEnumerator PlayParticleSystem()
+     /*   private IEnumerator PlayParticleSystem()
         {
             highlightParticleSystemComp.Play();
             yield return new WaitForSeconds(2);
             StopParticleSystem();
+        }
+     */
+
+        private void PlayParticleSystem()
+        {
+            highlightParticleSystemComp.Play();
         }
     }
 }

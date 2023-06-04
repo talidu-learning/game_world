@@ -26,6 +26,10 @@ namespace Interactables
         public static readonly UnityEvent DELETE_OBJECT_EVENT = new UnityEvent();
 
         private Interactable selectedObject;
+        private Material selectionMaterial2D;
+        private Material selectionMaterial3D;
+        private Material lastSwappedMaterial;
+        private SpriteRenderer currentRenderer;
 
         public static readonly SocketUnityEvent SELECT_SOCKET_EVENT = new SocketUnityEvent();
         public static readonly SocketUnityEvent DESELECT_SOCKET_EVENT = new SocketUnityEvent();
@@ -56,6 +60,8 @@ namespace Interactables
         private void Start()
         {
             GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameModes);
+            selectionMaterial2D = Resources.Load<Material>("2DSelectionMaterial");
+            selectionMaterial3D = Resources.Load<Material>("3DSelectionMaterial");
         }
 
         private void OnSwitchedGameModes(GameMode gameMode)
@@ -125,7 +131,9 @@ namespace Interactables
         private void DeselectObject()
         {
             highlightParticlesManager.StopParticleSystem();
-            
+
+            if (currentRenderer) currentRenderer.material = lastSwappedMaterial;
+
             GameModeSwitcher.SwitchGameMode.Invoke(GameMode.Default);
             // can happen when delete button is pressed. Interference with OnTap from Interactable?
             if (!selectedObject) return;
@@ -141,8 +149,12 @@ namespace Interactables
                 Debug.Log("SelectAnotherObject");
                 DeselectObject();
             }
-
             highlightParticlesManager.MoveParticleSystem(interactable.gameObject);
+
+
+            currentRenderer = interactable.transform.GetComponentInChildren<SpriteRenderer>() ?? null ;
+            lastSwappedMaterial = currentRenderer?.material;
+            if(currentRenderer) currentRenderer.material = selectionMaterial2D;
 
             if (ObjectWasPlacedBefore(interactable))
             {

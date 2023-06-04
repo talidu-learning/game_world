@@ -36,6 +36,7 @@ public class followCameraPosOnYPlane : MonoBehaviour
         }
         transform.position = targetPosition;
     }
+    
 
     public void UpdateCamRelatedPosition()
     {
