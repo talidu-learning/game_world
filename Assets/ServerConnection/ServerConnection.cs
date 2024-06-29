@@ -36,6 +36,7 @@ namespace ServerConnection
         
         public async Task GetStudentData()
         {
+            if(deactivatedServerConnection)return;
             // token = WebGLPluginJS.GetTokenFromLocalStorage();
             Debug.Log("Took token from local storage: " + Token);
             TaliduGraphApi.SetAuthToken(Token);

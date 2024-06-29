@@ -1,7 +1,7 @@
 using System;
 using Enumerations;
 using GameModes;
-using TouchScript.Examples.CameraControl;
+using TouchScript.Examples.Camera;
 using UnityEngine;
 using UnityEngine.UI;
 

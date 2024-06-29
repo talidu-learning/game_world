@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using Enumerations;
 using GameModes;
 using Interactables;
 using TouchScript.Gestures;
-using UnityEngine;
 using TouchScript.Gestures.TransformGestures;
 using TouchScript.InputSources;
+using UnityEngine;
 
-namespace TouchScript.Examples.CameraControl
+namespace TouchScript.Examples.Camera
 {
     /// <exclude />
     public class CameraController : MonoBehaviour
@@ -41,7 +40,7 @@ namespace TouchScript.Examples.CameraControl
         
         private void Awake()
         {
-            cam = Camera.main.transform;
+            cam = UnityEngine.Camera.main.transform;
             currentZoom = 0.5f;
             CalculateZoom();
             ManipulationGesture.OnTransformComplete.AddListener(OnComplete);
@@ -49,10 +48,6 @@ namespace TouchScript.Examples.CameraControl
 
         private void Start()
         {
-            // SelectionManager.SELECT_OBJECT_EVENT.AddListener(OnSelectedObject);
-            // SelectionManager.DESELECT_OBJECT_EVENT.AddListener(OnDeselectedObject);
-            // SelectionManager.DELETE_OBJECT_EVENT.AddListener(OnDeselectedObject);
-            
             GameModeSwitcher.OnSwitchedGameMode.AddListener(OnSwitchedGameModes);
         }
 
@@ -86,23 +81,6 @@ namespace TouchScript.Examples.CameraControl
             }
         }
 
-        private void OnDeselectedObject()
-        {
-            isZoomEnabled = true;
-        }
-
-        private void OnSelectedObject(Interactable interactable)
-        {
-            ZoomOut();
-            isZoomEnabled = false;
-        }
-
-        private void ZoomOut()
-        {
-            currentZoom = 1;
-            CalculateZoom();
-        }
-
         private void OnComplete(Gesture arg0)
         {
             var pointers = TouchManager.Instance.PressedPointers;
@@ -120,9 +98,6 @@ namespace TouchScript.Examples.CameraControl
             if(!isZoomEnabled) return;
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
-                // Vector3 newZoom = cam.transform.localPosition + Vector3.up * Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
-                // newZoom.y = Mathf.Clamp(newZoom.y, 5.0f, 40.5f);
-                // cam.transform.localPosition = newZoom;
                 currentZoom += -Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
                 currentZoom = Mathf.Clamp01(currentZoom);
                 CalculateZoom();
@@ -138,9 +113,7 @@ namespace TouchScript.Examples.CameraControl
             
             cam.transform.rotation = targetRot;
             Vector3 offset = Vector3.forward * distance.Evaluate(currentZoom);
- 
             Vector3 targetPos = pivot.position - targetRot * offset;
-
             cam.transform.position = targetPos;
         }
 
@@ -159,11 +132,6 @@ namespace TouchScript.Examples.CameraControl
         private void ManipulationTransformedHandler(object sender, System.EventArgs e)
         {
             if(!isZoomEnabled) return;
-            // var zoomFactor = Vector3.up * (ManipulationGesture.DeltaScale - 1f) * ZoomSpeed;
-            // Vector3 localPosition = cam.transform.localPosition + zoomFactor;
-            // localPosition.y = Mathf.Clamp(localPosition.y, 5.0f, 40.5f);
-            // cam.transform.localPosition = localPosition;
-
             currentZoom += ManipulationGesture.DeltaScale - 1f;
             CalculateZoom();
         }
